@@ -22,7 +22,7 @@ class SignUpView(View):
             login(request, new_user)
             return redirect("index")
         else:
-            print form.error_messages
+            return render(request, self.template_name, {'form':form})
 
 
 

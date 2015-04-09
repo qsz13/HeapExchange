@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load widget_tweaks %}
 
 {% block page %}
 
@@ -16,11 +16,10 @@
                     {% for field in form%}
 
                         <div class="input-field col s10 offset-s1">
-                            <label for="{{ field.id_for_label}}" class="form-control">{{ field.label }}</label>
-                        <div class="col-lg-8">
-                            <input name="{{ field.html_name }}">
+                            <label for="{{ field.id_for_label}}" class="">{{ field.label }}</label>
 
-                        </div>
+                            {% render_field field class+="form-control" %}
+
                         {{ field.errors }}
                         </div>
 
