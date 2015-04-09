@@ -34,7 +34,7 @@ class LoginView(View):
         return render(request, self.template_name, {"form": form})
 
     def post(self, request):
-        form = AuthenticationForm(request.POST)
+        form = AuthenticationForm(None, request.POST)
         if form.is_valid():
             login(request,form.get_user())
             return redirect("index")
