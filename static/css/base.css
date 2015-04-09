@@ -1,0 +1,71 @@
+.nav-color
+{
+  color:#807f83;
+  background-color:#ececec;
+}
+
+
+
+.btn {
+  text-decoration:none;
+  color: #FFF;
+  background-color: #2dbe60;
+  text-align: center;
+  letter-spacing: .5px;
+  @extend .z-depth-1;
+  @include transition(.2s ease-out);
+  cursor: pointer;
+
+}
+
+.btn:hover{
+    background-color: rgba(45, 190, 96, 0.5)
+}
+
+.page-title {
+  color:#807f83;
+  font-weight:300;
+
+}
+
+.body-color{
+  background-color: #FAFAFA;
+
+}
+
+.text-color{
+  color:#807f83;
+}
+
+
+.top3 { margin-top:3%; }
+.top5 { margin-top:5%; }
+.top7 { margin-top:7%; }
+.top10 { margin-top:10%; }
+.top15 { margin-top:15%; }
+.top17 { margin-top:17%; }
+.top30 { margin-top:30%; }
+
+.bottom3 { margin-bottom:3%; }
+.bottom5 { margin-bottom:5%; }
+.bottom7 { margin-bottom:7%; }
+.bottom10 { margin-bottom:10%; }
+.bottom15 { margin-bottom:15%; }
+.bottom17 { margin-bottom:17%; }
+.bottom30 { margin-bottom:30%; }
+
+
+input[type=text]:focus:not([readonly]),
+input[type=password]:focus:not([readonly]),
+input[type=email]:focus:not([readonly]),
+input[type=url]:focus:not([readonly]),
+input[type=time]:focus:not([readonly]),
+input[type=date]:focus:not([readonly]),
+input[type=datetime-local]:focus:not([readonly]),
+input[type=tel]:focus:not([readonly]),
+input[type=number]:focus:not([readonly]),
+input[type=search]:focus:not([readonly]),
+textarea.materialize-textarea:focus:not([readonly]) {
+  border-bottom: 1px solid #2dbe60;
+  box-shadow: 0 1px 0 0 #2dbe60;
+}
