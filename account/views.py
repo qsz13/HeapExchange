@@ -1,5 +1,5 @@
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, View
@@ -26,5 +26,18 @@ class SignUpView(View):
 
 
 
-class LoginView(TemplateView):
+class LoginView(View):
     template_name = "account/log_in.html"
+
+    def get(self, request):
+        form = AuthenticationForm()
+        return render(request, self.template_name, {"form": form})
+
+    def post(self, request):
+        form = AuthenticationForm(request.POST)
+        if form.is_valid():
+            login(request,form.get_user())
+            return redirect("index")
+        else:
+            print form.error_messages
+            return render(request, self.template_name,{'form':form})
