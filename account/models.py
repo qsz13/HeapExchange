@@ -16,8 +16,11 @@ class Profile(models.Model):
     user = models.OneToOneField('auth.User')
     gender = models.CharField(max_length=1, choices=GENDER_CHOICE, null=True, blank=True)
     age = models.IntegerField(null=True, blank=True)
-    email = models.EmailField()
-    phone = models.CharField(max_length=13)
+    email = models.EmailField(null=True, blank=True)
+    phone = models.CharField(max_length=13, null=True, blank=True)
+    school = models.CharField(max_length=15, null=True, blank=True)
+
+
 
 
     def __unicode__(self):

@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, View
+from account.forms import ProfileForm
 from account.models import Profile
 
 
@@ -43,8 +44,13 @@ class LoginView(View):
             return render(request, self.template_name,{'form':form})
 
 
-class ProfileView(TemplateView):
+class ProfileView(View):
     template_name = "account/profile.html"
 
-    # def get(self, request):
-    #     pass
+    def get(self, request):
+        form = ProfileForm()
+        return render(request, self.template_name, {"form": form})
+
+
+class SettingView(TemplateView):
+    template_name = "account/setting.html"
