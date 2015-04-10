@@ -1,7 +1,7 @@
 # HeapExchange
 runing [here](https://heap-exchange.herokuapp.com/)
 
-Setup environment for the first time:
+##Setup environment for the first time:
 
 windows:
 
@@ -16,7 +16,7 @@ $ python manage.py runserver
 open http://127.0.0.1:8000/
 ```
 
-
+======
 Ubuntu:
 
 ```bash
@@ -29,7 +29,7 @@ open http://127.0.0.1:8000/
 ```
 
 
-IDE:
+##IDE:
 
 [pycharm windows](http://download-cf.jetbrains.com/python/pycharm-professional-4.0.6.exe)
 
@@ -38,5 +38,6 @@ IDE:
 
 
 
-front-end framework:
+##front-end framework:
+
 [materialize](http://materializecss.com/color.html)
