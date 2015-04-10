@@ -19,4 +19,20 @@ hello,{{ user.username }}
           </div>
         </div>
       </div>
+
+<div class="row">
+    <div class="col s3">
+         <ul class="collection">
+      <li class="collection-item"><a href="{% url "announcement" %}">Announcement</a></li>
+      <li class="collection-item"><a href="{% url "coin" %}">Coin</a></li>
+      <li class="collection-item"><a href="{% url "post" %}">Post</a></li>
+      <li class="collection-item"><a href="{% url "search" %}">Search</a></li>
+
+    </ul>
+
+    </div>
+</div>
+
+
+
 {% endblock %}
