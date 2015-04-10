@@ -30,6 +30,7 @@ open http://127.0.0.1:8000/
 
 
 IDE:
+
 [pycharm windows](http://download-cf.jetbrains.com/python/pycharm-professional-4.0.6.exe)
 
 
