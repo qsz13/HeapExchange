@@ -14,7 +14,7 @@ class Profile(models.Model):
     )
 
     user = models.OneToOneField('auth.User')
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICE, null=True, blank=True)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICE, null=True, blank=False, default=None)
     age = models.IntegerField(null=True, blank=True)
     email = models.EmailField(null=True, blank=True)
     phone = models.CharField(max_length=13, null=True, blank=True)

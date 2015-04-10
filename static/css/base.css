@@ -78,22 +78,20 @@ textarea.materialize-textarea:focus:not([readonly]) {
 .tabs {
     height: 64px;
     background: none; }
-     .tabs::shadow #selectionBar {
-      background-color: #47b8e5; }
-     .tabs::shadow #ink {
-      color: rgba(71, 184, 229, 0.8); }
+
      .tabs li.tab {
       width: 20%;
       height: 64px;
       line-height: 64px;
-      color: rgba(59, 66, 80, 0.8);
+      color: rgba(70, 69, 74, 0.6);
       background: none; }
-       .tabs li.tab a {
+
+.tabs li.tab a {
         font-size: 14px;
         padding: 0;
-        color: rgba(59, 66, 80, 0.8); }
+        color: rgba(70, 69, 74, 0.6); }
          .tabs li.tab a:hover,  .tabs li.tab a:active,  .tabs li.tab a.active {
-           color: #3b4250; }
+           color: rgb(70, 69, 74); }
          .tabs li.tab a.btn.btn-primary {
           color: #ffffff;
           display: inline-block;
@@ -105,3 +103,10 @@ textarea.materialize-textarea:focus:not([readonly]) {
     @media (min-width: 481px) {
        .tabs li.tab a {
         font-size: 18px; } }
+
+
+.dropdown-content li > a, .dropdown-content li > span {
+
+    color:#2dbe60;
+    
+}

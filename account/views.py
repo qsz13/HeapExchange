@@ -46,26 +46,6 @@ class LoginView(View):
             return render(request, self.template_name, {'form': form})
 
 
-class ProfileView(View):
-    template_name = "account/profile.html"
-
-    def get(self, request):
-        form = ProfileForm()
-        return render(request, self.template_name, {"form": form})
-
-
-class SettingView(View):
-    template_name = "account/setting.html"
-
-    def post(self, request):
-        form = PasswordChangeForm(user=request.user, data=request.POST)
-        if form.is_valid():
-            form.save()
-            update_session_auth_hash(request, form.user)
-            return redirect("index")
-        else:
-            return render(request, self.template_name, {'form': form})
-
 
 
 class AccountView(View):
@@ -73,7 +53,29 @@ class AccountView(View):
 
     def get(self, request):
 
-        profile_form = ProfileForm()
+        profile_form = ProfileForm(instance=request.user.profile)
         setting_form = PasswordChangeForm(request.user)
         return render(request, self.template_name, {"profile_form": profile_form, "setting_form":setting_form})
 
+
+    def post(self, request):
+        profile_form = ProfileForm(instance=request.user.profile)
+        setting_form = PasswordChangeForm(request.user)
+
+        if 'profile' in request.POST:
+            profile_form = ProfileForm(request.POST, instance=request.user.profile)
+            if profile_form.is_valid():
+                profile_form.save()
+                return redirect("index")
+            else:
+
+                return render(request, self.template_name, {"profile_form": profile_form, "setting_form":setting_form})
+
+        elif 'setting' in request.POST:
+            setting_form = PasswordChangeForm(user=request.user, data=request.POST)
+            if setting_form.is_valid():
+                setting_form.save()
+                update_session_auth_hash(request, setting_form.user)
+                return redirect("index")
+            else:
+                return render(request, self.template_name, {"profile_form": profile_form, "setting_form":setting_form})

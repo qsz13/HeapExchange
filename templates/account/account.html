@@ -4,24 +4,46 @@
 
 {% block page %}
 
+<script type="text/javascript">
+    $(document).ready(function() {
+    $('select').material_select();
+  });
 
-    this is account
 
+</script>
 
-
-     <div class="row">
-        <div class="col s6 offset-s3">
+ <div class="row">
+        <div class="col s8 offset-s2 top3">
             <div class="card">
                   <ul class="tabs">
-                      <li class="tab col s3"><a href="#profile">Profile</a></li>
-                      <li class="tab col s3"><a href="#setting">Setting</a></li>
+                      <li class="tab col s3"><a href="#profile" onclick="window.location.hash='profile'">Profile</a></li>
+                      <li class="tab col s3"><a href="#setting" onclick="window.location.hash='setting'">Setting</a></li>
+                      <li class="tab col s3"><a href="#interest" onclick="window.location.hash='interest'">Interest</a></li>
+                      <li class="tab col s3"><a href="#time_table" onclick="window.location.hash='time_table'">Time Table</a></li>
 
                   </ul>
-                 <div id="profile" class="col s12">
-                     profile{{ profile_form }}
-                 </div>
+                     <div id="profile" class="col s12 top5 bottom7">
+                         <form action="" method="post">
+
+                        {% csrf_token %}
+                        {% for field in profile_form %}
+                            <div class="input-field col s8 offset-s2">
+                            {% render_field field class+="form-control" %}
+                            <label for="{{ field.id_for_label}}" class="">{{ field.label }}</label>
+
+                            {{ field.errors }}
+                            </div>
+
+                        {% endfor %}
+                        <div class="input-field col s8 offset-s2">
+                        <input class="btn btn-primary" name="profile" value="Submit" type="submit">
+                            </div>
+
+                        </form>
+
+                     </div>
                     <div id="setting" class="col s12 top5 bottom7">
-                        <form action="{% url "setting" %}" method="post">
+                        <form action="" method="post">
                         {% csrf_token %}
                         {% for field in setting_form %}
                             <div class="input-field col s8 offset-s2">
@@ -32,11 +54,16 @@
 
                         {% endfor %}
                         <div class="input-field col s8 offset-s2">
-                        <input class="btn btn-primary" value="Submit" type="submit">
+                        <input class="btn btn-primary" name="setting" value="Submit" type="submit">
                             </div>
                         </form>
                     </div>
-
+                    <div id="interest" class="col s12">
+                         here should be interest
+                     </div>
+                    <div id="time_table" class="col s12">
+                         here should be a time table
+                     </div>
             </div>
         </div>
 
