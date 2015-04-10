@@ -41,3 +41,16 @@ open http://127.0.0.1:8000/
 ##front-end framework:
 
 [materialize](http://materializecss.com/color.html)
+
+##development account:
+
+#####for admin:
+
+admin/amdin
+
+
+#####for normal user:
+
+from user1 to user5
+
+password:123
