@@ -16,6 +16,9 @@ class Profile(models.Model):
     user = models.OneToOneField('auth.User')
     gender = models.CharField(max_length=1, choices=GENDER_CHOICE, null=True, blank=True)
     age = models.IntegerField(null=True, blank=True)
+    email = models.EmailField()
+    phone = models.CharField(max_length=13)
+
 
     def __unicode__(self):
         return self.user.username

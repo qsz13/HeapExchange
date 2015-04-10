@@ -41,3 +41,10 @@ class LoginView(View):
         else:
             print form.error_messages
             return render(request, self.template_name,{'form':form})
+
+
+class ProfileView(TemplateView):
+    template_name = "account/profile.html"
+
+    # def get(self, request):
+    #     pass

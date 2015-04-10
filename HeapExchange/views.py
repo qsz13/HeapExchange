@@ -5,8 +5,6 @@ from django.views.generic import View
 __author__ = 'danielqiu'
 
 
-
-
 class LoginRequiredMixin(object):
     @classmethod
     def as_view(cls, **initkwargs):
