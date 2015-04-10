@@ -38,7 +38,10 @@ class LoginView(View):
         form = AuthenticationForm(None, request.POST)
         if form.is_valid():
             login(request,form.get_user())
-            return redirect("index")
+            if request.user.is_staff:
+                return redirect("heap_admin")
+            else:
+                return redirect("index")
         else:
             print form.error_messages
             return render(request, self.template_name,{'form':form})
