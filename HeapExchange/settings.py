@@ -39,6 +39,11 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'widget_tweaks',
     'account',
+    'announcement',
+    'coin',
+    'heap_admin',
+    'post',
+
 )
 
 MIDDLEWARE_CLASSES = (
