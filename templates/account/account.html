@@ -6,8 +6,39 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-    $('select').material_select();
+
+        $('select').material_select();
+
+
+        class_taken = "{{ class_taken }}";
+
+        $('#time-table-input').val("!");
+
+        for(c in class_taken)
+        {
+            row = c%11+1;
+            col = c%7+1;
+            if(class_taken[c]=='0')
+            {
+                $('#row'+row+"col"+col+"i").hide();
+            }
+            else if(class_taken[c]=='1')
+            {
+                $('#row'+row+"col"+col+"i").show();
+            }
+
+        }
+    $(".select-class").click(function(){
+        var icon = this.id+"i";
+        $("#"+icon).toggle();
+        row = this.id.match(/\d+/)[0];
+        col = this.id.match(/\d+$/)[0];
+
+    })
+
+
   });
+
 
 
 </script>
@@ -62,7 +93,55 @@
                          here should be interest
                      </div>
                     <div id="time_table" class="col s12">
-                         here should be a time table
+
+
+
+
+
+                        <table class="bordered centered">
+                            <thead>
+                              <tr>
+                                  <th data-field=""></th>
+                                  <th data-field="mon">Sun</th>
+                                  <th data-field="mon">Mon</th>
+                                  <th data-field="tue">Tue</th>
+                                  <th data-field="wed">Wed</th>
+                                  <th data-field="thu">Thu</th>
+                                  <th data-field="fri">Fri</th>
+                                  <th data-field="sat">Sat</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for i in classes_number  %}
+
+                                 <tr>
+                                  <td>class {{ i }}</td>
+                                  <td class="select-class" id="row{{ i }}col1"><i id="row{{ i }}col1i" class="small mdi-social-school"></i></td>
+                                  <td class="select-class" id="row{{ i }}col2"><i id="row{{ i }}col2i" class="small mdi-social-school"></i></td>
+                                  <td class="select-class" id="row{{ i }}col3"><i id="row{{ i }}col3i" class="small mdi-social-school"></i></td>
+                                  <td class="select-class" id="row{{ i }}col4"><i id="row{{ i }}col4i" class="small mdi-social-school"></i></td>
+                                  <td class="select-class" id="row{{ i }}col5"><i id="row{{ i }}col5i" class="small mdi-social-school"></i></td>
+                                  <td class="select-class" id="row{{ i }}col6"><i id="row{{ i }}col6i" class="small mdi-social-school"></i></td>
+                                  <td class="select-class" id="row{{ i }}col7"><i id="row{{ i }}col7i" class="small mdi-social-school"></i></td>
+                              </tr>
+                            {% endfor %}
+
+
+
+
+                            </tbody>
+                          </table>
+                        <div id="profile" class="col s12 offset-s5 top5 bottom7">
+                        <form method="post">
+                            <input id="time-table-input" name="table" hidden>
+                            <input class="btn btn-primary" name="time-table" value="Submit" type="submit">
+                        </form>
+                        </div>
+
+
+
+
                      </div>
             </div>
         </div>

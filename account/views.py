@@ -46,16 +46,18 @@ class LoginView(View):
             return render(request, self.template_name, {'form': form})
 
 
-
-
 class AccountView(View):
     template_name = "account/account.html"
+    classes_number = [i for i in range(1, 12)]
+    class_taken = "0" * 77
 
     def get(self, request):
 
         profile_form = ProfileForm(instance=request.user.profile)
         setting_form = PasswordChangeForm(request.user)
-        return render(request, self.template_name, {"profile_form": profile_form, "setting_form":setting_form})
+        return render(request, self.template_name, {"profile_form": profile_form, "setting_form": setting_form,
+                                                    'classes_number': self.classes_number,
+                                                    'class_taken': self.class_taken})
 
 
     def post(self, request):
@@ -69,7 +71,9 @@ class AccountView(View):
                 return redirect("index")
             else:
 
-                return render(request, self.template_name, {"profile_form": profile_form, "setting_form":setting_form})
+                return render(request, self.template_name, {"profile_form": profile_form, "setting_form": setting_form,
+                                                            'classes_number': self.classes_number,
+                                                            'class_taken': self.class_taken})
 
         elif 'setting' in request.POST:
             setting_form = PasswordChangeForm(user=request.user, data=request.POST)
@@ -78,4 +82,6 @@ class AccountView(View):
                 update_session_auth_hash(request, setting_form.user)
                 return redirect("index")
             else:
-                return render(request, self.template_name, {"profile_form": profile_form, "setting_form":setting_form})
+                return render(request, self.template_name, {"profile_form": profile_form, "setting_form": setting_form,
+                                                            'classes_number': self.classes_number,
+                                                            'class_taken': self.class_taken})

@@ -19,7 +19,7 @@ class Profile(models.Model):
     email = models.EmailField(null=True, blank=True)
     phone = models.CharField(max_length=13, null=True, blank=True)
     school = models.CharField(max_length=15, null=True, blank=True)
-
+    timetable = models.CharField(max_length=77, default="0"*77)
 
 
 
