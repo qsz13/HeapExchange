@@ -49,10 +49,10 @@ class LoginView(View):
 class AccountView(View):
     template_name = "account/account.html"
     classes_number = [i for i in range(1, 12)]
-    class_taken = "0" * 77
+    class_taken = None
 
     def get(self, request):
-
+        self.class_taken=request.user.profile.timetable
         profile_form = ProfileForm(instance=request.user.profile)
         setting_form = PasswordChangeForm(request.user)
         return render(request, self.template_name, {"profile_form": profile_form, "setting_form": setting_form,
@@ -61,6 +61,7 @@ class AccountView(View):
 
 
     def post(self, request):
+        self.class_taken=request.user.profile.timetable
         profile_form = ProfileForm(instance=request.user.profile)
         setting_form = PasswordChangeForm(request.user)
 
@@ -85,3 +86,14 @@ class AccountView(View):
                 return render(request, self.template_name, {"profile_form": profile_form, "setting_form": setting_form,
                                                             'classes_number': self.classes_number,
                                                             'class_taken': self.class_taken})
+
+        elif 'time-table' in request.POST:
+            table = request.POST['table']
+            profile = request.user.profile
+            profile.timetable = table
+            profile.save()
+            self.class_taken = table
+            return render(request, self.template_name, {"profile_form": profile_form, "setting_form": setting_form,
+                                                            'classes_number': self.classes_number,
+                                                            'class_taken': self.class_taken})
+
