@@ -4,8 +4,26 @@
 
 {% block page %}
 
-    this is Post
+    <div class="row">
+        <div class="col offset-s3 s6 top5">
+            <div class="row">
+                <div class="col s5">
+                    <a href="{% url "course_create" %}"><div class="card-panel green">
+                      <span class="white-text">Course</span>
+                    </div>
+                    </a>
 
-    {{ form }}
+
+                </div>
+                <div class="col offset-s2 s5">
+                    <div class="card-panel green">
+                      <span class="white-text">Activity</span>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
