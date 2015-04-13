@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="eb7b8738-a10f-41b7-b9b8-fce6eaa353b0" name="Default" comment="">
+    <list default="true" id="eb7b8738-a10f-41b7-b9b8-fce6eaa353b0" name="Default" comment="rm .idea">
       <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/HeapExchange.iml" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/dataSources.ids" afterPath="" />
@@ -768,7 +768,13 @@
       <option name="project" value="LOCAL" />
       <updated>1428908192901</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="rm .idea">
+      <created>1428908303974</created>
+      <option name="number" value="00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1428908303974</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -852,7 +858,8 @@
     <MESSAGE value="post model" />
     <MESSAGE value="coin model" />
     <MESSAGE value="gitignore" />
-    <option name="LAST_COMMIT_MESSAGE" value="gitignore" />
+    <MESSAGE value="rm .idea" />
+    <option name="LAST_COMMIT_MESSAGE" value="rm .idea" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
