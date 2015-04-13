@@ -6,12 +6,13 @@
     <schema name="" catalog=""/>
     <table name="account_profile" schema="" catalog="" type="TABLE">
       <column name="id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
-      <column name="gender" sqlType="VARCHAR(1)" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
       <column name="age" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
       <column name="user_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
       <column name="email" sqlType="VARCHAR(254)" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
       <column name="phone" sqlType="VARCHAR(13)" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
       <column name="school" sqlType="VARCHAR(15)" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
+      <column name="timetable" sqlType="VARCHAR(77)" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="gender" sqlType="VARCHAR(1)" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
       <primary-key columns="id"/>
       <foreign-key name="#FAKE_account_profile_1" columns="user_id" ref-table="auth_user" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
     </table>
@@ -60,6 +61,9 @@
       <exported-key name="#FAKE_auth_user_groups_2" table="auth_user_groups" schema="" catalog="" columns="user_id"/>
       <exported-key name="#FAKE_auth_user_user_permissions_2" table="auth_user_user_permissions" schema="" catalog="" columns="user_id"/>
       <exported-key name="#FAKE_django_admin_log_1" table="django_admin_log" schema="" catalog="" columns="user_id"/>
+      <exported-key name="#FAKE_postman_message_1" table="postman_message" schema="" catalog="" columns="moderation_by_id"/>
+      <exported-key name="#FAKE_postman_message_4" table="postman_message" schema="" catalog="" columns="recipient_id"/>
+      <exported-key name="#FAKE_postman_message_5" table="postman_message" schema="" catalog="" columns="sender_id"/>
     </table>
     <table name="auth_user_groups" schema="" catalog="" type="TABLE">
       <column name="id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
@@ -117,6 +121,40 @@
       <column name="expire_date" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
       <primary-key columns="session_key"/>
       <index name="django_session_de54fa62" unique="true" columns="expire_date"/>
+    </table>
+    <table name="postman_message" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="subject" sqlType="VARCHAR(120)" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="body" sqlType="TEXT" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="sender_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
+      <column name="recipient_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
+      <column name="email" sqlType="VARCHAR(254)" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="parent_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
+      <column name="thread_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
+      <column name="sent_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="read_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
+      <column name="replied_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
+      <column name="sender_archived" sqlType="BOOL" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="recipient_archived" sqlType="BOOL" precision="2000000000" scale="10" nullable="false" jdbcType="4"/>
+      <column name="sender_deleted_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
+      <column name="recipient_deleted_at" sqlType="DATETIME" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
+      <column name="moderation_status" sqlType="VARCHAR(1)" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="moderation_by_id" sqlType="INTEGER" precision="2000000000" scale="10" nullable="true" jdbcType="4"/>
+      <column name="moderation_date" sqlType="DATETIME" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
+      <column name="moderation_reason" sqlType="VARCHAR(120)" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <primary-key columns="id"/>
+      <foreign-key name="#FAKE_postman_message_1" columns="moderation_by_id" ref-table="auth_user" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
+      <foreign-key name="#FAKE_postman_message_2" columns="thread_id" ref-table="postman_message" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
+      <foreign-key name="#FAKE_postman_message_3" columns="parent_id" ref-table="postman_message" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
+      <foreign-key name="#FAKE_postman_message_4" columns="recipient_id" ref-table="auth_user" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
+      <foreign-key name="#FAKE_postman_message_5" columns="sender_id" ref-table="auth_user" ref-schema="" ref-catalog="" ref-columns="id" update-rule="3" delete-rule="3" deferrability="1"/>
+      <exported-key name="#FAKE_postman_message_2" table="postman_message" schema="" catalog="" columns="thread_id"/>
+      <exported-key name="#FAKE_postman_message_3" table="postman_message" schema="" catalog="" columns="parent_id"/>
+      <index name="postman_message_9378d60f" unique="true" columns="moderation_by_id"/>
+      <index name="postman_message_e3464c97" unique="true" columns="thread_id"/>
+      <index name="postman_message_6be37982" unique="true" columns="parent_id"/>
+      <index name="postman_message_8b938c66" unique="true" columns="recipient_id"/>
+      <index name="postman_message_924b1846" unique="true" columns="sender_id"/>
     </table>
     <table name="sqlite_sequence" schema="" catalog="" type="TABLE">
       <column name="name" sqlType="" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>

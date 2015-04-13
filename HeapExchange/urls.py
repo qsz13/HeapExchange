@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^announcement/', include('announcement.urls')),
     url(r'^search/', include('search.urls')),
     url(r'^heap_coin/', include('coin.urls')),
+    url(r'^message/', include('postman.urls')),
 
 
 ]
