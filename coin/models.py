@@ -10,8 +10,6 @@ class Balance(models.Model):
 
 
 
-
-
 class Transfer(models.Model):
     from_user = models.OneToOneField(User, related_name="expense")
     to_user = models.OneToOneField(User, related_name="income")
