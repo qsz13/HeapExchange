@@ -64,7 +64,7 @@ class AccountView(View):
         self.class_taken=request.user.profile.timetable
         profile_form = ProfileForm(instance=request.user.profile)
         setting_form = PasswordChangeForm(request.user)
-
+        print request.POST
         if 'profile' in request.POST:
             profile_form = ProfileForm(request.POST, instance=request.user.profile)
             if profile_form.is_valid():

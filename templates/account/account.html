@@ -3,8 +3,9 @@
 {% block title %}Account{% endblock %}
 
 {% block page %}
+ {% block extrahead %}
 
-<script type="text/javascript">
+     <script type="text/javascript">
 String.prototype.replaceAt=function(index, character) {
     return this.substr(0, index) + character + this.substr(index+character.length);
 }
@@ -57,6 +58,10 @@ String.prototype.replaceAt=function(index, character) {
 
 
 </script>
+
+
+ {% endblock %}
+
 
  <div class="row">
         <div class="col s8 offset-s2 top3">
