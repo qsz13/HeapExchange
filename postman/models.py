@@ -98,7 +98,7 @@ def get_user_representation(user):
 class MessageManager(models.Manager):
     """The manager for Message."""
 
-    def _folder(self, related, filters, option=None, order_by=None):
+    def _folder(self, related, filters, option=OPTION_MESSAGES, order_by=None):
         """Base code, in common to the folders."""
         qs = self.all() if option == OPTION_MESSAGES else QuerySet(self.model, PostmanQuery(self.model), using=self._db)
         if related:
