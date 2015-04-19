@@ -58,8 +58,11 @@ String.prototype.replaceAt=function(index, character) {
 
 
 </script>
-
-
+<link rel="stylesheet" href="/static/css/jquery.tagit.css">
+     <link rel="stylesheet" href="/static/css/tagit.ui-zendesk.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/js/tag-it.js" type="text/javascript" charset="utf-8"></script>
  {% endblock %}
 
 
@@ -109,14 +112,28 @@ String.prototype.replaceAt=function(index, character) {
                             </div>
                         </form>
                     </div>
+
+
+
                     <div id="interest" class="col s12">
-                         here should be interest
+{#https://github.com/aehlke/tag-it#}
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#myTags").tagit();
+    });
+</script>
+
+<ul id="myTags">
+    <!-- Existing list items will be pre-added to the tags -->
+    <li>Tag1</li>
+    <li>Tag2</li>
+</ul>
+
                      </div>
+
+
+
                     <div id="time_table" class="col s12">
-
-
-
-
 
                         <table class="bordered centered">
                             <thead>
