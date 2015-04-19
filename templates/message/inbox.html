@@ -41,6 +41,7 @@ in the INSTALLED_APPS setting.
 
                          {% endfor %}
                       </ul>
+                        {% paginate %}
                     {% else %}
                         <p>{% trans "No messages." %}</p>
                     {% endif %}

@@ -102,7 +102,7 @@ from .views import (InboxView, SentView, ArchivesView, TrashView,
 
 urlpatterns = patterns('',
     url(r'^inbox/(?:(?P<option>'+OPTIONS+')/)?$', InboxView.as_view(template_name="message/inbox.html"), name='postman_inbox'),
-    url(r'^sent/(?:(?P<option>'+OPTIONS+')/)?$', SentView.as_view(), name='postman_sent'),
+    url(r'^sent/(?:(?P<option>'+OPTIONS+')/)?$', SentView.as_view(template_name="message/sent.html"), name='postman_sent'),
     url(r'^archives/(?:(?P<option>'+OPTIONS+')/)?$', ArchivesView.as_view(), name='postman_archives'),
     url(r'^trash/(?:(?P<option>'+OPTIONS+')/)?$', TrashView.as_view(), name='postman_trash'),
     url(r'^write/(?:(?P<recipients>[^/#]+)/)?$', WriteView.as_view(template_name="message/write.html"), name='postman_write'),

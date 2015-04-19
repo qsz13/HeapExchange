@@ -1,0 +1,50 @@
+{% extends "message/message_base.html" %}
+{% load i18n %}{% load postman_tags %}
+{% load pagination_tags %}
+{% block page-title %}Sent{% endblock %}
+{% block message_page %}
+
+    <div class="row">
+        <div class="col s12">
+
+            <div id="postman">
+
+                {% autopaginate pm_messages %}
+                {% if invalid_page %}
+                    <p>{% trans "Sorry, this page number is invalid." %}</p>
+                {% else %}
+                    {% if pm_messages %}
+                        <ul class="collapsible popout" data-collapsible="accordion">
+                        {% for message in pm_messages %}
+
+
+
+                        <li>
+                          <div class="collapsible-header">
+                              {{ message.subject }} from <a>{{ message.sender }}</a>
+                          </div>
+                          <div class="collapsible-body">
+                              <p>{{ message.body }}</p>
+                              <p> {{ message.sent_at|compact_date:_("g:i A,M j,n/j/y") }}</p>
+                              <p><a href="{% if message.thread_id %}{% url 'postman_view_conversation' message.thread_id %}{% else %}{{message.get_absolute_url }}{% endif %}?next={{ current_url|urlencode }}">
+                                view detail
+                              </a></p>
+                          </div>
+                        </li>
+
+                         {% endfor %}
+                      </ul>
+
+                    {% else %}
+                        <p>{% trans "No messages." %}</p>
+                    {% endif %}
+
+                {% endif %}
+            {% paginate %}
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock message_page %}
