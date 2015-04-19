@@ -8,12 +8,14 @@ for the template tag library.
 If the real implementation is to be used, just make sure that 'pagination' is declared before 'postman'
 in the INSTALLED_APPS setting.
 {% endcomment %}
+{% block page-title %}Inbox{% endblock %}
 {% block message_page %}
+
     <div class="row">
-        <div class="col s8 offset-s2">
+        <div class="col s12">
 
             <div id="postman">
-                <h4>{% block pm_folder_title %}Inbox{% endblock %}</h4>
+
                 {% autopaginate pm_messages %}
                 {% if invalid_page %}
                     <p>{% trans "Sorry, this page number is invalid." %}</p>

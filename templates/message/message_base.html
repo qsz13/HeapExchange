@@ -8,19 +8,17 @@
   <div class="row">
     <div class="col offset-l1">
 
-  <a class='dropdown-button btn' href='#' data-activates='postman_menu'>这里填什么我也不知道</a>
+  <a class='dropdown-button btn' href='#' data-activates='postman_menu'>{% block page-title %}{% endblock %}</a>
 
     <ul id="postman_menu" class='dropdown-content'>{% postman_unread as unread_count %}
      <li><a href="{% url 'postman_inbox' %}">{% trans "Inbox" %}{% if unread_count %} <strong>({{ unread_count }})</strong>{% endif %}</a></li>
      <li><a href="{% url 'postman_sent' %}">{% trans "Sent" %}</a></li>
-     <li class="active"><a href="{% url 'postman_write' %}">{% trans "Write" %}</a></li>
-     <li><a href="{% url 'postman_archives' %}">{% trans "Archives" %}</a></li>
-     <li><a href="{% url 'postman_trash' %}">{% trans "Trash" %}</a></li>
+     <li><a href="{% url 'postman_write' %}">{% trans "Write" %}</a></li>
     </ul>
     </div>
   </div>
 
-<div class="card top5">
+<div class="top5">
 
 
     {% block message_page %}
