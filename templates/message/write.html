@@ -13,14 +13,14 @@
 {% block pm_write_recipient %}{% endblock %}
     {% for field in form%}
 
-                        <div class="input-field">
-                            <label for="{{ field.id_for_label}}" class="">{{ field.label }}</label>
+        <div class="input-field">
+            <label for="{{ field.id_for_label}}" class="">{{ field.label }}</label>
 
-                            {% render_field field class+="form-control materialize-textarea" %}
-                        {{ field.errors }}
-                        </div>
+            {% render_field field class+="form-control materialize-textarea" %}
+        {{ field.errors }}
+        </div>
 
-                    {% endfor %}
+    {% endfor %}
 
 <button class="btn top3" type="submit">{% trans "Send" %}</button>
 </form>
