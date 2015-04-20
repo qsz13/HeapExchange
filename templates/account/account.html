@@ -34,7 +34,8 @@ String.prototype.replaceAt=function(index, character) {
             }
 
         }
-    $(".select-class").click(function(){
+    $(".select-class").click(function(e){
+        e.stopImmediatePropagation();
         var icon = this.id+"i";
         $("#"+icon).toggle();
         row = parseInt(this.id.match(/\d+/)[0]);
