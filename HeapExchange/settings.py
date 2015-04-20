@@ -143,3 +143,11 @@ LOGIN_URL = '/account/login'
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 POSTMAN_AUTO_MODERATE_AS = True
+
+MEDIA_ROOT = 'media/'
+
+MEDIA_DIRS = (
+    os.path.join(BASE_DIR, "media"),
+)
+
+MEDIA_URL = '/media/'

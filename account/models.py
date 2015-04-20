@@ -1,8 +1,8 @@
 from django.contrib.auth.models import User
 from django.db import models
-
-# Create your models here.
+from django.db.models import ImageField
 from django.db.models.signals import post_save
+
 
 
 class Profile(models.Model):
@@ -19,8 +19,9 @@ class Profile(models.Model):
     email = models.EmailField(null=True, blank=True)
     phone = models.CharField(max_length=13, null=True, blank=True)
     school = models.CharField(max_length=15, null=True, blank=True)
+    avatar = ImageField(upload_to='avatar', default="/media/avatar/default", blank=True)
     timetable = models.CharField(max_length=77, default="0"*77)
-    interest_tag = models.ManyToManyField('post.Tag', related_name="interest_profile", null=True, blank=True)
+    interest_tag = models.ManyToManyField('post.Tag', related_name="interest_profile", blank=True)
 
 
     def __unicode__(self):

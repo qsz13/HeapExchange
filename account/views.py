@@ -65,6 +65,7 @@ class AccountView(View):
         profile_form = ProfileForm(instance=request.user.profile)
         setting_form = PasswordChangeForm(request.user)
         tags = request.user.profile.interest_tag.all()
+
         if 'profile' in request.POST:
             profile_form = ProfileForm(request.POST, instance=request.user.profile)
             if profile_form.is_valid():
