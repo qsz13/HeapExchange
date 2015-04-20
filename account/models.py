@@ -20,7 +20,7 @@ class Profile(models.Model):
     phone = models.CharField(max_length=13, null=True, blank=True)
     school = models.CharField(max_length=15, null=True, blank=True)
     timetable = models.CharField(max_length=77, default="0"*77)
-    intrest_tag = models.ManyToManyField('post.Tag', related_name="intrest_profile")
+    interest_tag = models.ManyToManyField('post.Tag', related_name="interest_profile", null=True, blank=True)
 
 
     def __unicode__(self):

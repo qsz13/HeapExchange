@@ -4,7 +4,9 @@
 
 {% block page %}
  {% block extrahead %}
-
+<link rel="stylesheet" href="/static/css/jquery.tagit.css">
+     <link rel="stylesheet" href="/static/css/tagit.ui-zendesk.css">
+<script src="/static/js/tag-it.js" type="text/javascript" charset="utf-8"></script>
      <script type="text/javascript">
 String.prototype.replaceAt=function(index, character) {
     return this.substr(0, index) + character + this.substr(index+character.length);
@@ -58,11 +60,7 @@ String.prototype.replaceAt=function(index, character) {
 
 
 </script>
-<link rel="stylesheet" href="/static/css/jquery.tagit.css">
-     <link rel="stylesheet" href="/static/css/tagit.ui-zendesk.css">
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="/static/js/tag-it.js" type="text/javascript" charset="utf-8"></script>
+
  {% endblock %}
 
 
@@ -115,7 +113,7 @@ String.prototype.replaceAt=function(index, character) {
 
 
 
-                    <div id="interest" class="col s12">
+                    <div id="interest" class="col s12 top5 bottom5">
 {#https://github.com/aehlke/tag-it#}
 <script type="text/javascript">
     $(document).ready(function() {
@@ -123,11 +121,19 @@ String.prototype.replaceAt=function(index, character) {
     });
 </script>
 
-<ul id="myTags">
-    <!-- Existing list items will be pre-added to the tags -->
-    <li>Tag1</li>
-    <li>Tag2</li>
-</ul>
+                        <form method="post">{% csrf_token %}
+                            <ul id="myTags">
+                                <!-- Existing list items will be pre-added to the tags -->
+                                {% for tag in tags %}
+                                    <li>{{ tag }}</li>
+                                    {% empty %}
+                                {% endfor %}
+
+                            </ul>
+                            <input class="btn" type="submit" name="interest" value="Submit">
+                        </form>
+
+
 
                      </div>
 

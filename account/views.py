@@ -1,10 +1,9 @@
 from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
-from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
-from django.views.generic import TemplateView, View
+from django.views.generic import View
 from account.forms import ProfileForm
-from account.models import Profile
+from post.models import Tag
 
 
 class SignUpView(View):
@@ -52,19 +51,20 @@ class AccountView(View):
     class_taken = None
 
     def get(self, request):
-        self.class_taken=request.user.profile.timetable
+        self.class_taken = request.user.profile.timetable
         profile_form = ProfileForm(instance=request.user.profile)
         setting_form = PasswordChangeForm(request.user)
+        tags = request.user.profile.interest_tag.all()
         return render(request, self.template_name, {"profile_form": profile_form, "setting_form": setting_form,
                                                     'classes_number': self.classes_number,
-                                                    'class_taken': self.class_taken})
+                                                    'class_taken': self.class_taken, 'tags': tags})
 
 
     def post(self, request):
-        self.class_taken=request.user.profile.timetable
+        self.class_taken = request.user.profile.timetable
         profile_form = ProfileForm(instance=request.user.profile)
         setting_form = PasswordChangeForm(request.user)
-        print request.POST
+        tags = request.user.profile.interest_tag.all()
         if 'profile' in request.POST:
             profile_form = ProfileForm(request.POST, instance=request.user.profile)
             if profile_form.is_valid():
@@ -74,7 +74,7 @@ class AccountView(View):
 
                 return render(request, self.template_name, {"profile_form": profile_form, "setting_form": setting_form,
                                                             'classes_number': self.classes_number,
-                                                            'class_taken': self.class_taken})
+                                                            'class_taken': self.class_taken, 'tags':tags})
 
         elif 'setting' in request.POST:
             setting_form = PasswordChangeForm(user=request.user, data=request.POST)
@@ -85,7 +85,7 @@ class AccountView(View):
             else:
                 return render(request, self.template_name, {"profile_form": profile_form, "setting_form": setting_form,
                                                             'classes_number': self.classes_number,
-                                                            'class_taken': self.class_taken})
+                                                            'class_taken': self.class_taken, 'tags':tags})
 
         elif 'time-table' in request.POST:
             table = request.POST['table']
@@ -94,6 +94,16 @@ class AccountView(View):
             profile.save()
             self.class_taken = table
             return render(request, self.template_name, {"profile_form": profile_form, "setting_form": setting_form,
-                                                            'classes_number': self.classes_number,
-                                                            'class_taken': self.class_taken})
+                                                        'classes_number': self.classes_number,
+                                                        'class_taken': self.class_taken, 'tags':tags})
+
+        elif 'interest' in request.POST:
+            tags = request.POST.getlist('tags')
+            for tag in tags:
+                t, created = Tag.objects.get_or_create(name=tag.lower())
+
+                request.user.profile.interest_tag.add(t)
+            return render(request, self.template_name, {"profile_form": profile_form, "setting_form": setting_form,
+                                                        'classes_number': self.classes_number,
+                                                        'class_taken': self.class_taken, 'tags':tags})
 
