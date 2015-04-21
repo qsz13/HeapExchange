@@ -58,6 +58,26 @@ String.prototype.replaceAt=function(index, character) {
 
   });
 
+function readURL(input) {
+
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#blah').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+$(document).ready(function() {
+                                $("#myTags").tagit();
+    $("#imgInp").change(function(){
+    readURL(this);
+});
+                            });
+
 
 
 </script>
@@ -76,35 +96,25 @@ String.prototype.replaceAt=function(index, character) {
 
                   </ul>
                      <div id="profile" class="col s12 top5 bottom7">
-                         <form action="" method="post">
+                         <form action="" method="post" enctype="multipart/form-data">
 
                         {% csrf_token %}
 
 
-                         {% csrf_token %}
-                        <div class="demo-row">
-                          <div class="demo-title">用户头像</div>
-                          <div class="demo-content">
-                              <div class="fileinput fileinput-new" data-provides="fileinput">
-                              <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
-                                <img data-src="holder.js/" alt="100%x100%" src="{{ user_image.url }}" data-holder-rendered="true" style="display: block;">
-                              </div>
-                              <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 12px;"></div>
-                              <div>
-                                <span class="btn btn-primary btn-embossed btn-file">
-                                  <span class="fileinput-new"><span class="fui-image"></span>&nbsp;&nbsp;选择头像</span>
-                                  <span class="fileinput-exists"><span class="fui-gear"></span>&nbsp;&nbsp;更换</span>
-                                  <input type="hidden"><input name="avatar" id="img-file" type="file" >
-                                </span>
-                                <a href="#" class="btn btn-primary btn-embossed fileinput-exists" data-dismiss="fileinput"><span class="fui-trash"></span>&nbsp;&nbsp;取消</a>
-                              </div>
-                              </div>
-                          </div>
-                        </div>
 
+                            <div class="row">
+                             <div class="input-field col s8 offset-s2">
+                             <img id="blah" src="{{ avatar }}" alt="your image" height="100px"/>
 
+                            </div>
+                         </div>
 
+                        <div class="row">
+                             <div class="input-field col s8 offset-s2">
 
+                            <input type='file' id="imgInp" />
+                            </div>
+                         </div>
 
 
                         {% for field in profile_form %}
@@ -143,12 +153,7 @@ String.prototype.replaceAt=function(index, character) {
 
 
                     <div id="interest" class="col s12 top5 bottom5">
-                        {#https://github.com/aehlke/tag-it#}
-                        <script type="text/javascript">
-                            $(document).ready(function() {
-                                $("#myTags").tagit();
-                            });
-                        </script>
+
 
                         <form method="post">{% csrf_token %}
                             <ul id="myTags">
