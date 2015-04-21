@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}All Course{% endblock %}
+
+{% block page %}
+
+    <ul id="dropdown2" class="dropdown-content">
+        <li><a href="{% url 'posted_course' %}">Posted Course<span class="badge">1</span></a></li>
+      </ul>
+    <a class="btn dropdown-button" href="#!" data-activates="dropdown2">All POST<i class="mdi-navigation-arrow-drop-down right"></i></a>
+
+    <div class="row">
+        <div class="col s8 offset-s2">
+
+            {% for course in course_list %}
+                
+                <div class="row card top7">
+                    <div class="col s8 offset-s2">
+
+                        <h4>{{ course.title }}</h4>
+                        <p>{{ course.initialtime }}</p>
+                        <p>{{ course.description }}</p>
+                        <div class="card-action">
+                            <a href="{% url 'join_course' course.id %}"> JOIN </a>
+                        </div>
+                    
+                    </div>
+                </div>
+            
+            {% endfor %}
+        </div>
+    </div>
+
+
+<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+    <a class="btn-floating btn-large red" href={% url 'course_create' %}>
+      <i class="large mdi-editor-mode-edit"></i>
+    </a>    
+</div>
+
+
+{% endblock %}

@@ -1,32 +1,35 @@
 from django.contrib.auth.models import User
 from django.db import models
+from datetime import datetime
 
-
-
-
-
-# TODO change model
 
 class Post(models.Model):
-    created_time = models.DateTimeField()
-    creator = models.OneToOneField(User)
-    title = models.CharField(max_length=32)
-    description = models.TextField()
-    flag_times = models.IntegerField(null=True)
-    flag_user = models.ManyToManyField(User, related_name="flag_post")
+    title = models.CharField(max_length=100, default='DEFAULT')
+    time = models.DateTimeField(default=datetime.now())
+    description = models.CharField(max_length=500, default='DEFAULT')
+    deadline = models.DateTimeField(default=datetime.now())
+    location = models.CharField(max_length=100, default='DEFAULT')
+    requirement = models.CharField(max_length=500, default='DEFAULT')
+    initialtime = models.DateTimeField(default=datetime.now())
+    limit = models.IntegerField(default=10)
 
-
-
-class Course(models.Model):
-    skill_requirement = models.CharField(max_length=30)
-    link = models.URLField()
-    student_limit = models.IntegerField()
-    price = models.IntegerField()
-    tag = models.ManyToManyField("Tag")
-    place = models.CharField(max_length=20)
-
-class Tag(models.Model):
-    name = models.CharField(max_length=10)
+    class Meta:
+        abstract = True
 
     def __unicode__(self):
         return self.name
+
+
+class Course(Post):
+    initiator = models.ForeignKey(User, default=1)
+    joined = models.ManyToManyField(User, related_name="joined")
+    interested = models.ManyToManyField(User, related_name="interested")
+    price = models.IntegerField(default=0)
+
+
+class Activity(Post):
+    pass
+
+
+class Tag(models.Model):
+    pass
