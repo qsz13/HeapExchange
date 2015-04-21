@@ -34,7 +34,7 @@
 {% if reply_to_pk %}<hr/>
 <h4>{% trans 'Reply' %}</h4>
 <form action="{% url 'postman_reply' reply_to_pk %}?next={{ next_url|urlencode }}" method="post">{% csrf_token %}
-<div id="pm_reply">
+<div id="pm_reply" class="input-field">
         <label for="{{ form.body.id_for_label}}" class="">Reply</label>
         {% render_field form.body class+="form-control materialize-textarea" %}
 

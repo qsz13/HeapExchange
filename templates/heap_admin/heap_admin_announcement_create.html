@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% block title %}Heap Admin{% endblock %}
+
+{% block page %}
+
+
+
+    <div class="row">
+        <div class="col s8 offset-s2 card top5">
+
+            <div class="row">
+
+                <div class="col s8 offset-s2 top5">
+                    <form method="post">
+                    {% csrf_token %}
+                    {% for field in form%}
+
+                        <div class="input-field">
+                            <label for="{{ field.id_for_label}}" class="">{{ field.label }}</label>
+
+                            {% render_field field class+="form-control  materialize-textarea" %}
+                        {{ field.errors }}
+                        </div>
+                    {% endfor %}
+                        <div class="input-field col s10 offset-s1">
+                            <input class="btn btn-primary" value="publish" type="submit">
+                        </div>
+                    </form>
+
+
+
+                </div>
+
+
+
+
+            </div>
+
+
+
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+{% endblock %}
