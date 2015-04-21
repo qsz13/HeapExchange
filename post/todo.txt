@@ -1,0 +1,9 @@
+- Course
+	- view detail & layout
+	- form layout
+	- join conditional tag
+	- interest
+	- edit & update
+	- delete
+- Activity
+	- same as above
