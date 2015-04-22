@@ -5,7 +5,9 @@
 {% block page %}
 
 <ul id="dropdown2" class="dropdown-content">
-        <li><a href="{% url 'all_course' %}">All POST<span class="badge">1</span></a></li>
+        <li><a href="{% url 'all_course' %}">All Course<span class="badge">1</span></a></li>
+        <li><a href="{% url 'joined_course' %}">Joined Course<span class="badge">1</span</a></li>
+        <li><a href="{% url 'interested_course' %}">Interested Course<span class="badge">1</span</a></li>
       </ul>
 <a class="btn dropdown-button" href="#!" data-activates="dropdown2">Posted Course<i class="mdi-navigation-arrow-drop-down right"></i></a>
 
@@ -22,8 +24,18 @@
                         <p>{{ course.initialtime }}</p>
                         <p>{{ course.description }}</p>
 
-                        <p> {{ course.joined.count  }}  people have joined course. </p>
-                    
+                        <p> {{ course.joined.count  }}  people have joined course:  
+                                {% for user in course.joined.all %}
+                                    {{ user }}
+                                {% endfor %}
+                        </p>
+
+                        <p> {{course.interested.count }} people are interested in the course:
+                                {% for user in course.interested.all %}
+                                    {{ user }}
+                                {% endfor %}
+                        </p>
+
                     </div>
                 </div>
             

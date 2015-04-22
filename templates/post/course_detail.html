@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %} {{ course.title}} {% endblock %}
+
+{% block page %}
+
+<div class="row">
+<div class="col s8 offset-s2">
+<div class="row card top7">
+<div class="col s8 offset-s2">
+
+<h1> {{ course.title }} </h1>
+
+<p>Initialed by {{ course.initiator.email}} </p>
+
+<p> Time : {{ course.time }} </p>
+
+<p> Deadline : {{ course.deadline }} </p>
+
+<p> Location : {{ course.location }} </p>
+
+<br/><br/>
+
+<p> {{ course.description }} </p>
+
+{% if not is_self %}
+    
+    {% if not interested %}
+        <a class="waves-effect waves-light btn" href="{% url 'interested_course' course.id %}">Interesting</a>
+    {% else %}
+        <a class="waves-effect waves-light btn red" href="{% url 'uninterested_course' course.id %}">Interested</a>
+    {% endif %}
+
+    {% if not has_joined %}
+        <a class="waves-effect waves-light btn" href="{% url 'join_course' course.id %}" >Join</a>
+    {% else %}
+        <a class="waves-effect waves-light btn red" href="{% url 'unjoin_course' course.id %}">Joined</a>
+    {% endif %}
+
+{% endif %}
+
+<br/><br/><br/>
+
+</div>
+</div>
+</div>
+</div>
+
+{% endblock %}

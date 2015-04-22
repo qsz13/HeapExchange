@@ -43,23 +43,81 @@ def get_course_form(request):
 
 @login_required
 def posted_course(request):
-	user = request.user
-	course_list = Course.objects.filter(initiator=user)
-	
-	return render(request, 'post/posted_course.html', {'course_list' : course_list})
+    user = request.user
+    course_list = Course.objects.filter(initiator=user)
+    return render(request, 'post/posted_course.html', {'course_list': course_list})
 
 
 def all_course(request):
-	course_list = Course.objects.all()
-	
-	return render(request, 'post/all_course.html', {'course_list' : course_list})
+    course_list = Course.objects.all()
+    return render(request, 'post/all_course.html', {'course_list': course_list})
 
 
 @login_required
 def join_course(request, course_id):
-	user = request.user
-	course = Course.objects.get(id=course_id)
-	course.joined.add(user)
-	course.save()
+    user = request.user
+    course = Course.objects.get(id=course_id)
+    course.joined.add(user)
+    course.save()
+    return redirect('course_detail', course_id=course_id)
 
-	return redirect('all_course')
+
+@login_required
+def unjoin_course(request, course_id):
+    user = request.user
+    course = Course.objects.get(id=course_id)
+    course.joined.remove(user)
+    course.save()
+    return redirect('course_detail', course_id=course_id)
+
+
+@login_required
+def interested_course(request, course_id):
+    user = request.user
+    course = Course.objects.get(id=course_id)
+    course.interested.add(user)
+    course.save()
+    return redirect('course_detail', course_id=course_id)
+
+
+@login_required
+def uninterested_course(request, course_id):
+    user = request.user
+    course = Course.objects.get(id=course_id)
+    course.interested.remove(user)
+    course.save()
+    return redirect('course_detail', course_id=course_id)
+
+
+def course_detail(request, course_id):
+    course = Course.objects.get(id=course_id)
+    if course.initiator == request.user:
+        is_self = True
+    else:
+        is_self = False
+    if request.user in course.joined.all():
+        has_joined = True
+    else:
+        has_joined = False
+    if request.user in course.interested.all():
+        interested = True
+    else:
+        interested = False
+    return render(request, 'post/course_detail.html', {'course': course,
+                                                       'is_self': is_self,
+                                                       'has_joined': has_joined,
+                                                       'interested': interested})
+
+
+@login_required
+def joined_course(request):
+    user = request.user
+    course_list = user.joins.all()
+    return render(request, 'post/joined_course.html', {'course_list': course_list})
+
+
+@login_required
+def interested_course(request):
+    user = request.user
+    course_list = user.interests.all()
+    return render(request, 'post/interested_course.html', {'course_list': course_list})

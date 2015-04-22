@@ -21,9 +21,9 @@ class Post(models.Model):
 
 
 class Course(Post):
-    initiator = models.ForeignKey(User, default=1)
-    joined = models.ManyToManyField(User, related_name="joined")
-    interested = models.ManyToManyField(User, related_name="interested")
+    initiator = models.ForeignKey(User, default=1, related_name='initiator')
+    joined = models.ManyToManyField(User, related_name="joins")
+    interested = models.ManyToManyField(User, related_name="interests")
     price = models.IntegerField(default=0)
 
 
