@@ -72,7 +72,7 @@ def unjoin_course(request, course_id):
 
 
 @login_required
-def interested_course(request, course_id):
+def interest_course(request, course_id):
     user = request.user
     course = Course.objects.get(id=course_id)
     course.interested.add(user)
@@ -81,7 +81,7 @@ def interested_course(request, course_id):
 
 
 @login_required
-def uninterested_course(request, course_id):
+def uninterest_course(request, course_id):
     user = request.user
     course = Course.objects.get(id=course_id)
     course.interested.remove(user)

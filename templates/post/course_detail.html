@@ -4,6 +4,15 @@
 
 {% block page %}
 
+<ul id="dropdown2" class="dropdown-content">
+        <li><a href="{% url 'all_course' %}">All Course<span class="badge">1</span></a></li>
+        <li><a href="{% url 'posted_course' %}">Posted Course<span class="badge">1</span></a></li>
+        <li><a href="{% url 'joined_course' %}">Joined Course<span class="badge">1</span></a></li>
+        <li><a href="{% url 'interested_course' %}">Interested Course<span class="badge">1</span></a></li>
+      </ul>
+    <a class="btn dropdown-button" href="#!" data-activates="dropdown2">COURSE<i class="mdi-navigation-arrow-drop-down right"></i></a>
+
+
 <div class="row">
 <div class="col s8 offset-s2">
 <div class="row card top7">
@@ -26,9 +35,9 @@
 {% if not is_self %}
     
     {% if not interested %}
-        <a class="waves-effect waves-light btn" href="{% url 'interested_course' course.id %}">Interesting</a>
+        <a class="waves-effect waves-light btn" href="{% url 'interest_course' course.id %}">Interesting</a>
     {% else %}
-        <a class="waves-effect waves-light btn red" href="{% url 'uninterested_course' course.id %}">Interested</a>
+        <a class="waves-effect waves-light btn red" href="{% url 'uninterest_course' course.id %}">Interested</a>
     {% endif %}
 
     {% if not has_joined %}

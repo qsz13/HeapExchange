@@ -9,6 +9,6 @@ class CourseForm(ModelForm):
         fields = ['title', 'description', 'location', 'time']
         widgets = {
             # delete datepicker
-            #'time': DateTimePicker(options={"format":"YYYY-MM-DD HH:mm","pickSeconds": False},),
+            'time': DateTimePicker(options={"format":"YYYY-MM-DD HH:mm","pickSeconds": False},),
             #'description': Textarea(attrs = {'cols' : 80, 'rows' : 20}),
         }

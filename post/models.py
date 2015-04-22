@@ -4,14 +4,14 @@ from datetime import datetime
 
 
 class Post(models.Model):
-    title = models.CharField(max_length=100, default='DEFAULT')
+    title = models.CharField(max_length=100, null=True)
     time = models.DateTimeField(default=datetime.now())
-    description = models.CharField(max_length=500, default='DEFAULT')
+    description = models.CharField(max_length=500, null=True)
     deadline = models.DateTimeField(default=datetime.now())
-    location = models.CharField(max_length=100, default='DEFAULT')
-    requirement = models.CharField(max_length=500, default='DEFAULT')
+    location = models.CharField(max_length=100, null=True)
+    requirement = models.CharField(max_length=500, null=True)
     initialtime = models.DateTimeField(default=datetime.now())
-    limit = models.IntegerField(default=10)
+    limit = models.IntegerField(null=True)
 
     class Meta:
         abstract = True
