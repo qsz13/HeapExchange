@@ -1,10 +1,9 @@
 from django.contrib.admin.views.decorators import staff_member_required
 from django.core.urlresolvers import reverse_lazy
-from django.http import HttpResponse
-from django.shortcuts import render
 
-# Create your views here.
-from django.views.generic import TemplateView, View, CreateView
+
+
+from django.views.generic import TemplateView, CreateView
 from announcement.models import Announcement
 
 

@@ -5,12 +5,12 @@ from datetime import datetime
 
 class Post(models.Model):
     title = models.CharField(max_length=100, null=True)
-    time = models.DateTimeField(default=datetime.now())
+    time = models.DateTimeField(auto_now=True)
     description = models.CharField(max_length=500, null=True)
-    deadline = models.DateTimeField(default=datetime.now())
+    deadline = models.DateTimeField(auto_now=True)
     location = models.CharField(max_length=100, null=True)
     requirement = models.CharField(max_length=500, null=True)
-    initialtime = models.DateTimeField(default=datetime.now())
+    initialtime = models.DateTimeField(auto_now=True)
     limit = models.IntegerField(null=True)
 
     class Meta:
