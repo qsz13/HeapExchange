@@ -15,4 +15,6 @@ class Transfer(models.Model):
     from_user = models.OneToOneField(User, related_name="expense")
     to_user = models.OneToOneField(User, related_name="income")
     amount = models.IntegerField()
-    time = models.DateTimeField(auto_now=True)
+    time = models.DateTimeField(auto_now=True,null=True)
+    def __unicode__(self):
+        return "transfer from "+str(self.from_user)+" to "+str(self.to_user)
