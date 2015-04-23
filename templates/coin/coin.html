@@ -9,6 +9,6 @@
     {{ form }}
     {{ transfers }}
     {% for transfer in transfers %}
-        <br>{{ transfer.from_user }} to {{ transfer.to_user }},amount is {{ transfer.amount }}
+        <br>{{ transfer.from_user }} to {{ transfer.to_user }},amount is {{ transfer.amount }}<br>
     {% endfor %}
 {% endblock %}
