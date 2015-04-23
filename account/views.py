@@ -72,13 +72,7 @@ class AccountView(View):
         tags = request.user.profile.interest_tag.all()
 
         if 'profile' in request.POST:
-            profile_form = ProfileForm(request.POST, instance=request.user.profile)
-            if 'avatar' in request.FILES:
-                data = request.FILES['avatar']
-                print str(data)
-                file_path = os.path.join("avatar", str(request.user.id)+"-"+str(data))
-                file_real_path = default_storage.save(file_path, ContentFile(data.read()))
-                request.user.profile.avatar = file_real_path
+            profile_form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
             if profile_form.is_valid():
                 profile_form.save()
                 return redirect("index")

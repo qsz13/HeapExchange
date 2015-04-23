@@ -47,6 +47,7 @@ INSTALLED_APPS = (
     'post',
     'postman',
     'notifications',
+    'awesome_avatar',
 
 
 )

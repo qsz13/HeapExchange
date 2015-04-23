@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import ImageField
 from django.db.models.signals import post_save
+from awesome_avatar.fields import AvatarField
 from coin.models import Balance
 
 
@@ -19,9 +20,10 @@ class Profile(models.Model):
     email = models.EmailField(null=True, blank=True)
     phone = models.CharField(max_length=13, null=True, blank=True)
     school = models.CharField(max_length=15, null=True, blank=True)
-    avatar = ImageField(upload_to='avatar', default="/media/avatar/default.png", blank=True)
     timetable = models.CharField(max_length=77, default="0"*77)
     interest_tag = models.ManyToManyField('post.Tag', related_name="interest_profile", blank=True)
+    avatar = AvatarField(upload_to='avatar', width=100, height=100)
+
 
 
     def __unicode__(self):
