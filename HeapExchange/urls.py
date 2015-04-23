@@ -18,7 +18,7 @@ urlpatterns = [
     url(r'^search/', include('search.urls')),
     url(r'^heap_coin/', include('coin.urls')),
     url(r'^message/', include('postman.urls')),
-    url('^notifications/', include(notifications.urls)),
+    url('^notifications/', include('notifications.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

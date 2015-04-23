@@ -4,7 +4,10 @@
 
 {% block page %}
  {% block extrahead %}
-<link rel="stylesheet" href="/static/css/jquery.tagit.css">
+
+     <link rel="stylesheet" href="/static/css/jquery-ui.css">
+     <link rel="stylesheet" href="/static/css/jquery.tagit.css">
+
      <link rel="stylesheet" href="/static/css/tagit.ui-zendesk.css">
 <script src="/static/js/tag-it.js" type="text/javascript" charset="utf-8"></script>
      <script type="text/javascript">
@@ -72,7 +75,7 @@ function readURL(input) {
 }
 
 $(document).ready(function() {
-                                $("#myTags").tagit();
+                                $("#myTags").tagit({autocomplete:{source:'{% url "all_tags" %}'}});
 
                             });
 

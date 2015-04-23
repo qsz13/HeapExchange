@@ -22,7 +22,7 @@ class Profile(models.Model):
     school = models.CharField(max_length=15, null=True, blank=True)
     timetable = models.CharField(max_length=77, default="0"*77)
     interest_tag = models.ManyToManyField('post.Tag', related_name="interest_profile", blank=True)
-    avatar = AvatarField(upload_to='avatar', width=100, height=100)
+    avatar = AvatarField(upload_to='avatar',default="default.png",width=100, height=100)
 
 
 

@@ -27,9 +27,10 @@
     <ul class="right">
         {% if user.is_authenticated %}
 
-
+            <li><a class="nav-color" href="{% url 'notifications_all' %}">Notification</a></li>
             <li><a class="nav-color" href="{% url 'post' %}">Post</a></li>
             <li><a class="nav-color" href="{% url 'postman_inbox' %}">Message</a></li>
+            <li><img src="/media/{{ user.profile.avatar }}" height="50px" alt="" class="circle"></li>
             <li><a class="dropdown-button nav-color" href="#!" data-activates="dropdown1">{{ user.username }}<i class="nav-color mdi-navigation-arrow-drop-down right"></i></a></li>
             <ul id="dropdown1" class="dropdown-content">
               <li><a href="{% url "account" %}#profile" onclick="window.location.reload()">Profile</a></li>

@@ -1,7 +1,8 @@
+import json
 from django.shortcuts import render
 from django.views.generic import TemplateView, CreateView
 from HeapExchange.views import LoginRequiredMixin
-from .models import Course
+from .models import Course, Tag
 from .forms import CourseForm
 from django.http import HttpResponse
 from django.shortcuts import redirect
@@ -121,3 +122,11 @@ def interested_course(request):
     user = request.user
     course_list = user.interests.all()
     return render(request, 'post/interested_course.html', {'course_list': course_list})
+
+def all_tags(request):
+    if 'term' in request.GET:
+        tags = Tag.objects.filter(
+            name__istartswith=request.GET['term']
+        )[:10]
+        return HttpResponse( json.dumps( [ tag.name for tag in tags ] ) )
+    return HttpResponse()

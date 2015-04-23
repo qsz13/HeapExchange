@@ -3,6 +3,7 @@ from post import views
 
 urlpatterns = [
                        url(r'^$', views.all_course, name='post'),
+                       url(r'all_tags', views.all_tags, name='all_tags'),
                        url(r'^course/create/$', views.get_course_form, name='course_create'), 
                        url(r'^course/posted/$', views.posted_course, name='posted_course'), 
                        url(r'^course/all/$', views.all_course, name='all_course'),

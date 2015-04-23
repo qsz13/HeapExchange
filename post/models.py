@@ -31,4 +31,7 @@ class Activity(Post):
 
 
 class Tag(models.Model):
-    pass
+    name = models.CharField(max_length=20)
+
+    def __unicode__(self):
+        return self.name
