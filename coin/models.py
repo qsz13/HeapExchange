@@ -15,3 +15,4 @@ class Transfer(models.Model):
     from_user = models.OneToOneField(User, related_name="expense")
     to_user = models.OneToOneField(User, related_name="income")
     amount = models.IntegerField()
+    time = models.DateTimeField(auto_now=True)
