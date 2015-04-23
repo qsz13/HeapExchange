@@ -6,6 +6,9 @@ class Balance(models.Model):
     user = models.OneToOneField(User)
     amount = models.IntegerField()
 
+    def __unicode__(self):
+        return self.user.username+"'s balance"
+
 
 
 class Transfer(models.Model):

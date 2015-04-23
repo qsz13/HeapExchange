@@ -46,6 +46,8 @@ INSTALLED_APPS = (
     'heap_admin',
     'post',
     'postman',
+    'notifications',
+
 
 )
 

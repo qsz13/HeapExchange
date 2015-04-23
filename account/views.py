@@ -1,5 +1,8 @@
+import os
 from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
 from django.shortcuts import render, redirect
 from django.views.generic import View, CreateView
 from account.forms import ProfileForm
@@ -70,6 +73,12 @@ class AccountView(View):
 
         if 'profile' in request.POST:
             profile_form = ProfileForm(request.POST, instance=request.user.profile)
+            if 'avatar' in request.FILES:
+                data = request.FILES['avatar']
+                print str(data)
+                file_path = os.path.join("avatar", str(request.user.id)+"-"+str(data))
+                file_real_path = default_storage.save(file_path, ContentFile(data.read()))
+                request.user.profile.avatar = file_real_path
             if profile_form.is_valid():
                 profile_form.save()
                 return redirect("index")
