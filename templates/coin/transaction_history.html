@@ -1,0 +1,17 @@
+{% extends "coin/coin_base.html" %}
+{% block transaction_history_page %}
+    <div class="col s10 offset-s1">
+         <ul class="collection">
+        {% for transaction in transactions  %}
+            <li class="collection-item avatar">
+              <i class="mdi-action-assessment circle green"></i>
+              <span class="title">{{ transaction.time }}</span>
+              <p>from: {{ transaction.from_user }} -> to: {{ transaction.to_user }}</p>
+                <p>amount: {{ transaction.amount }}</p>
+              <a href="#!" class="secondary-content"><i class="mdi-action-grade"></i></a>
+            </li>
+        {% endfor %}
+         </ul>
+
+    </div>
+{% endblock %}
