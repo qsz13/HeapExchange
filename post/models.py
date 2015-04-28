@@ -30,7 +30,7 @@ class Course(Post):
 
     def get_absolute_url(self):
         path = reverse('course_detail', args=[self.id])
-        return "http://%s%s" % (Site.objects.get_current().domain, path)
+        return path
 
 
 class Activity(Post):

@@ -139,10 +139,9 @@ def all_tags(request):
 class CourseExploreList(APIView):
     def get(self, request, format=None):
         course = Course.objects.order_by('-time').all()
-        for c in course:
-            print c.get_absolute_url()
-
+        course_url_list = [c.get_absolute_url() for c in course]
         serializer = CourseSerializer(course, many=True)
-        #for s in serializer.data:
+        for (s, curl) in zip(serializer.data, course_url_list):
+            s['url'] = curl
 
         return Response(serializer.data)
