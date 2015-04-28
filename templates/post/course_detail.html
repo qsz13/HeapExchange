@@ -4,55 +4,106 @@
 
 {% block page %}
 
-<ul id="dropdown2" class="dropdown-content">
-        <li><a href="{% url 'all_course' %}">All Course<span class="badge">1</span></a></li>
-        <li><a href="{% url 'posted_course' %}">Posted Course<span class="badge">1</span></a></li>
-        <li><a href="{% url 'joined_course' %}">Joined Course<span class="badge">1</span></a></li>
-        <li><a href="{% url 'interested_course' %}">Interested Course<span class="badge">1</span></a></li>
-      </ul>
-    <a class="btn dropdown-button" href="#!" data-activates="dropdown2">COURSE<i class="mdi-navigation-arrow-drop-down right"></i></a>
-
 
 <div class="row">
-<div class="col s8 offset-s2">
-<div class="row card top7">
-<div class="col s8 offset-s2">
 
-<h1> {{ course.title }} </h1>
+        <div class="col s7 offset-s1">
+                <div class="row">
+                </div>
 
-<p>Initialed by {{ course.initiator.email}} </p>
+                <div class="row card">
+                <div class="col s10 offset-s1">
+                <div class="row">
+                        
+                        <div class="row">
+                                <p class="card-title black-text">{{course.title}}</p>
+                                {% if is_self %}
+                                        <a class="col s2 offset-s11" href="{% url 'update_course' course.id %}">[编辑]</a>
+                                {% endif %}
+                        </div>
+                        <p> <span class="green-text text-darken-1">By</span> {{ course.initiator}} </p>
+                        <p> <span class="green-text text-darken-1">课程时间 : </span>{{ course.time }} </p>
+                        <p> <span class="green-text text-darken-1">报名截止 : </span> {{ course.deadline }} </p>
+                        <p> <span class="green-text text-darken-1">地点 : </span> {{ course.location }} </p>
+                        <p> <span class="green-text text-darken-1">价格 : </span> 
+                                {% if course.price == 0 %}
+                                        免费
+                                {% else %}
+                                        {{ course.price }}
+                                {% endif %}
+                        </p>
 
-<p> Time : {{ course.time }} </p>
+                        <p> <span class="green-text text-darken-1">人数 : </span> 
+                        {{ course.joined.count }} / {{ course.limit }} </p>
 
-<p> Deadline : {{ course.deadline }} </p>
+                        <p> <span class="green-text text-darken-1">课程详情: </span></p>
+                        <p> {{ course.description }} </p>
 
-<p> Location : {{ course.location }} </p>
+                        {% if not is_self %}
+                                {% if not interested %}
+                                        <a class="waves-effect waves-light btn" href="{% url 'interest_course' course.id %}">我感兴趣</a>
+                                {% else %}
+                                        <a class="waves-effect waves-light btn red" href="{% url 'uninterest_course' course.id %}">已感兴趣</a>
+                                {% endif %}
+                                {% if not has_joined %}
+                                        <a class="waves-effect waves-light btn" href="{% url 'join_course' course.id %}" >我要参加</a>
+                                {% else %}
+                                        {% if course.limit == course.joined.count %}
+                                                <a class="btn disabled">已满员</a>
+                                        {% else %}
+                                                <a class="waves-effect waves-light btn red" href="{% url 'unjoin_course' course.id %}">已参加</a>
+                                        {% endif %}
+                                {% endif %}
+                        {% endif %}
+                    
+                </div>
+                </div>
+                </div>
+        </div>
 
-<br/><br/>
 
-<p> {{ course.description }} </p>
+        <div class="col s3">
 
-{% if not is_self %}
-    
-    {% if not interested %}
-        <a class="waves-effect waves-light btn" href="{% url 'interest_course' course.id %}">Interesting</a>
-    {% else %}
-        <a class="waves-effect waves-light btn red" href="{% url 'uninterest_course' course.id %}">Interested</a>
-    {% endif %}
+                <div class="row">
+                </div>
 
-    {% if not has_joined %}
-        <a class="waves-effect waves-light btn" href="{% url 'join_course' course.id %}" >Join</a>
-    {% else %}
-        <a class="waves-effect waves-light btn red" href="{% url 'unjoin_course' course.id %}">Joined</a>
-    {% endif %}
+                <div class="row card">
+                        <div class="col s3 offset-s1">
+                                <p class="card-title black-text">PLACEHOLDER</p>
+                                <p>Similar Courses</p>
+                        </div>
+                </div>
 
-{% endif %}
 
-<br/><br/><br/>
+                <div class="row">
+                </div>
 
-</div>
-</div>
-</div>
+                {% if course.interested.count > 0 or course.joined.count > 0 %}
+                <div class="row card">
+                        <div class="col offset-s1">
+                                <p> 
+                                        {% if course.interested.count > 0 %}
+                                                {% for user in course.interested.all %}
+                                                        {{ user }}  
+                                                {% endfor %}
+                                                对这门课感兴趣。
+                                        {% endif %}
+                                </p>
+
+                                <p> 
+                                        {% if course.joined.count > 0 %}
+                                                {% for user in course.joined.all %}
+                                                        {{ user }}  
+                                                {% endfor %}
+                                                参加了这门课。
+                                        {% endif %}
+                                </p>                                
+                        </div>
+                </div>
+                {% endif %}
+
+        </div>
+
 </div>
 
 {% endblock %}

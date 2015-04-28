@@ -14,7 +14,11 @@ urlpatterns = [
                        url(r'^course/unjoin/(?P<course_id>[0-9]+)/$', views.unjoin_course, name='unjoin_course'), 
                        url(r'^course/interest/(?P<course_id>[0-9]+)/$', views.interest_course, name='interest_course'), 
                        url(r'^course/uninterest/(?P<course_id>[0-9]+)/$', views.uninterest_course, name='uninterest_course'),
-                       url(r'^course/explore_list/', views.CourseExploreList.as_view(), name='course_explore_list_api')
+                       url(r'^course/explore_list/', views.CourseExploreList.as_view(), name='course_explore_list_api'),
+                       url(r'^course/update/(?P<course_id>[0-9]+)/$', views.update_course, name='update_course'),
+
+                       url(r'^course/remove/(?P<course_id>[0-9]+)/$', views.remove_course, name='remove_course'), 
+                       
                        #url(r'^course/interestin/$', views.interest_in_course, name='interest_in_course'),
                        # url(r'^login/$', views.LoginView.as_view(), name='login'),
                        # url(r'^logout/$', 'django.contrib.auth.views.logout', name='logout', kwargs={'next_page': '/'}),

@@ -22,7 +22,7 @@ $(document).ready(function() {
 
             <div class="row">
             <div class="col s10 offset-s1">
-            <p class="card-title black-text">创建课程</p>
+            <p class="card-title black-text">编辑课程</p>
             
             <div class="row">  
             <form action="." method="post">
@@ -111,7 +111,8 @@ $(document).ready(function() {
             </div>
 
             <div class="row">
-            <input class="btn btn-primary col offset-s5" type="submit" value="Submit"/>
+            <input class="btn btn-primary col offset-s4" type="submit" value="提交"/>
+            <a href="{% url 'remove_course' course.id %}" class="btn btn-primary red col offset-s1" >删除</a> 
             </div>
 
             </form>

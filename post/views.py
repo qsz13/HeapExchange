@@ -13,6 +13,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from datetime import datetime
 from post.serializers import CourseSerializer
+from django.shortcuts import get_object_or_404
 
 
 class TempView(TemplateView):
@@ -54,7 +55,8 @@ def posted_course(request):
 
 
 def all_course(request):
-    course_list = Course.objects.all()
+    user = request.user
+    course_list = Course.objects.exclude(initiator=user)
     return render(request, 'post/all_course.html', {'course_list': course_list})
 
 
@@ -117,29 +119,47 @@ def course_detail(request, course_id):
 @login_required
 def joined_course(request):
     user = request.user
-    course_list = user.joins.all()
+    course_list = user.c_joins.all()
     return render(request, 'post/joined_course.html', {'course_list': course_list})
 
 
 @login_required
 def interested_course(request):
     user = request.user
-    course_list = user.interests.all()
+    course_list = user.c_interests.all()
     return render(request, 'post/interested_course.html', {'course_list': course_list})
+
 
 def all_tags(request):
     if 'term' in request.GET:
         tags = Tag.objects.filter(
             name__istartswith=request.GET['term']
         )[:10]
-        return HttpResponse( json.dumps( [ tag.name for tag in tags ] ) )
+        return HttpResponse(json.dumps([tag.name for tag in tags]))
     return HttpResponse()
 
 
+@login_required
+def update_course(request, course_id):
+    course = get_object_or_404(Course, id=course_id)
+    form = CourseForm(request.POST or None, instance=course)
+    if form.is_valid():
+        form.save()
+        return redirect('course_detail', course_id)
+    return render(request, 'post/update_course.html', {'form': form, 'course':course})
+
+
+@login_required
+def remove_course(request, course_id):
+    course = get_object_or_404(Course, id=course_id)
+    course.delete()
+    return redirect('posted_course')
 
 class CourseExploreList(APIView):
+
     def get(self, request, format=None):
-        course = Course.objects.order_by('-time').filter(~Q(initiator=request.user))
+        course = Course.objects.order_by(
+            '-time').filter(~Q(initiator=request.user))
         course_url_list = [c.get_absolute_url() for c in course]
         serializer = CourseSerializer(course, many=True)
         for (s, curl) in zip(serializer.data, course_url_list):
