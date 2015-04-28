@@ -1,6 +1,8 @@
 import os
 from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
+from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.shortcuts import render, redirect
@@ -13,16 +15,28 @@ class SignUpView(View):
     template_name = "account/sign_up.html"
 
     def get(self, request):
+        referral = None
+        if 'referral' in request.GET:
+            referral = request.GET['referral']
         form = UserCreationForm()
-        return render(request, self.template_name, {'form': form})
+        return render(request, self.template_name, {'form': form,'referral':referral})
 
     def post(self, request):
         form = UserCreationForm(request.POST)
+
+
         if form.is_valid():
             form.save()
             new_user = authenticate(username=request.POST['username'],
                                     password=form.clean_password2())
             login(request, new_user)
+            if 'referral' in request.POST:
+                referral = request.POST['referral']
+                try:
+                    referral_user = User.objects.get(username=referral)
+                    referral_user.profile.refer(new_user)
+                except ObjectDoesNotExist as e:
+                    pass
             return redirect("index")
         else:
             return render(request, self.template_name, {'form': form})

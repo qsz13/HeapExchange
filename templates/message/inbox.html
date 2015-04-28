@@ -21,14 +21,27 @@ in the INSTALLED_APPS setting.
                     <p>{% trans "Sorry, this page number is invalid." %}</p>
                 {% else %}
                     {% if pm_messages %}
-                        <ul class="collapsible popout" data-collapsible="accordion">
+                        <ul class="collapsible  popout" data-collapsible="accordion">
                         {% for message in pm_messages %}
 
 
-
                         <li>
-                          <div class="collapsible-header">
-                              {{ message.subject }} from <a>{{ message.sender }}</a>
+                          <div class="collapsible-header top3" style="height: 50px">
+
+                              <div class="row">
+
+                                  <div class="col">
+                                      <img src="/media/{{ message.sender.profile.avatar }}" alt="" height="40px" class="circle nav-avatar">
+
+                                  </div>
+
+                                  <div class="col">
+                                      {{ message.subject }} from <a>{{ message.sender }}</a>
+
+                                  </div>
+
+                              </div>
+
                           </div>
                           <div class="collapsible-body">
                               <p>{{ message.body }}</p>

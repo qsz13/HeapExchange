@@ -1,6 +1,8 @@
 import json
 from django.shortcuts import render
 from django.views.generic import TemplateView, CreateView
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from HeapExchange.views import LoginRequiredMixin
 from .models import Course, Tag
 from .forms import CourseForm
@@ -9,6 +11,7 @@ from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from datetime import datetime
+from post.serializers import CourseSerializer
 
 
 class TempView(TemplateView):
@@ -130,3 +133,16 @@ def all_tags(request):
         )[:10]
         return HttpResponse( json.dumps( [ tag.name for tag in tags ] ) )
     return HttpResponse()
+
+
+
+class CourseExploreList(APIView):
+    def get(self, request, format=None):
+        course = Course.objects.order_by('-time').all()
+        for c in course:
+            print c.get_absolute_url()
+
+        serializer = CourseSerializer(course, many=True)
+        #for s in serializer.data:
+
+        return Response(serializer.data)

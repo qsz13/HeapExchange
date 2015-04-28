@@ -48,6 +48,7 @@ INSTALLED_APPS = (
     'postman',
     'notifications',
     'awesome_avatar',
+    'rest_framework',
 
 
 )
@@ -154,3 +155,11 @@ MEDIA_DIRS = (
 )
 
 MEDIA_URL = '/media/'
+
+REFER_COIN = 50
+
+REGISTER_COIN = 50
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination'
+}

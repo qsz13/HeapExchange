@@ -14,11 +14,16 @@
     <div class="row">
         <div class="col s8 offset-s2">
 
-             <div class="collection">
+{#             <div class="collection">#}
+             <ul class="collapsible popout">
                 {% for course in course_list %}
-                    <a href="{% url 'course_detail' course.id%}" class="collection-item"> {{ course.title }} </a>
+                    <li>
+                        <div class="collapsible-header"> {{ course.title }} </div>
+                        <div class="collapsible-body"><p><a href="{% url 'course_detail' course.id%}">detail</a></p></div>
+                    </li>
                 {% endfor %}
-            </div>
+             </ul>
+{#            </div>#}
        
         </div>
     </div>

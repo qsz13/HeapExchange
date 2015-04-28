@@ -1,4 +1,6 @@
 from django.contrib.auth.models import User
+from django.contrib.sites.models import Site
+from django.core.urlresolvers import reverse
 from django.db import models
 
 
@@ -16,7 +18,7 @@ class Post(models.Model):
         abstract = True
 
     def __unicode__(self):
-        return self.name
+        return self.title
 
 
 class Course(Post):
@@ -24,6 +26,11 @@ class Course(Post):
     joined = models.ManyToManyField(User, related_name="joins")
     interested = models.ManyToManyField(User, related_name="interests")
     price = models.IntegerField(default=0)
+
+
+    def get_absolute_url(self):
+        path = reverse('course_detail', args=[self.id])
+        return "http://%s%s" % (Site.objects.get_current().domain, path)
 
 
 class Activity(Post):
