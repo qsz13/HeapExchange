@@ -111,13 +111,13 @@ class allView(View):
         Index page for authenticated user
         """
 
-        # if getattr(settings, 'NOTIFICATIONS_SOFT_DELETE', False):
-        #     qs = request.user.notifications.active()
-        # else:
-        #     qs = request.user.notifications.all()
-        # return render(request, 'notifications/notifications_all.html', {
-        #     'notifications': qs
-        # })
+        if getattr(settings, 'NOTIFICATIONS_SOFT_DELETE', False):
+            qs = request.user.notifications.active()
+        else:
+            qs = request.user.notifications.all()
+        return render(request, 'notifications/notifications_all.html', {
+            'notifications': qs
+        })
         actions = request.user.notifications.all()
 
         paginator = Paginator(actions, 16) # Show 16 notifications per page

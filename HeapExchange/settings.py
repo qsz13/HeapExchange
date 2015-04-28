@@ -163,3 +163,7 @@ REGISTER_COIN = 50
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination'
 }
+
+DISABLE_USER_EMAILING = True
+
+POSTMAN_NOTIFIER_APP = 'notifications'

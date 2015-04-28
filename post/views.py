@@ -1,4 +1,5 @@
 import json
+from django.db.models import Q
 from django.shortcuts import render
 from django.views.generic import TemplateView, CreateView
 from rest_framework.response import Response
@@ -138,7 +139,7 @@ def all_tags(request):
 
 class CourseExploreList(APIView):
     def get(self, request, format=None):
-        course = Course.objects.order_by('-time').all()
+        course = Course.objects.order_by('-time').filter(~Q(initiator=request.user))
         course_url_list = [c.get_absolute_url() for c in course]
         serializer = CourseSerializer(course, many=True)
         for (s, curl) in zip(serializer.data, course_url_list):
