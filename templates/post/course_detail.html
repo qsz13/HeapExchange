@@ -25,11 +25,12 @@
                         <p> <span class="green-text text-darken-1">课程时间 : </span>{{ course.time }} </p>
                         <p> <span class="green-text text-darken-1">报名截止 : </span> {{ course.deadline }} </p>
                         <p> <span class="green-text text-darken-1">地点 : </span> {{ course.location }} </p>
+                        <p> <span class="green-text text-darken-1">需求 : </span> {{ course.requirement }} </p>
                         <p> <span class="green-text text-darken-1">价格 : </span> 
                                 {% if course.price == 0 %}
                                         免费
                                 {% else %}
-                                        {{ course.price }}
+                                        {{ course.price }} <span class="green-text text-darken-1"> Q币 </span> 
                                 {% endif %}
                         </p>
 
