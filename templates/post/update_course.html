@@ -1,17 +1,28 @@
 {% extends "base.html" %}
-
+{% load widget_tweaks %}
 {% block title %} 编辑课程 {% endblock %}
+
+{% block extrahead %}
+{#    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">#}
+{#    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>#}
+{#    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>#}
+    <script>
+    $(document).ready(function() {
+         $('.datepicker').pickadate({
+        selectMonths: true, // Creates a dropdown to control month
+        selectYears: 15 // Creates a dropdown of 15 years to control year
+      });
+    });
+
+
+    </script>
+
+
+{% endblock %}
 
 {% block page %}
 
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css"> 
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
-<script>
-$(document).ready(function() {
-    $('.datepicker').datepicker();
-});
-</script>
+
 
 <div class="row">
 </div>
@@ -43,7 +54,7 @@ $(document).ready(function() {
                     <div class="fieldWrapper">
                         {{ form.time.errors }}
                         <label for="{{ form.time.id_for_label }}">时间:</label>
-                        {{ form.time }}
+                         <input  id="{{ form.time.id_for_label }}" name="{{ form.time.name }}" type="date" class="datepicker" value="{{ form.time.value }}">
                     </div>
                 </div>                
             </div>
@@ -53,7 +64,7 @@ $(document).ready(function() {
                     <div class="fieldWrapper">
                         {{ form.deadline.errors }}
                         <label for="{{ form.deadline.id_for_label }}">截止日期:</label>
-                        {{ form.deadline }}
+                        <input  id="{{ form.deadline.id_for_label }}" name="{{ form.deadline.name }}" type="date" class="datepicker" value="{{ form.deadline.value }}">
                     </div>
                 </div>                
             </div>
