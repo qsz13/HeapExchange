@@ -7,6 +7,7 @@ urlpatterns = [
                        url(r'^history/$', views.TransactionView.as_view(), name="transaction_history"),
                        url(r'^input/$', views.InputTransactionView.as_view(), name="input_transaction"),
                        url(r'^output/$', views.OutputTransactionView.as_view(), name="output_transaction"),
+                       url(r'^delete/$', views.deletetransaction, name="delete_transaction")
                        # url(r'^login/$', views.LoginView.as_view(), name='login'),
                        # url(r'^logout/$', 'django.contrib.auth.views.logout', name='logout', kwargs={'next_page': '/'}),
                        # url(r'^profile/$', views.ProfileView.as_view(), name='profile'),

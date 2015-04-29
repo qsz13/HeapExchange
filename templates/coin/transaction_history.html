@@ -8,7 +8,16 @@
               <span class="title">{{ transaction.time }}</span>
               <p>from: {{ transaction.from_user }} -> to: {{ transaction.to_user }}</p>
                 <p>amount: {{ transaction.amount }}</p>
-              <a href="#!" class="secondary-content"><i class="mdi-action-grade"></i></a>
+
+              <form action="{% url 'delete_transaction' %}" method="post">
+                  {% csrf_token %}
+                  <input type="hidden" name="transaction_type" value="transaction_history" />
+                  <input type="hidden" name="transaction_id" value="{{ transaction.id }}"/>
+                  <button class="btn-floating btn-mdi secondary-content waves-effect waves-light red" type="submit" >
+                    <i class="mdi-action-delete"></i>
+                  </button>
+              </form>
+
             </li>
         {% endfor %}
          </ul>
