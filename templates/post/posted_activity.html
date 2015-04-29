@@ -21,8 +21,8 @@
                          </ul>
                     <a class="btn dropdown-button" href="#!" data-activates="dropdown2">我发布的<i class="mdi-navigation-arrow-drop-down right"></i></a>
 
-                    <a class="waves-effect waves-light btn red" href="{% url 'posted_course' %}">课程</a>
-                    <a class="waves-effect waves-light btn" href="{% url 'posted_activity' %}">活动</a>
+                    <a class="waves-effect waves-light btn" href="{% url 'posted_course' %}">课程</a>
+                    <a class="waves-effect waves-light btn red" href="{% url 'posted_activity' %}">活动</a>
             </div>
 
 
@@ -32,14 +32,14 @@
                     {# <div class="collection">#}
                     
                             <ul class="collapsible popout">
-                                    {% for course in course_list %}
+                                    {% for activity in activity_list %}
                                             <li>
-                                            <div class="collapsible-header"> {{ course.title }} </div>
+                                            <div class="collapsible-header"> {{ activity.title }} </div>
                                             <div class="collapsible-body">
-                                                    <p> {{ course.description }} </p>
+                                                    <p> {{ activity.description }} </p>
                                                     <p>
-                                                            <a href="{% url 'course_detail' course.id%}">详细</a>
-                                                            <a href="{% url 'update_course' course.id%}">编辑</a>
+                                                            <a href="{% url 'activity_detail' activity.id%}">详细</a>
+                                                            <a href="{% url 'update_activity' activity.id%}">编辑</a>
                                                     </p>
                                             </div>
                                             </li>

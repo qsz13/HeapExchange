@@ -14,14 +14,14 @@
 
             <div class="row">
                     <ul id="dropdown2" class="dropdown-content">
-                            <li><a href="{% url 'all_course' %}">所有POST<span class="badge"></span></a></li>
-                            <li><a href="{% url 'posted_course' %}">我发布的<span class="badge"></span></a></li>
-                            <li><a href="{% url 'joined_course' %}">我参加的<span class="badge"></span></a></li>
-                            <li><a href="{% url 'interested_course' %}">我感兴趣的<span class="badge"></span></a></li>
+                            <li><a href="{% url 'all_activity' %}">所有POST<span class="badge"></span></a></li>
+                            <li><a href="{% url 'posted_activity' %}">我发布的<span class="badge"></span></a></li>
+                            <li><a href="{% url 'joined_activity' %}">我参加的<span class="badge"></span></a></li>
+                            <li><a href="{% url 'interested_activity' %}">我感兴趣的<span class="badge"></span></a></li>
                     </ul>
                     <a class="btn dropdown-button" href="#!" data-activates="dropdown2">我感兴趣的<i class="mdi-navigation-arrow-drop-down right"></i></a>
 
-                    <a class="waves-effect waves-light btn red" href="{% url 'interested_course' %}">课程</a>
+                    <a class="waves-effect waves-light btn red" href="{% url 'interested_activity' %}">课程</a>
                     <a class="waves-effect waves-light btn" href="{% url 'interested_activity' %}">活动</a>
             </div>
 
@@ -32,12 +32,12 @@
                     {# <div class="collection">#}
                     
                             <ul class="collapsible popout">
-                                    {% for course in course_list %}
+                                    {% for activity in activity_list %}
                                             <li>
-                                            <div class="collapsible-header"> {{ course.title }} </div>
+                                            <div class="collapsible-header"> {{ activity.title }} </div>
                                             <div class="collapsible-body">
-                                                    <p> {{ course.description }} </p>
-                                                    <p><a href="{% url 'course_detail' course.id%}">详细</a></p>
+                                                    <p> {{ activity.description }} </p>
+                                                    <p><a href="{% url 'activity_detail' activity.id%}">详细</a></p>
                                             </div>
                                             </li>
                                     {% endfor %}
