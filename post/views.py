@@ -14,6 +14,7 @@ from django.contrib.auth.models import User
 from datetime import datetime
 from post.serializers import CourseSerializer
 from django.shortcuts import get_object_or_404
+from datetime import datetime
 
 
 class TempView(TemplateView):
@@ -85,10 +86,19 @@ def course_detail(request, course_id):
         interested = True
     else:
         interested = False
+    if datetime.date(datetime.now()) >= course.deadline:
+        status = 'registering'
+    elif datetime.date(datetime.now()) < course.deadline and datetime.date(datetime.now()) > course.time:
+        status = 'tobegin'
+    else:
+        status = 'end'
+
     return render(request, 'post/course_detail.html', {'course': course,
                                                        'is_self': is_self,
                                                        'has_joined': has_joined,
-                                                       'interested': interested})
+                                                       'interested': interested, 
+                                                       'status' : status,
+                                                       })
 
 
 def activity_detail(request, activity_id):
@@ -105,10 +115,17 @@ def activity_detail(request, activity_id):
         interested = True
     else:
         interested = False
+    if datetime.date(datetime.now()) >= course.deadline:
+        status = 'registering'
+    elif datetime.date(datetime.now()) < course.deadline and datetime.date(datetime.now()) > course.time:
+        status = 'tobegin'
+    else:
+        status = 'end'
     return render(request, 'post/activity_detail.html', {'activity': activity,
                                                        'is_self': is_self,
                                                        'has_joined': has_joined,
-                                                       'interested': interested})
+                                                       'interested': interested,
+                                                       'status': status})
 
 
 

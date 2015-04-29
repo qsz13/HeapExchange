@@ -26,6 +26,13 @@
                         <p> <span class="green-text text-darken-1">报名截止 : </span> {{ course.deadline }} </p>
                         <p> <span class="green-text text-darken-1">地点 : </span> {{ course.location }} </p>
                         <p> <span class="green-text text-darken-1">需求 : </span> {{ course.requirement }} </p>
+                        <p> <span class="green-text text-darken-1">状态 : </span> 
+
+                        <span class="green-text text-darken-1"> {% if status == 'registering' %}  正在报名 {% endif %}</span>
+                        <span class="yellow-text text-darken-1"> {% if status == 'tobegin' %}  等待开始 {% endif %} </span>
+                        <span class="red-text text-darken-1"> {% if status == 'end' %}  已结束 {% endif %} </span>
+
+                        </p>
                         <p> <span class="green-text text-darken-1">价格 : </span> 
                                 {% if course.price == 0 %}
                                         免费
