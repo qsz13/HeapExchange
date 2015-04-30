@@ -26,7 +26,7 @@
                         <p> <span class="green-text text-darken-1">报名截止 : </span> {{ course.deadline }} </p>
                         <p> <span class="green-text text-darken-1">地点 : </span> {{ course.location }} </p>
                         <p> <span class="green-text text-darken-1">需求 : </span> {{ course.requirement }} </p>
-                        <p> <span class="green-text text-darken-1">状态 : </span> 
+                        <p> <span class="green-text text-darken-1">状态 : </span>
 
                         <span class="green-text text-darken-1"> {% if status == 'registering' %}  正在报名 {% endif %}</span>
                         <span class="yellow-text text-darken-1"> {% if status == 'tobegin' %}  等待开始 {% endif %} </span>
@@ -83,12 +83,13 @@
                 </div>
 
 
-                <div class="row">
-                </div>
+                <!-- <div class="row">
+                </div> -->
 
                 {% if course.interested.count > 0 or course.joined.count > 0 %}
                 <div class="row card">
                         <div class="col offset-s1">
+                                <p class="card-title black-text">兴趣&参加</p>
                                 <p> 
                                         {% if course.interested.count > 0 %}
                                                 {% for user in course.interested.all %}
@@ -109,6 +110,20 @@
                         </div>
                 </div>
                 {% endif %}
+
+                <div class="row card">
+                        <div class="col offset-s1">
+                                <p class="card-title black-text">相关标签</p>
+                                        <p>
+                                                {% for t in course.tag.all %}
+                                                        <span>{{ t }}</span>
+                                                {% endfor %}
+                                                <!-- add link -->
+                                        </p>
+                                        <p><a href="{% url 'course_add_tag' course.id%}">为课程添加标签</a></p>
+                        </div>
+                </div>
+                                
 
         </div>
 

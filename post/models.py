@@ -41,6 +41,8 @@ class Activity(Post):
 
 class Tag(models.Model):
     name = models.CharField(max_length=20)
+    course = models.ManyToManyField(Course, related_name='tag')
+    activity = models.ManyToManyField(Activity, related_name='tag')
 
     def __unicode__(self):
         return self.name

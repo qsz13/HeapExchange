@@ -42,6 +42,8 @@ urlpatterns = [
 
                        url(r'^course/remove/(?P<course_id>[0-9]+)/$', views.remove_course, name='remove_course'), 
                        url(r'^activity/remove/(?P<activity_id>[0-9]+)/$', views.remove_activity, name='remove_activity'), 
+
+                       url(r'^course/addtag/(?P<course_id>[0-9]+)/$', views.course_add_tag, name='course_add_tag'),
                        
                        #url(r'^course/interestin/$', views.interest_in_course, name='interest_in_course'),
                        # url(r'^login/$', views.LoginView.as_view(), name='login'),

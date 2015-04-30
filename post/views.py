@@ -315,3 +315,22 @@ class CourseExploreList(APIView):
             s['url'] = curl
 
         return Response(serializer.data)
+
+
+
+def course_add_tag(request, course_id):
+    course = Course.objects.get(id=course_id)
+    if request.method == 'POST':
+        tags = request.POST.getlist('tags')
+            #print tags
+        course.tag.clear()
+        for tag in tags:
+            t, created = Tag.objects.get_or_create(name=tag.lower())
+            course.tag.add(t)
+        course.save()
+        return redirect('course_detail', course_id=course_id)
+
+    else:
+        tags = course.tag.all()
+
+    return render(request, 'post/add_tag.html', {'tags':tags})

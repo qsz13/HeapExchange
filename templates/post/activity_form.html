@@ -43,7 +43,7 @@ $(document).ready(function() {
                     <div class="fieldWrapper">
                         {{ form.time.errors }}
                         <label for="{{ form.time.id_for_label }}">时间:</label>
-                        {{ form.time }}
+                        <input id="{{form.time.id_for_label}}" name="{{form.time.name}}" type="date" class="datepicker">
                     </div>
                 </div>                
             </div>
@@ -53,7 +53,7 @@ $(document).ready(function() {
                     <div class="fieldWrapper">
                         {{ form.deadline.errors }}
                         <label for="{{ form.deadline.id_for_label }}">截止日期:</label>
-                        {{ form.deadline }}
+                        <input  id="{{ form.deadline.id_for_label }}" name="{{ form.deadline.name }}" type="date" class="datepicker">
                     </div>
                 </div>                
             </div>

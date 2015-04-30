@@ -11,10 +11,10 @@
         selectYears: 15 // Creates a dropdown of 15 years to control year
       });
     });
-
-
-    </script>
+</script>
 {% endblock %}
+
+
 
 {% block page %}
 
@@ -59,7 +59,7 @@
                     <div class="fieldWrapper">
                         {{ form.deadline.errors }}
                         <label for="{{ form.deadline.id_for_label }}">截止日期:</label>
-                        <input  id="{{ form.deadline.id_for_label }}" name="{{ form.deadline.name }}" type="date" class="datepicker"">
+                        <input  id="{{ form.deadline.id_for_label }}" name="{{ form.deadline.name }}" type="date" class="datepicker">
                     </div>
                 </div>                
             </div>

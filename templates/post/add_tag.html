@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block title %} 添加标签 {% endblock %}
+
+{% block jquery-ui %}    <script src="/static/js/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+{% endblock %}
+
+{% block extrahead %}
+
+     <link rel="stylesheet" href="/static/css/jquery-ui.css">
+     <link rel="stylesheet" href="/static/css/jquery.tagit.css">
+
+
+     <link rel="stylesheet" href="/static/css/tagit.ui-zendesk.css">
+<script src="/static/js/tag-it.js" type="text/javascript" charset="utf-8"></script>
+     <script type="text/javascript">
+String.prototype.replaceAt=function(index, character) {
+    return this.substr(0, index) + character + this.substr(index+character.length);
+}
+    $(document).ready(function() {
+
+        $('select').material_select();
+
+
+        class_taken = "{{ class_taken }}";
+
+        $('#time-table-input').attr('value', class_taken);
+
+        for(c in class_taken)
+        {
+            row = c%11+1;
+            col = parseInt(c/11)+1;
+            if(class_taken[c]=='0')
+            {
+                $('#row'+row+"col"+col+"i").hide();
+            }
+            else if(class_taken[c]=='1')
+            {
+                $('#row'+row+"col"+col+"i").show();
+            }
+
+        }
+    $(".select-class").click(function(e){
+        e.stopImmediatePropagation();
+        var icon = this.id+"i";
+        $("#"+icon).toggle();
+        row = parseInt(this.id.match(/\d+/)[0]);
+        col = parseInt(this.id.match(/\d+$/)[0]);
+        index = (col-1)*11+row-1;
+        if(class_taken[index]=='0')
+        {
+            class_taken=class_taken.replaceAt(index,'1');
+
+
+        }
+        else if(class_taken[index]=='1')
+        {
+            class_taken=class_taken.replaceAt(index,'0');
+        }
+        console.log("row"+row+"col"+col+"index"+index);
+        $('#time-table-input').attr('value', class_taken);
+    })
+
+
+  });
+
+function readURL(input) {
+
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#blah').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+
+// HOW TO DIRECT TO ALL_TAGS
+$(document).ready(function() {
+                                $("#myTags").tagit({autocomplete:{source:'{% url "all_tags" %}'}});
+
+                            });
+
+
+
+</script>
+
+ {% endblock %}
+
+
+{% block page %}
+
+ <form method="post">{% csrf_token %}
+                            <ul id="myTags">
+                                <!-- Existing list items will be pre-added to the tags -->
+                                {% for tag in tags %}
+                                    <li>{{ tag }}</li>
+                                    {% empty %}
+                                {% endfor %}
+
+                            </ul>
+                            <input class="btn" type="submit" name="interest" value="Submit">
+                        </form>
+
+{% endblock %}
