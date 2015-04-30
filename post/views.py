@@ -115,9 +115,9 @@ def activity_detail(request, activity_id):
         interested = True
     else:
         interested = False
-    if datetime.date(datetime.now()) >= course.deadline:
+    if datetime.date(datetime.now()) >= activity.deadline:
         status = 'registering'
-    elif datetime.date(datetime.now()) < course.deadline and datetime.date(datetime.now()) > course.time:
+    elif datetime.date(datetime.now()) < activity.deadline and activity.date(datetime.now()) > activity.time:
         status = 'tobegin'
     else:
         status = 'end'
@@ -333,7 +333,26 @@ def course_add_tag(request, course_id):
     else:
         tags = course.tag.all()
 
-    return render(request, 'post/add_tag.html', {'tags':tags})
+    return render(request, 'post/add_tag.html', {'tags':tags, 'item':course})
+
+
+def activity_add_tag(request, activity_id):
+    activity = Activity.objects.get(id=activity_id)
+    if request.method == 'POST':
+        tags = request.POST.getlist('tags')
+            #print tags
+        activity.tag.clear()
+        for tag in tags:
+            t, created = Tag.objects.get_or_create(name=tag.lower())
+            activity.tag.add(t)
+        activity.save()
+        return redirect('activity_detail', activity_id=activity_id)
+
+    else:
+        tags = activity.tag.all()
+
+    return render(request, 'post/add_tag.html', {'tags':tags, 'item':activity})
+
 
 
 def alltag(request):

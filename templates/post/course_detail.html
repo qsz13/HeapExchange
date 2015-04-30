@@ -116,7 +116,7 @@
                                 <p class="card-title black-text">相关标签</p>
                                         <p>
                                                 {% for t in course.tag.all %}
-                                                        <span>{{ t }}</span>
+                                                        <span><a class="waves-effect waves-light btn red accent-2" href="{% url 'tagview' t.id %}"><i class="mdi-image-style left"></i>{{ t.name }}</a></span>
                                                 {% endfor %}
                                                 <!-- add link -->
                                         </p>

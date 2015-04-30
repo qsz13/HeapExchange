@@ -44,6 +44,7 @@ urlpatterns = [
                        url(r'^activity/remove/(?P<activity_id>[0-9]+)/$', views.remove_activity, name='remove_activity'), 
 
                        url(r'^course/addtag/(?P<course_id>[0-9]+)/$', views.course_add_tag, name='course_add_tag'),
+                       url(r'^activity/addtag/(?P<activity_id>[0-9]+)/$', views.activity_add_tag, name='activity_add_tag'),
 
                        url(r'^alltag/$', views.alltag, name='all_tag'),
                        url(r'^tagview/(?P<tag_id>[0-9]+)/$', views.tagview, name='tagview')

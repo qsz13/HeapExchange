@@ -93,16 +93,26 @@ $(document).ready(function() {
 
 {% block page %}
 
- <form method="post">{% csrf_token %}
-                            <ul id="myTags">
-                                <!-- Existing list items will be pre-added to the tags -->
-                                {% for tag in tags %}
-                                    <li>{{ tag }}</li>
-                                    {% empty %}
-                                {% endfor %}
+<div class="row">
+</div>
 
-                            </ul>
-                            <input class="btn" type="submit" name="interest" value="Submit">
-                        </form>
+<div class="row">
+<div class="col s10 offset-s1">
+<div class="card">
+
+            <div class="row">
+            <div class="col s10 offset-s1">
+            <p class="card-title black-text">为 <span class="blue-text"> {{ item.title }} </span> 添加标签</p>
+
+ 	<form method="post">{% csrf_token %}
+            	<ul id="myTags">
+                        <!-- Existing list items will be pre-added to the tags -->
+                        {% for tag in tags %}
+                        	<li>{{ tag }}</li>
+                                    {% empty %}
+                        {% endfor %}
+                        </ul>
+                        <input class="btn col offset-s11" type="submit" name="interest" value="提交">
+	</form>
 
 {% endblock %}

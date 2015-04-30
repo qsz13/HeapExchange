@@ -83,6 +83,7 @@
                 {% if activity.interested.count > 0 or activity.joined.count > 0 %}
                 <div class="row card">
                         <div class="col offset-s1">
+                        <p class="card-title black-text">兴趣&参加</p>
                                 <p> 
                                         {% if activity.interested.count > 0 %}
                                                 {% for user in activity.interested.all %}
@@ -103,6 +104,19 @@
                         </div>
                 </div>
                 {% endif %}
+
+                <div class="row card">
+                        <div class="col offset-s1">
+                                <p class="card-title black-text">相关标签</p>
+                                        <p>
+                                                {% for t in activity.tag.all %}
+                                                        <span><a class="waves-effect waves-light btn red accent-2" href="{% url 'tagview' t.id %}"><i class="mdi-image-style left"></i>{{ t.name }}</a></span>
+                                                {% endfor %}
+                                                <!-- add link -->
+                                        </p>
+                                        <p><a href="{% url 'activity_add_tag' activity.id%}">为活动添加标签</a></p>
+                        </div>
+                </div>
 
         </div>
 
