@@ -74,6 +74,14 @@ def create_activity(request):
 
 def course_detail(request, course_id):
     course = Course.objects.get(id=course_id)
+    ini = course.initiator
+    list = []
+    for c in ini.c_initiator.all():
+        if c != course:
+            list.append(c)
+    for a in ini.a_initiator.all():
+        list.append(a)
+
     if course.initiator == request.user:
         is_self = True
     else:
@@ -94,6 +102,7 @@ def course_detail(request, course_id):
         status = 'end'
 
     return render(request, 'post/course_detail.html', {'course': course,
+                                                       'related_list':list,
                                                        'is_self': is_self,
                                                        'has_joined': has_joined,
                                                        'interested': interested, 
@@ -103,6 +112,13 @@ def course_detail(request, course_id):
 
 def activity_detail(request, activity_id):
     activity = Activity.objects.get(id=activity_id)
+    ini = activity.initiator
+    list = []
+    for c in ini.c_initiator.all():
+        list.append(c)
+    for a in ini.a_initiator.all():
+        if a != activity:
+            list.append(a)
     if activity.initiator == request.user:
         is_self = True
     else:
@@ -122,6 +138,7 @@ def activity_detail(request, activity_id):
     else:
         status = 'end'
     return render(request, 'post/activity_detail.html', {'activity': activity,
+                                                       'related_list':list,
                                                        'is_self': is_self,
                                                        'has_joined': has_joined,
                                                        'interested': interested,

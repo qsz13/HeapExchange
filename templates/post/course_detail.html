@@ -76,11 +76,24 @@
                 </div>
 
                 <div class="row card">
-                        <div class="col s3 offset-s1">
-                                <p class="card-title black-text">PLACEHOLDER</p>
-                                <p>Similar Courses</p>
-                        </div>
+                        <div class="row"></div>
+                                <div class="row">
+                                        <span class="col s1"><a class="waves-effect waves-teal btn-flat text-black"><i><img src="/media/{{ course.initiator.profile.avatar }}" alt="" height="30px" width="30px"class="circle nav-avatar"></i></a></span>
+                                </div>
+                                <div class="col offset-s1">
+                                        <p> {{course.initiator}} 的条目: </p>
+                                        <p>
+                                        {% for c in related_list %}
+                                                {% if c.flag == 0%}
+                                                        <li> <a href ="{% url 'course_detail' c.id %}"> {{ c.title }}</a></li>
+                                                {% else %}
+                                                        <li> <a href ="{% url 'activity_detail' c.id %}"> {{ c.title }}</a></li>
+                                                {% endif %}
+                                        {% endfor %}
+                                        </p>
+                                </div>
                 </div>
+
 
 
                 <!-- <div class="row">
