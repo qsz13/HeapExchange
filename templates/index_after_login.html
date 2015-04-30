@@ -1,38 +1,189 @@
 {% extends "base.html" %}
 
+{% block extrahead %}
+<script>
+
+$(document).ready(function(){
+    $('.tabs-wrapper .row').pushpin({ top: $('.tabs-wrapper').offset().top });
+
+
+
+
+
+  });
+
+
+    $.getJSON( "/post/course/explore_list/", function( data ) {
+        console.log(data);
+        $("#index-card").html('');
+        for(d in data)
+        {
+            $("#index-card").append('<div class="card">\
+                <div class="card-content ">\
+                  <span class="card-title black-text">'+data[d].title+"</span><p>" + data[d].description+'</div>\
+                <div class="card-action">\
+                  <a href="'+data[d].url+'">Detail</a>\
+                </div>\
+              </div>');
+
+            console.log(data[d].title);
+        }
+    });
+
+
+</script>
+
+{% endblock %}
 
 {% block page %}
-hello,{{ user.username }}
 
-    <div class="row">
-        <div class="col s12 m6">
-          <div class="card blue-grey darken-1">
-            <div class="card-content white-text">
-              <span class="card-title">Card Title</span>
-              <p>I am a very simple card. I am good at containing small bits of information.
-              I am convenient because I require little markup to use effectively.</p>
+    <div class="container top3">
+
+        <div class="row">
+            <div class="col s8">
+
+                <div id="index-card">
+                    <div class="center">
+                        <div class="preloader-wrapper big active">
+                          <div class="spinner-layer spinner-blue">
+                            <div class="circle-clipper left">
+                              <div class="circle"></div>
+                            </div><div class="gap-patch">
+                              <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                              <div class="circle"></div>
+                            </div>
+                          </div>
+
+                          <div class="spinner-layer spinner-red">
+                            <div class="circle-clipper left">
+                              <div class="circle"></div>
+                            </div><div class="gap-patch">
+                              <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                              <div class="circle"></div>
+                            </div>
+                          </div>
+
+                          <div class="spinner-layer spinner-yellow">
+                            <div class="circle-clipper left">
+                              <div class="circle"></div>
+                            </div><div class="gap-patch">
+                              <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                              <div class="circle"></div>
+                            </div>
+                          </div>
+
+                          <div class="spinner-layer spinner-green">
+                            <div class="circle-clipper left">
+                              <div class="circle"></div>
+                            </div><div class="gap-patch">
+                              <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                              <div class="circle"></div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+              <div class="card">
+                <div class="card-content ">
+                  <span class="card-title black-text">Card Title</span>
+                  <p>I am a very simple card. I am good at containing small bits of information.
+                  I am convenient because I require little markup to use effectively.</p>
+                </div>
+                <div class="card-action">
+                  <a href="#">This is a link</a>
+                  <a href='#'>This is a link</a>
+                </div>
+              </div>
+
+                <div class="card blue-grey darken-1">
+                <div class="card-content white-text">
+                  <span class="card-title">Card Title</span>
+                  <p>I am a very simple card. I am good at containing small bits of information.
+                  I am convenient because I require little markup to use effectively.</p>
+                </div>
+                <div class="card-action">
+                  <a href="#">This is a link</a>
+                  <a href='#'>This is a link</a>
+                </div>
+              </div>
+
+                <div class="card blue-grey darken-1">
+                <div class="card-content white-text">
+                  <span class="card-title">Card Title</span>
+                  <p>I am a very simple card. I am good at containing small bits of information.
+                  I am convenient because I require little markup to use effectively.</p>
+                </div>
+                <div class="card-action">
+                  <a href="#">This is a link</a>
+                  <a href='#'>This is a link</a>
+                </div>
+              </div>
+
+                <div class="card blue-grey darken-1">
+                <div class="card-content white-text">
+                  <span class="card-title">Card Title</span>
+                  <p>I am a very simple card. I am good at containing small bits of information.
+                  I am convenient because I require little markup to use effectively.</p>
+                </div>
+                <div class="card-action">
+                  <a href="#">This is a link</a>
+                  <a href='#'>This is a link</a>
+                </div>
+              </div>
+
+                <div class="card blue-grey darken-1">
+                <div class="card-content white-text">
+                  <span class="card-title">Card Title</span>
+                  <p>I am a very simple card. I am good at containing small bits of information.
+                  I am convenient because I require little markup to use effectively.</p>
+                </div>
+                <div class="card-action">
+                  <a href="#">This is a link</a>
+                  <a href='#'>This is a link</a>
+                </div>
+              </div>
+
+                <div class="card blue-grey darken-1">
+                <div class="card-content white-text">
+                  <span class="card-title">Card Title</span>
+                  <p>I am a very simple card. I am good at containing small bits of information.
+                  I am convenient because I require little markup to use effectively.</p>
+                </div>
+                <div class="card-action">
+                  <a href="#">This is a link</a>
+                  <a href='#'>This is a link</a>
+                </div>
+              </div>
             </div>
-            <div class="card-action">
-              <a href="#">This is a link</a>
-              <a href='#'>This is a link</a>
-            </div>
-          </div>
+
+
+            <div class="col offset-s1 s3">
+                <div class="toc-wrapper pinned">
+
+                    <ul class="collection">
+                      <li class="collection-item"><a href="{% url "announcement" %}">Announcement</a></li>
+                      <li class="collection-item"><a href="{% url "coin" %}">Coin</a></li>
+                      <li class="collection-item"><a href="{% url "post" %}">Post</a></li>
+                      <li class="collection-item"><a href="{% url "search" %}">Search</a></li>
+
+                    </ul>
+                </div>
+
+
         </div>
-      </div>
 
-<div class="row">
-    <div class="col s3">
-         <ul class="collection">
-      <li class="collection-item"><a href="{% url "announcement" %}">Announcement</a></li>
-      <li class="collection-item"><a href="{% url "coin" %}">Coin</a></li>
-      <li class="collection-item"><a href="{% url "post" %}">Post</a></li>
-      <li class="collection-item"><a href="{% url "search" %}">Search</a></li>
+          </div>
 
-    </ul>
-
-    </div>
+ <p><a href="http://127.0.0.1:8000/account/signup/?referral={{ user.username }}">refer link</a></p>
 </div>
-
 
 
 {% endblock %}

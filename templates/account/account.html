@@ -2,11 +2,14 @@
 {% load widget_tweaks %}
 {% block title %}Account{% endblock %}
 
-{% block page %}
- {% block extrahead %}
+{% block jquery-ui %}    <script src="/static/js/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+{% endblock %}
+
+{% block extrahead %}
 
      <link rel="stylesheet" href="/static/css/jquery-ui.css">
      <link rel="stylesheet" href="/static/css/jquery.tagit.css">
+
 
      <link rel="stylesheet" href="/static/css/tagit.ui-zendesk.css">
 <script src="/static/js/tag-it.js" type="text/javascript" charset="utf-8"></script>
@@ -84,6 +87,11 @@ $(document).ready(function() {
 </script>
 
  {% endblock %}
+
+
+
+{% block page %}
+
 
 
  <div class="row">

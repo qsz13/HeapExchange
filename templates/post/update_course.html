@@ -1,10 +1,12 @@
 {% extends "base.html" %}
-
-{% block title %} 创建课程 {% endblock %}
-
+{% load widget_tweaks %}
+{% block title %} 编辑课程 {% endblock %}
 
 {% block extrahead %}
-<script>
+{#    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">#}
+{#    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>#}
+{#    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>#}
+    <script>
     $(document).ready(function() {
          $('.datepicker').pickadate({
         selectMonths: true, // Creates a dropdown to control month
@@ -14,9 +16,12 @@
 
 
     </script>
+
+
 {% endblock %}
 
 {% block page %}
+
 
 
 <div class="row">
@@ -28,7 +33,7 @@
 
             <div class="row">
             <div class="col s10 offset-s1">
-            <p class="card-title black-text">创建课程</p>
+            <p class="card-title black-text">编辑课程</p>
             
             <div class="row">  
             <form action="." method="post">
@@ -49,7 +54,7 @@
                     <div class="fieldWrapper">
                         {{ form.time.errors }}
                         <label for="{{ form.time.id_for_label }}">时间:</label>
-                        <input  id="{{ form.time.id_for_label }}" name="{{ form.time.name }}" type="date" class="datepicker">
+                         <input  id="{{ form.time.id_for_label }}" name="{{ form.time.name }}" type="date" class="datepicker" value="{{ form.time.value }}">
                     </div>
                 </div>                
             </div>
@@ -59,7 +64,7 @@
                     <div class="fieldWrapper">
                         {{ form.deadline.errors }}
                         <label for="{{ form.deadline.id_for_label }}">截止日期:</label>
-                        <input  id="{{ form.deadline.id_for_label }}" name="{{ form.deadline.name }}" type="date" class="datepicker"">
+                        <input  id="{{ form.deadline.id_for_label }}" name="{{ form.deadline.name }}" type="date" class="datepicker" value="{{ form.deadline.value }}">
                     </div>
                 </div>                
             </div>
@@ -117,7 +122,8 @@
             </div>
 
             <div class="row">
-            <input class="btn btn-primary col offset-s5" type="submit" value="Submit"/>
+            <input class="btn btn-primary col offset-s4" type="submit" value="提交"/>
+            <a href="{% url 'remove_course' course.id %}" class="btn btn-primary red col offset-s1" >删除</a> 
             </div>
 
             </form>

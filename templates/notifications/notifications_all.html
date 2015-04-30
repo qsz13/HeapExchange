@@ -1,11 +1,53 @@
 {% extends "message/message_base.html" %}
 
 {% block page %}
+
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col offset-s2 s8">
+                <ul class="collection">
+                    {% for notice in notifications %}
+
+                        <li class="collection-item">
+                        {{ notice.actor }}{{ notice.verb }}
+
+                            <a class="close pull-right" href="{% url 'mark_as_read' notice.slug %}">mark as read</a>
+                        </li>
+                    {% endfor %}
+                    <li class="collection-item">asd</li>
+                </ul>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <ul class="notifications">
   {% for notice in notifications %}
         <div class="alert alert-block alert-{{ notice.level }}">
-  <a class="close pull-right" href="{% url 'notifications:mark_as_read' notice.slug %}">
-    <i class="icon-close"></i>
+  <a class="close pull-right" href="{% url 'mark_as_read' notice.slug %}">
+    <i class="icon-close">close</i>
   </a>
 
   <h4>

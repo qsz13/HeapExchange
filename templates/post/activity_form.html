@@ -1,23 +1,17 @@
 {% extends "base.html" %}
 
-{% block title %} 创建课程 {% endblock %}
-
-
-{% block extrahead %}
-<script>
-    $(document).ready(function() {
-         $('.datepicker').pickadate({
-        selectMonths: true, // Creates a dropdown to control month
-        selectYears: 15 // Creates a dropdown of 15 years to control year
-      });
-    });
-
-
-    </script>
-{% endblock %}
+{% block title %} 发起活动 {% endblock %}
 
 {% block page %}
 
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css"> 
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+<script>
+$(document).ready(function() {
+    $('.datepicker').datepicker();
+});
+</script>
 
 <div class="row">
 </div>
@@ -28,7 +22,7 @@
 
             <div class="row">
             <div class="col s10 offset-s1">
-            <p class="card-title black-text">创建课程</p>
+            <p class="card-title black-text">发起活动</p>
             
             <div class="row">  
             <form action="." method="post">
@@ -49,7 +43,7 @@
                     <div class="fieldWrapper">
                         {{ form.time.errors }}
                         <label for="{{ form.time.id_for_label }}">时间:</label>
-                        <input  id="{{ form.time.id_for_label }}" name="{{ form.time.name }}" type="date" class="datepicker">
+                        {{ form.time }}
                     </div>
                 </div>                
             </div>
@@ -59,7 +53,7 @@
                     <div class="fieldWrapper">
                         {{ form.deadline.errors }}
                         <label for="{{ form.deadline.id_for_label }}">截止日期:</label>
-                        <input  id="{{ form.deadline.id_for_label }}" name="{{ form.deadline.name }}" type="date" class="datepicker"">
+                        {{ form.deadline }}
                     </div>
                 </div>                
             </div>
@@ -104,17 +98,7 @@
                 </div>                
             </div>
 
-            <div class="row">
-                <div class="input-field">
-                    <div class="fieldWrapper">
-                        {{ form.price.errors }}
-                        <label for="{{ form.price.id_for_label }}">价格:</label>
-                        {{ form.price }}
-                    </div>
-                </div>                
-            </div>
-
-            </div>
+           </div>
 
             <div class="row">
             <input class="btn btn-primary col offset-s5" type="submit" value="Submit"/>

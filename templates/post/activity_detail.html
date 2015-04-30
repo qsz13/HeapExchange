@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %} {{ course.title}} {% endblock %}
+{% block title %} {{ activity.title}} {% endblock %}
 
 {% block page %}
 
@@ -16,16 +16,16 @@
                 <div class="row">
                         
                         <div class="row">
-                                <p class="card-title black-text">{{course.title}}</p>
+                                <p class="card-title black-text">{{activity.title}}</p>
                                 {% if is_self %}
-                                        <a class="col s2 offset-s11" href="{% url 'update_course' course.id %}">[编辑]</a>
+                                        <a class="col s2 offset-s11" href="{% url 'update_activity' activity.id %}">[编辑]</a>
                                 {% endif %}
                         </div>
-                        <p> <span class="green-text text-darken-1">By</span> {{ course.initiator}} </p>
-                        <p> <span class="green-text text-darken-1">课程时间 : </span>{{ course.time }} </p>
-                        <p> <span class="green-text text-darken-1">报名截止 : </span> {{ course.deadline }} </p>
-                        <p> <span class="green-text text-darken-1">地点 : </span> {{ course.location }} </p>
-                        <p> <span class="green-text text-darken-1">需求 : </span> {{ course.requirement }} </p>
+                        <p> <span class="green-text text-darken-1">By</span> {{ activity.initiator}} </p>
+                        <p> <span class="green-text text-darken-1">活动时间 : </span>{{ activity.time }} </p>
+                        <p> <span class="green-text text-darken-1">报名截止 : </span> {{ activity.deadline }} </p>
+                        <p> <span class="green-text text-darken-1">地点 : </span> {{ activity.location }} </p>
+                        <p> <span class="green-text text-darken-1">需求 : </span> {{ activity.requirement }} </p>
                         <p> <span class="green-text text-darken-1">状态 : </span> 
 
                         <span class="green-text text-darken-1"> {% if status == 'registering' %}  正在报名 {% endif %}</span>
@@ -33,33 +33,27 @@
                         <span class="red-text text-darken-1"> {% if status == 'end' %}  已结束 {% endif %} </span>
 
                         </p>
-                        <p> <span class="green-text text-darken-1">价格 : </span> 
-                                {% if course.price == 0 %}
-                                        免费
-                                {% else %}
-                                        {{ course.price }} <span class="green-text text-darken-1"> Q币 </span> 
-                                {% endif %}
-                        </p>
+                        
 
                         <p> <span class="green-text text-darken-1">人数 : </span> 
-                        {{ course.joined.count }} / {{ course.limit }} </p>
+                        {{ activity.joined.count }} / {{ activity.limit }} </p>
 
-                        <p> <span class="green-text text-darken-1">课程详情: </span></p>
-                        <p> {{ course.description }} </p>
+                        <p> <span class="green-text text-darken-1">活动详情: </span></p>
+                        <p> {{ activity.description }} </p>
 
                         {% if not is_self %}
                                 {% if not interested %}
-                                        <a class="waves-effect waves-light btn" href="{% url 'interest_course' course.id %}">我感兴趣</a>
+                                        <a class="waves-effect waves-light btn" href="{% url 'interest_activity' activity.id %}">我感兴趣</a>
                                 {% else %}
-                                        <a class="waves-effect waves-light btn red" href="{% url 'uninterest_course' course.id %}">已感兴趣</a>
+                                        <a class="waves-effect waves-light btn red" href="{% url 'uninterest_activity' activity.id %}">已感兴趣</a>
                                 {% endif %}
                                 {% if not has_joined %}
-                                        <a class="waves-effect waves-light btn" href="{% url 'join_course' course.id %}" >我要参加</a>
+                                        <a class="waves-effect waves-light btn" href="{% url 'join_activity' activity.id %}" >我要参加</a>
                                 {% else %}
-                                        {% if course.limit == course.joined.count %}
+                                        {% if activity.limit == activity.joined.count %}
                                                 <a class="btn disabled">已满员</a>
                                         {% else %}
-                                                <a class="waves-effect waves-light btn red" href="{% url 'unjoin_course' course.id %}">已参加</a>
+                                                <a class="waves-effect waves-light btn red" href="{% url 'unjoin_activity' activity.id %}">已参加</a>
                                         {% endif %}
                                 {% endif %}
                         {% endif %}
@@ -78,7 +72,7 @@
                 <div class="row card">
                         <div class="col s3 offset-s1">
                                 <p class="card-title black-text">PLACEHOLDER</p>
-                                <p>Similar Courses</p>
+                                <p>Similar activitys</p>
                         </div>
                 </div>
 
@@ -86,24 +80,24 @@
                 <div class="row">
                 </div>
 
-                {% if course.interested.count > 0 or course.joined.count > 0 %}
+                {% if activity.interested.count > 0 or activity.joined.count > 0 %}
                 <div class="row card">
                         <div class="col offset-s1">
                                 <p> 
-                                        {% if course.interested.count > 0 %}
-                                                {% for user in course.interested.all %}
+                                        {% if activity.interested.count > 0 %}
+                                                {% for user in activity.interested.all %}
                                                         {{ user }}  
                                                 {% endfor %}
-                                                对这门课感兴趣。
+                                                对这个活动感兴趣。
                                         {% endif %}
                                 </p>
 
                                 <p> 
-                                        {% if course.joined.count > 0 %}
-                                                {% for user in course.joined.all %}
+                                        {% if activity.joined.count > 0 %}
+                                                {% for user in activity.joined.all %}
                                                         {{ user }}  
                                                 {% endfor %}
-                                                参加了这门课。
+                                                参加了这个活动。
                                         {% endif %}
                                 </p>                                
                         </div>
