@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}所有标签{% endblock %}
+
+{% block extrahead %}
+<style type="text/css">
+p.big {line-height: 350%}
+</style>
+{% endblock %}
+
+{% block page %}
+
+<div class="row">
+<div class="col s10 offset-s1">
+
+
+            <div class="row">
+            </div>
+
+
+	<div class="row">
+                    <ul id="dropdown2" class="dropdown-content">
+                            <li><a href="{% url 'all_course' %}">所有POST<span class="badge"></span></a></li>
+                            <li><a href="{% url 'posted_course' %}">我发布的<span class="badge"></span></a></li>
+                            <li><a href="{% url 'joined_course' %}">我参加的<span class="badge"></span></a></li>
+                            <li><a href="{% url 'interested_course' %}">我感兴趣的<span class="badge"></span></a></li>
+                            <li><a href="{% url 'all_tag' %}">所有标签<span class="badge"></span></a></li>
+                    </ul>
+                    <a class="btn dropdown-button" href="#!" data-activates="dropdown2">所有标签<i class="mdi-navigation-arrow-drop-down right"></i></a>
+            </div>
+
+            <div class="row">
+            <div class="col s10 offset-s1">
+	<div class="card">
+		<div class="col s11 offset-s1">
+		<div class="row"></div>
+			<p class="big">
+			{% for tag in tag_list %}
+			<span><a class="waves-effect waves-light btn red accent-2" href="{% url 'tagview' tag.id %}"><i class="mdi-image-style left"></i>{{ tag.name }}</a></span>
+			{% endfor %}
+			</p>
+		<div class="row"></div>
+		</div>
+	</div>
+	</div>
+	</div>
+
+</div>
+</div>
+{% endblock %}

@@ -26,11 +26,13 @@ class Course(Post):
     joined = models.ManyToManyField(User, related_name="c_joins")
     interested = models.ManyToManyField(User, related_name="c_interests")
     price = models.IntegerField(default=0)
+    flag = models.IntegerField(default=0)
 
 
     def get_absolute_url(self):
         path = reverse('course_detail', args=[self.id])
         return path
+
 
 
 class Activity(Post):
@@ -39,10 +41,12 @@ class Activity(Post):
     interested = models.ManyToManyField(User, related_name="a_interests")
 
 
+
 class Tag(models.Model):
     name = models.CharField(max_length=20)
     course = models.ManyToManyField(Course, related_name='tag')
     activity = models.ManyToManyField(Activity, related_name='tag')
+    flag = models.IntegerField(default=1)
 
     def __unicode__(self):
         return self.name

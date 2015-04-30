@@ -334,3 +334,20 @@ def course_add_tag(request, course_id):
         tags = course.tag.all()
 
     return render(request, 'post/add_tag.html', {'tags':tags})
+
+
+def alltag(request):
+    tag_list = Tag.objects.all()
+    return render(request, 'post/alltag.html', {'tag_list':tag_list})
+
+def tagview(request, tag_id):
+    tag = get_object_or_404(Tag, id=tag_id)
+    list = []
+    course_list = Course.objects.filter(tag=tag)
+    for course in course_list:
+        list.append(course)
+    activity_list = Activity.objects.filter(tag=tag)
+    for activity in activity_list:
+        list.append(activity)
+    
+    return render(request, 'post/tagview.html', {'post_list':list, 'tag':tag})
