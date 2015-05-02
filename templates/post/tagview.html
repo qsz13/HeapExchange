@@ -15,7 +15,7 @@
 
             <div class="row">
                     <ul id="dropdown2" class="dropdown-content">
-                            <li><a href="{% url 'all_tag' %}">所有标签<span class="badge"></span></a></li>
+                            <li><a href="{% url 'all_tags' %}">所有标签<span class="badge"></span></a></li>
                     </ul>
                     <a class="btn dropdown-button" href="#!" data-activates="dropdown2">标签：<i class="mdi-navigation-arrow-drop-down right"></i></a>
                     <span><a class="waves-effect waves-light btn red accent-2"><i class="mdi-image-style left"></i>{{ tag.name }}</a></span>
@@ -33,11 +33,7 @@
                                             <div class="collapsible-header"> {{ post.title }} </div>
                                             <div class="collapsible-body">
                                                     <p> {{ post.description }} </p>
-                                                    {% if post.flag == 0 %}
-                                                        <p><a href="{% url 'course_detail' post.id%}">详细</a></p>
-                                                    {% else %}
-                                                        <p><a href="{% url 'activity_detail' post.id%}">详细</a></p>
-                                                    {% endif %}
+                                                        <p><a href="{% url 'detail' post.flag post.id%}">详细</a></p>
                                             </div>
                                             </li>
                                     {% endfor %}

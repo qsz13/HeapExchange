@@ -6,9 +6,9 @@ from django.db import models
 
 class Post(models.Model):
     title = models.CharField(max_length=100, null=True)
-    time = models.DateField()
+    time = models.DateField(null=True)
     description = models.CharField(max_length=500, null=True)
-    deadline = models.DateField()
+    deadline = models.DateField(null=True)
     location = models.CharField(max_length=100, null=True)
     requirement = models.CharField(max_length=500, null=True)
     initialtime = models.DateTimeField(auto_now=True)
@@ -22,31 +22,28 @@ class Post(models.Model):
 
 
 class Course(Post):
-    initiator = models.ForeignKey(User, default=1, related_name='c_initiator')
-    joined = models.ManyToManyField(User, related_name="c_joins")
-    interested = models.ManyToManyField(User, related_name="c_interests")
+    initiator = models.ForeignKey(User, default=1, related_name='courses')
+    joined = models.ManyToManyField(User, related_name="joined_courses")
+    interested = models.ManyToManyField(User, related_name="interested_courses")
     price = models.IntegerField(default=0)
-    flag = models.IntegerField(default=0)
-
+    flag = models.CharField(max_length=1, default='c')
 
     def get_absolute_url(self):
         path = reverse('course_detail', args=[self.id])
         return path
 
 
-
 class Activity(Post):
-    initiator = models.ForeignKey(User, default=1, related_name='a_initiator')
-    joined = models.ManyToManyField(User, related_name="a_joins")
-    interested = models.ManyToManyField(User, related_name="a_interests")
-
+    initiator = models.ForeignKey(User, default=1, related_name='activities')
+    joined = models.ManyToManyField(User, related_name="joined_activities")
+    interested = models.ManyToManyField(User, related_name="interested_activities")
+    flag = models.CharField(max_length=1, default='a')
 
 
 class Tag(models.Model):
     name = models.CharField(max_length=20)
-    course = models.ManyToManyField(Course, related_name='tag')
-    activity = models.ManyToManyField(Activity, related_name='tag')
-    flag = models.IntegerField(default=1)
+    course = models.ManyToManyField(Course, related_name='tags')
+    activity = models.ManyToManyField(Activity, related_name='tags')
 
     def __unicode__(self):
         return self.name

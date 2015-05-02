@@ -1,0 +1,17 @@
+{% extends "post/lv_base.html" %}
+
+{% block title %}我的兴趣{% endblock %}
+
+{% block current_tab %}
+
+<a class="btn dropdown-button" href="#!" data-activates="dropdown2">我感兴趣的<i class="mdi-navigation-arrow-drop-down right"></i></a>
+
+{% if kind == 'c' %}
+    <a class="waves-effect waves-light btn red" href="{% url 'interested' 'c'%}">课程</a>
+    <a class="waves-effect waves-light btn" href="{% url 'interested' 'a'%}">活动</a>
+{% else %}
+    <a class="waves-effect waves-light btn" href="{% url 'interested' 'c'%}">课程</a>
+    <a class="waves-effect waves-light btn red" href="{% url 'interested' 'a'%}">活动</a>
+{% endif %}
+
+{% endblock %}

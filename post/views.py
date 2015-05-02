@@ -27,255 +27,148 @@ class CourseCreateView(LoginRequiredMixin, CreateView):
     template_name = "post/course_create_form.html"
 
 
+@login_required
+def create(request, kind):
+    if request.method == 'POST':
+        if kind == 'a':
+            form = ActivityForm(request.POST)
+        else:
+            form = CourseForm(request.POST)
+        if form.is_valid():
+            new_form = form.save(commit=False)
+            new_form.initiator = User.objects.get(id=request.user.id)
+            new_form.initialtime = datetime.now()
+            new_form.save()
+            return redirect('posted', kind=kind)
+    else:
+        if kind == 'a':
+            form = ActivityForm()
+        else:
+            form = CourseForm()
+        return render(request, 'post/create.html', {'form': form, 'kind': kind})
 
 
 @login_required
-def create_course(request):
-    if request.method == 'POST':
-        form = CourseForm(request.POST)
-        if form.is_valid():
-            # do sth
-            new_f = form.save(commit=False)
-            # initiator
-            user = User.objects.get(id=request.user.id)
-            new_f.initiator = user
-            # initialtime
-            new_f.initialtime = datetime.now()
-            new_f.save()
+def detail(request, kind, id):
+    if kind == 'a':
+        post = Activity.objects.get(id=id)
+    elif kind == 'c':
+        post = Course.objects.get(id=id)
 
-            return redirect('posted_course')
-    else:
-        form = CourseForm()
+    initiator = post.initiator
+    ini_list = []
+    for item in initiator.courses.all():
+        if item != post:
+            ini_list.append(item)
+    for item in initiator.activities.all():
+        if item != post:
+            ini_list.append(item)
 
-        return render(request, 'post/course_form.html', {'form': form})
-
-
-@login_required
-def create_activity(request):
-    if request.method == 'POST':
-        form = ActivityForm(request.POST)
-        if form.is_valid():
-            # do sth
-            new_f = form.save(commit=False)
-            # initiator
-            user = User.objects.get(id=request.user.id)
-            new_f.initiator = user
-            # initialtime
-            new_f.initialtime = datetime.now()
-            new_f.save()
-
-            return redirect('posted_activity')
-    else:
-        form = ActivityForm()
-
-        return render(request, 'post/activity_form.html', {'form': form})
-
-
-
-def course_detail(request, course_id):
-    course = Course.objects.get(id=course_id)
-    ini = course.initiator
-    list = []
-    for c in ini.c_initiator.all():
-        if c != course:
-            list.append(c)
-    for a in ini.a_initiator.all():
-        list.append(a)
-
-    if course.initiator == request.user:
+    context_dict = {}
+    if initiator == request.user:
         is_self = True
     else:
         is_self = False
-    if request.user in course.joined.all():
+
+    if request.user in post.joined.all():
         has_joined = True
     else:
         has_joined = False
-    if request.user in course.interested.all():
+
+    if request.user in post.interested.all():
         interested = True
     else:
         interested = False
-    if datetime.date(datetime.now()) >= course.deadline:
+
+    if datetime.date(datetime.now()) >= post.deadline:
         status = 'registering'
-    elif datetime.date(datetime.now()) < course.deadline and datetime.date(datetime.now()) > course.time:
+    elif datetime.date(datetime.now()) < post.deadline and datetime.date(datetime.now()) > post.time:
         status = 'tobegin'
     else:
         status = 'end'
 
-    return render(request, 'post/course_detail.html', {'course': course,
-                                                       'related_list':list,
-                                                       'is_self': is_self,
-                                                       'has_joined': has_joined,
-                                                       'interested': interested, 
-                                                       'status' : status,
-                                                       })
+    return render(request,
+                  'post/detail.html',
+                  {'kind': kind, 'post': post, 'list': ini_list, 'is_self': is_self, 'has_joined': has_joined, 'interested': interested, 'status': status})
 
 
-def activity_detail(request, activity_id):
-    activity = Activity.objects.get(id=activity_id)
-    ini = activity.initiator
-    list = []
-    for c in ini.c_initiator.all():
-        list.append(c)
-    for a in ini.a_initiator.all():
-        if a != activity:
-            list.append(a)
-    if activity.initiator == request.user:
-        is_self = True
+def all(request, kind='c'):
+    if kind == 'a':
+        list = Activity.objects.exclude(initiator=request.user)
+    elif kind == 'c':
+        list = Course.objects.exclude(initiator=request.user)
+    return render(request, 'post/all.html', {'list': list, 'kind': kind})
+
+
+@login_required
+def posted(request, kind):
+    if kind == 'a':
+        list = Activity.objects.filter(initiator=request.user)
+    elif kind == 'c':
+        list = Course.objects.filter(initiator=request.user)
+    return render(request, 'post/posted.html', {'list': list, 'kind': kind})
+
+
+@login_required
+def joined(request, kind):
+    if kind == 'a':
+        list = request.user.joined_activities.all()
     else:
-        is_self = False
-    if request.user in activity.joined.all():
-        has_joined = True
+        list = request.user.joined_courses.all()
+    return render(request, 'post/joined.html', {'list': list, 'kind': kind})
+
+
+@login_required
+def interested(request, kind):
+    if kind == 'a':
+        list = request.user.interested_activities.all()
     else:
-        has_joined = False
-    if request.user in activity.interested.all():
-        interested = True
+        list = request.user.interested_courses.all()
+    return render(request, 'post/interested.html', {'list': list, 'kind': kind})
+
+
+@login_required
+def join(request, kind, id):
+    if kind == 'a':
+        post = get_object_or_404(Activity, id=id)
     else:
-        interested = False
-    if datetime.date(datetime.now()) >= activity.deadline:
-        status = 'registering'
-    elif datetime.date(datetime.now()) < activity.deadline and activity.date(datetime.now()) > activity.time:
-        status = 'tobegin'
+        post = get_object_or_404(Course, id=id)
+    post.joined.add(request.user)
+    post.save()
+    return redirect('detail', kind=kind, id=id)
+
+
+@login_required
+def unjoin(request, kind, id):
+    if kind == 'a':
+        post = get_object_or_404(Activity, id=id)
     else:
-        status = 'end'
-    return render(request, 'post/activity_detail.html', {'activity': activity,
-                                                       'related_list':list,
-                                                       'is_self': is_self,
-                                                       'has_joined': has_joined,
-                                                       'interested': interested,
-                                                       'status': status})
-
-
-
-
-def all_course(request):
-    user = request.user
-    course_list = Course.objects.exclude(initiator=user)
-    return render(request, 'post/all_course.html', {'course_list': course_list})
-
-
-def all_activity(request):
-    user = request.user
-    activity_list = Activity.objects.exclude(initiator=user)
-    return render(request, 'post/all_activity.html', {'activity_list': activity_list})
-
-
+        post = get_object_or_404(Course, id=id)
+    post.joined.remove(request.user)
+    post.save()
+    return redirect('detail', kind=kind, id=id)
 
 
 @login_required
-def posted_course(request):
-    user = request.user
-    course_list = Course.objects.filter(initiator=user)
-    return render(request, 'post/posted_course.html', {'course_list': course_list})
+def interest(request, kind, id):
+    if kind == 'a':
+        post = get_object_or_404(Activity, id=id)
+    else:
+        post = get_object_or_404(Course, id=id)
+    post.interested.add(request.user)
+    post.save()
+    return redirect('detail', kind=kind, id=id)
 
 
 @login_required
-def posted_activity(request):
-    user = request.user
-    activity_list = Activity.objects.filter(initiator=user)
-    return render(request, 'post/posted_activity.html', {'activity_list': activity_list})
-
-
-
-@login_required
-def joined_course(request):
-    user = request.user
-    course_list = user.c_joins.all()
-    return render(request, 'post/joined_course.html', {'course_list': course_list})
-
-
-@login_required
-def joined_activity(request):
-    user = request.user
-    activity_list = user.a_joins.all()
-    return render(request, 'post/joined_activity.html', {'activity_list': activity_list})
-
-
-
-@login_required
-def interested_course(request):
-    user = request.user
-    course_list = user.c_interests.all()
-    return render(request, 'post/interested_course.html', {'course_list': course_list})
-
-
-@login_required
-def interested_activity(request):
-    user = request.user
-    activity_list = user.a_interests.all()
-    return render(request, 'post/interested_activity.html', {'activity_list': activity_list})
-
-
-
-@login_required
-def join_course(request, course_id):
-    user = request.user
-    course = Course.objects.get(id=course_id)
-    course.joined.add(user)
-    course.save()
-    return redirect('course_detail', course_id=course_id)
-
-
-@login_required
-def unjoin_course(request, course_id):
-    user = request.user
-    course = Course.objects.get(id=course_id)
-    course.joined.remove(user)
-    course.save()
-    return redirect('course_detail', course_id=course_id)
-
-
-@login_required
-def interest_course(request, course_id):
-    user = request.user
-    course = Course.objects.get(id=course_id)
-    course.interested.add(user)
-    course.save()
-    return redirect('course_detail', course_id=course_id)
-
-
-@login_required
-def uninterest_course(request, course_id):
-    user = request.user
-    course = Course.objects.get(id=course_id)
-    course.interested.remove(user)
-    course.save()
-    return redirect('course_detail', course_id=course_id)
-
-
-@login_required
-def join_activity(request, activity_id):
-    user = request.user
-    activity = activity.objects.get(id=activity_id)
-    activity.joined.add(user)
-    activity.save()
-    return redirect('activity_detail', activity_id=activity_id)
-
-
-@login_required
-def unjoin_activity(request, activity_id):
-    user = request.user
-    activity = activity.objects.get(id=activity_id)
-    activity.joined.remove(user)
-    activity.save()
-    return redirect('activity_detail', activity_id=activity_id)
-
-
-@login_required
-def interest_activity(request, activity_id):
-    user = request.user
-    activity = activity.objects.get(id=activity_id)
-    activity.interested.add(user)
-    activity.save()
-    return redirect('activity_detail', activity_id=activity_id)
-
-
-@login_required
-def uninterest_activity(request, activity_id):
-    user = request.user
-    activity = activity.objects.get(id=activity_id)
-    activity.interested.remove(user)
-    activity.save()
-    return redirect('activity_detail', activity_id=activity_id)
+def uninterest(request, kind, id):
+    if kind == 'a':
+        post = get_object_or_404(Activity, id=id)
+    else:
+        post = get_object_or_404(Course, id=id)
+    post.interested.remove(request.user)
+    post.save()
+    return redirect('detail', kind=kind, id=id)
 
 
 def all_tags(request):
@@ -288,37 +181,29 @@ def all_tags(request):
 
 
 @login_required
-def update_course(request, course_id):
-    course = get_object_or_404(Course, id=course_id)
-    form = CourseForm(request.POST or None, instance=course)
+def update(request, kind, id):
+    if kind == 'a':
+        post = get_object_or_404(Activity, id=id)
+        form = ActivityForm(request.POST or None, instance=post)
+        token = "ACTIVITY"
+    else:
+        post = get_object_or_404(Course, id=id)
+        form = CourseForm(request.POST or None, instance=post)
+        token = "COURSE"
     if form.is_valid():
         form.save()
-        return redirect('course_detail', course_id)
-    return render(request, 'post/update_course.html', {'form': form, 'course':course})
+        return redirect('detail', kind, id)
+    return render(request, 'post/update.html', {'form': form, 'post': post, 'token': token})
 
 
 @login_required
-def update_activity(request, activity_id):
-    activity = get_object_or_404(Activity, id=activity_id)
-    form = ActivityForm(request.POST or None, instance=activity)
-    if form.is_valid():
-        form.save()
-        return redirect('activity_detail', activity_id)
-    return render(request, 'post/update_activity.html', {'form': form, 'activity':activity})
-
-
-@login_required
-def remove_course(request, course_id):
-    course = get_object_or_404(Course, id=course_id)
-    course.delete()
-    return redirect('posted_course')
-
-@login_required
-def remove_activity(request, activity_id):
-    activity = get_object_or_404(Activity, id=activity_id)
-    activity.delete()
-    return redirect('posted_activity')
-
+def remove(request, kind, id):
+    if kind == 'a':
+        post = get_object_or_404(Activity, id=id)
+    else:
+        post = get_object_or_404(Course, id=id)
+    post.delete()
+    return redirect('posted', kind=kind)
 
 
 class CourseExploreList(APIView):
@@ -334,49 +219,33 @@ class CourseExploreList(APIView):
         return Response(serializer.data)
 
 
+def add_tag(request, kind, id):
+    if kind == 'a':
+        post = get_object_or_404(Activity, id=id)
+    else:
+        post = get_object_or_404(Course, id=id)
 
-def course_add_tag(request, course_id):
-    course = Course.objects.get(id=course_id)
     if request.method == 'POST':
         tags = request.POST.getlist('tags')
-            #print tags
-        course.tag.clear()
+        # print tags
+        post.tags.clear()
         for tag in tags:
             t, created = Tag.objects.get_or_create(name=tag.lower())
-            course.tag.add(t)
-        course.save()
-        return redirect('course_detail', course_id=course_id)
-
+            post.tags.add(t)
+        post.save()
+        return redirect('detail', kind=kind, id=id)
     else:
-        tags = course.tag.all()
+        tags = post.tags.all()
 
-    return render(request, 'post/add_tag.html', {'tags':tags, 'item':course})
-
-
-def activity_add_tag(request, activity_id):
-    activity = Activity.objects.get(id=activity_id)
-    if request.method == 'POST':
-        tags = request.POST.getlist('tags')
-            #print tags
-        activity.tag.clear()
-        for tag in tags:
-            t, created = Tag.objects.get_or_create(name=tag.lower())
-            activity.tag.add(t)
-        activity.save()
-        return redirect('activity_detail', activity_id=activity_id)
-
-    else:
-        tags = activity.tag.all()
-
-    return render(request, 'post/add_tag.html', {'tags':tags, 'item':activity})
+    return render(request, 'post/addtag.html', {'tags': tags, 'item': post})
 
 
-
-def alltag(request):
+def all_tags(request):
     tag_list = Tag.objects.all()
-    return render(request, 'post/alltag.html', {'tag_list':tag_list})
+    return render(request, 'post/all_tags.html', {'tag_list': tag_list})
 
-def tagview(request, tag_id):
+
+def tag_view(request, tag_id):
     tag = get_object_or_404(Tag, id=tag_id)
     list = []
     course_list = Course.objects.filter(tag=tag)
@@ -385,5 +254,5 @@ def tagview(request, tag_id):
     activity_list = Activity.objects.filter(tag=tag)
     for activity in activity_list:
         list.append(activity)
-    
-    return render(request, 'post/tagview.html', {'post_list':list, 'tag':tag})
+
+    return render(request, 'post/tagview.html', {'post_list': list, 'tag': tag})

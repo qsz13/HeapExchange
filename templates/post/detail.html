@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %} {{ activity.title}} {% endblock %}
+{% block title %} {{ post.title }} {% endblock %}
 
 {% block page %}
 
@@ -16,16 +16,16 @@
                 <div class="row">
                         
                         <div class="row">
-                                <p class="card-title black-text">{{activity.title}}</p>
+                                <p class="card-title black-text">{{post.title}}</p>
                                 {% if is_self %}
-                                        <a class="col s2 offset-s11" href="{% url 'update_activity' activity.id %}">[编辑]</a>
+                                        <a class="col s2 offset-s11" href="{% url 'update' post.flag post.id %}">[编辑]</a>
                                 {% endif %}
                         </div>
-                        <p> <span class="green-text text-darken-1">By</span> {{ activity.initiator}} </p>
-                        <p> <span class="green-text text-darken-1">活动时间 : </span>{{ activity.time }} </p>
-                        <p> <span class="green-text text-darken-1">报名截止 : </span> {{ activity.deadline }} </p>
-                        <p> <span class="green-text text-darken-1">地点 : </span> {{ activity.location }} </p>
-                        <p> <span class="green-text text-darken-1">需求 : </span> {{ activity.requirement }} </p>
+                        <p> <span class="green-text text-darken-1">By</span> {{ post.initiator}} </p>
+                        <p> <span class="green-text text-darken-1">活动时间 : </span>{{ post.time }} </p>
+                        <p> <span class="green-text text-darken-1">报名截止 : </span> {{ post.deadline }} </p>
+                        <p> <span class="green-text text-darken-1">地点 : </span> {{ post.location }} </p>
+                        <p> <span class="green-text text-darken-1">需求 : </span> {{ post.requirement }} </p>
                         <p> <span class="green-text text-darken-1">状态 : </span> 
 
                         <span class="green-text text-darken-1"> {% if status == 'registering' %}  正在报名 {% endif %}</span>
@@ -36,24 +36,24 @@
                         
 
                         <p> <span class="green-text text-darken-1">人数 : </span> 
-                        {{ activity.joined.count }} / {{ activity.limit }} </p>
+                        {{ post.joined.count }} / {{ post.limit }} </p>
 
                         <p> <span class="green-text text-darken-1">活动详情: </span></p>
-                        <p> {{ activity.description }} </p>
+                        <p> {{ post.description }} </p>
 
                         {% if not is_self %}
                                 {% if not interested %}
-                                        <a class="waves-effect waves-light btn" href="{% url 'interest_activity' activity.id %}">我感兴趣</a>
+                                        <a class="waves-effect waves-light btn" href="{% url 'interest' kind=post.flag id=post.id %}">我感兴趣</a>
                                 {% else %}
-                                        <a class="waves-effect waves-light btn red" href="{% url 'uninterest_activity' activity.id %}">已感兴趣</a>
+                                        <a class="waves-effect waves-light btn red" href="{% url 'uninterest' kind=post.flag id=post.id %}">已感兴趣</a>
                                 {% endif %}
                                 {% if not has_joined %}
-                                        <a class="waves-effect waves-light btn" href="{% url 'join_activity' activity.id %}" >我要参加</a>
+                                        <a class="waves-effect waves-light btn" href="{% url 'join' kind=post.flag id=post.id %}" >我要参加</a>
                                 {% else %}
-                                        {% if activity.limit == activity.joined.count %}
+                                        {% if post.limit == post.joined.count %}
                                                 <a class="btn disabled">已满员</a>
                                         {% else %}
-                                                <a class="waves-effect waves-light btn red" href="{% url 'unjoin_activity' activity.id %}">已参加</a>
+                                                <a class="waves-effect waves-light btn red" href="{% url 'unjoin' kind=post.flag id=post.id %}">已参加</a>
                                         {% endif %}
                                 {% endif %}
                         {% endif %}
@@ -70,35 +70,32 @@
                 </div>
 
                 <div class="row card">
-                        <div class="row"></div>
-                                <div class="row">
-                                        <span class="col s1"><a class="waves-effect waves-teal btn-flat text-black"><i><img src="/media/{{ course.initiator.profile.avatar }}" alt="" height="30px" width="30px"class="circle nav-avatar"></i></a></span>
-                                </div>
-                                <div class="col offset-s1">
-                                        <p> {{course.initiator}} 的条目: </p>
-                                        <p>
-                                        {% for c in related_list %}
-                                                {% if c.flag == 0%}
-                                                        <li> <a href ="{% url 'course_detail' c.id %}"> {{ c.title }}</a></li>
-                                                {% else %}
-                                                        <li> <a href ="{% url 'activity_detail' c.id %}"> {{ c.title }}</a></li>
-                                                {% endif %}
-                                        {% endfor %}
-                                        </p>
-                                </div>
+                    <div class="row top5">
+                        <div class="col top3 s2">
+                            <span><a class="waves-effect waves-teal btn-flat text-black"><i><img src="/media/{{ post.initiator.profile.avatar }}" alt="" height="30px" width="30px"class="circle nav-avatar"></i></a></span>
+                        </div>
+                        <div class="col s9 offset-s1">
+                                <p> {{post.initiator}} 的条目: </p>
+                                <p>
+                                {% for item in list %}
+                                        <li> <a href ="{% url 'detail' item.flag item.id %}"> {{ item.title }}</a></li>
+                                {% endfor %}
+                                </p>
+                        </div>
+                    </div>
                 </div>
 
 
                 <div class="row">
                 </div>
 
-                {% if activity.interested.count > 0 or activity.joined.count > 0 %}
+                {% if post.interested.count > 0 or post.joined.count > 0 %}
                 <div class="row card">
                         <div class="col offset-s1">
                         <p class="card-title black-text">兴趣&参加</p>
                                 <p> 
-                                        {% if activity.interested.count > 0 %}
-                                                {% for user in activity.interested.all %}
+                                        {% if post.interested.count > 0 %}
+                                                {% for user in post.interested.all %}
                                                         {{ user }}  
                                                 {% endfor %}
                                                 对这个活动感兴趣。
@@ -106,8 +103,8 @@
                                 </p>
 
                                 <p> 
-                                        {% if activity.joined.count > 0 %}
-                                                {% for user in activity.joined.all %}
+                                        {% if post.joined.count > 0 %}
+                                                {% for user in post.joined.all %}
                                                         {{ user }}  
                                                 {% endfor %}
                                                 参加了这个活动。
@@ -121,12 +118,12 @@
                         <div class="col offset-s1">
                                 <p class="card-title black-text">相关标签</p>
                                         <p>
-                                                {% for t in activity.tag.all %}
+                                                {% for t in post.tags.all %}
                                                         <span><a class="waves-effect waves-light btn red accent-2" href="{% url 'tagview' t.id %}"><i class="mdi-image-style left"></i>{{ t.name }}</a></span>
                                                 {% endfor %}
                                                 <!-- add link -->
                                         </p>
-                                        <p><a href="{% url 'activity_add_tag' activity.id%}">为活动添加标签</a></p>
+                                        <p><a href="{% url 'addtag' post.flag post.id%}">为活动添加标签</a></p>
                         </div>
                 </div>
 

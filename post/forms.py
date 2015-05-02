@@ -3,7 +3,7 @@ from .models import Course, Activity
 from django import forms
 from functools import partial
 
-DateInput = partial(forms.DateTimeInput, {'class': 'datepicker','type':'date'})
+DateInput = partial(forms.DateInput, {'class': 'datepicker','type':'date'})
 
 class CourseForm(ModelForm):
     class Meta:
@@ -11,8 +11,8 @@ class CourseForm(ModelForm):
         fields = ['title', 'location', 'time', 'deadline', 'description', 'requirement', 'limit', 'price']
         widgets = {
         	'title' : forms.TextInput(),
-            # 'time' : DateInput(),
-            # 'deadline' : DateInput(),
+            'time' : forms.DateInput(attrs={'class':'datepicker', 'type':'text'}),
+            'deadline' : forms.DateInput(attrs={'class':'datepicker'}),
             'limit' : forms.NumberInput(),
             'description' : Textarea(attrs = {'cols' : 80, 'rows' : 20, 'class':'materialize-textarea'}),
             'price' : forms.NumberInput(),
