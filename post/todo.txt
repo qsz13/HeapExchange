@@ -1,9 +1,5 @@
-- Course
-	- view detail & layout
-	- form layout
-	- join conditional tag
-	- interest
-	- edit & update
-	- delete
-- Activity
-	- same as above
+- Search
+- Picture
+- List view display
+- Detail page layout
+- Joined % interested list diaplay with avator

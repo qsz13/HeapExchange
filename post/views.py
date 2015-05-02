@@ -106,7 +106,7 @@ def posted(request, kind):
         list = Activity.objects.filter(initiator=request.user)
     elif kind == 'c':
         list = Course.objects.filter(initiator=request.user)
-    return render(request, 'post/posted.html', {'list': list, 'kind': kind})
+    return render(request, 'post/posted.html', {'list': list, 'kind': kind, 'is_posted': True})
 
 
 @login_required
