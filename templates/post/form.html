@@ -1,6 +1,20 @@
 {% extends "base.html" %}
 
-{% block title %} Posted Courses {% endblock %}
+{% block title %}
+
+    {% if action == 'create' %}
+        创建
+    {% elif action == 'update' %}
+        编辑
+    {% endif %}
+
+    {% if kind == 'c' %}
+        课程
+    {% elif kind == 'a' %}
+        活动
+    {% endif %}
+
+{% endblock %}
 
 {% block extrahead %}
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css"> 
@@ -24,7 +38,19 @@ $(document).ready(function() {
 
             <div class="row">
             <div class="col s10 offset-s1">
-            <p class="card-title black-text">创建课程</p>
+            <p class="card-title black-text">
+                {% if action == 'create' %}
+                    创建
+                {% elif action == 'update' %}
+                    编辑
+                {% endif %}
+
+                {% if kind == 'c' %}
+                    课程
+                {% elif kind == 'a' %}
+                    活动
+                {% endif %}
+            </p>
             
             <div class="row">  
             <form action="." method="post">
@@ -100,6 +126,7 @@ $(document).ready(function() {
                 </div>                
             </div>
 
+            {% if kind == 'c' %}
             <div class="row">
                 <div class="input-field">
                     <div class="fieldWrapper">
@@ -109,11 +136,20 @@ $(document).ready(function() {
                     </div>
                 </div>                
             </div>
+            {% endif %}
 
             </div>
 
             <div class="row">
-            <input class="btn btn-primary col offset-s5" type="submit" value="Submit"/>
+                <div class="col s2 offset-s3">
+                    <input class="btn btn-primary col offset-s5" type="submit" value="提交"/>
+                </div>
+            
+                {%if action == 'update'%}
+                <div class="col s2 offset-s1">
+                    <a class="waves-effect waves-light btn red" href="{% url 'remove' post.flag post.id %}">删除</a>
+                </div>
+                {% endif %}
             </div>
 
             </form>

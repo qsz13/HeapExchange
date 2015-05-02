@@ -25,8 +25,8 @@ class ActivityForm(ModelForm):
         fields = ['title', 'location', 'time', 'deadline', 'description', 'requirement', 'limit']
         widgets = {
             'title' : forms.TextInput(),
-            'time' : DateInput(),
-            'deadline' : DateInput(),
+            'time' : forms.DateInput(attrs={'class':'datepicker', 'type':'text'}),
+            'deadline' : forms.DateInput(attrs={'class':'datepicker'}),
             'limit' : forms.NumberInput(),
             'description' : Textarea(attrs = {'cols' : 80, 'rows' : 20, 'class':'materialize-textarea'}),
         }

@@ -24,9 +24,9 @@ urlpatterns = [
                        
                        # post actions
                        url(r'^join/(?P<kind>[a,c]{1})/(?P<id>[0-9]+)/$', views.join, name='join'),
-                       url(r'^unjoin/(?P<kind>[a,c]{1})/(?P<id>[0-9]+)/$', views.join, name='unjoin'),
-                       url(r'^interest/(?P<kind>[a,c]{1})/(?P<id>[0-9]+)/$', views.join, name='interest'),
-                       url(r'^uninterest/(?P<kind>[a,c]{1})/(?P<id>[0-9]+)/$', views.join, name='uninterest'),
+                       url(r'^unjoin/(?P<kind>[a,c]{1})/(?P<id>[0-9]+)/$', views.unjoin, name='unjoin'),
+                       url(r'^interest/(?P<kind>[a,c]{1})/(?P<id>[0-9]+)/$', views.interest, name='interest'),
+                       url(r'^uninterest/(?P<kind>[a,c]{1})/(?P<id>[0-9]+)/$', views.uninterest, name='uninterest'),
 
                        url(r'^course/explore_list/', views.CourseExploreList.as_view(), name='course_explore_list_api'),
                        

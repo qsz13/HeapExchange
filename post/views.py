@@ -45,7 +45,7 @@ def create(request, kind):
             form = ActivityForm()
         else:
             form = CourseForm()
-        return render(request, 'post/create.html', {'form': form, 'kind': kind})
+        return render(request, 'post/form.html', {'form': form, 'kind': kind, 'action': 'create'})
 
 
 @login_required
@@ -80,9 +80,9 @@ def detail(request, kind, id):
     else:
         interested = False
 
-    if datetime.date(datetime.now()) >= post.deadline:
+    if datetime.date(datetime.now()) <= post.deadline:
         status = 'registering'
-    elif datetime.date(datetime.now()) < post.deadline and datetime.date(datetime.now()) > post.time:
+    elif datetime.date(datetime.now()) > post.deadline and datetime.date(datetime.now()) < post.time:
         status = 'tobegin'
     else:
         status = 'end'
@@ -185,15 +185,13 @@ def update(request, kind, id):
     if kind == 'a':
         post = get_object_or_404(Activity, id=id)
         form = ActivityForm(request.POST or None, instance=post)
-        token = "ACTIVITY"
     else:
         post = get_object_or_404(Course, id=id)
         form = CourseForm(request.POST or None, instance=post)
-        token = "COURSE"
     if form.is_valid():
         form.save()
         return redirect('detail', kind, id)
-    return render(request, 'post/update.html', {'form': form, 'post': post, 'token': token})
+    return render(request, 'post/form.html', {'form': form, 'post': post, 'kind': kind, 'action': 'update'})
 
 
 @login_required
@@ -237,7 +235,7 @@ def add_tag(request, kind, id):
     else:
         tags = post.tags.all()
 
-    return render(request, 'post/addtag.html', {'tags': tags, 'item': post})
+    return render(request, 'post/add_tag.html', {'tags': tags, 'item': post})
 
 
 def all_tags(request):
@@ -248,11 +246,11 @@ def all_tags(request):
 def tag_view(request, tag_id):
     tag = get_object_or_404(Tag, id=tag_id)
     list = []
-    course_list = Course.objects.filter(tag=tag)
+    course_list = Course.objects.filter(tags=tag)
     for course in course_list:
         list.append(course)
-    activity_list = Activity.objects.filter(tag=tag)
+    activity_list = Activity.objects.filter(tags=tag)
     for activity in activity_list:
         list.append(activity)
 
-    return render(request, 'post/tagview.html', {'post_list': list, 'tag': tag})
+    return render(request, 'post/tag_view.html', {'list': list, 'tag': tag, 'kind': 'c'})
