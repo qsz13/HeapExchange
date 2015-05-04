@@ -23,20 +23,20 @@ class Post(models.Model):
 
 class Course(Post):
     initiator = models.ForeignKey(User, default=1, related_name='courses')
-    joined = models.ManyToManyField(User, related_name="joined_courses")
-    interested = models.ManyToManyField(User, related_name="interested_courses")
+    joined = models.ManyToManyField(User, related_name="joined_courses", null=True, blank=True)
+    interested = models.ManyToManyField(User, related_name="interested_courses", null=True, blank=True)
     price = models.IntegerField(default=0)
     flag = models.CharField(max_length=1, default='c')
 
     def get_absolute_url(self):
-        path = reverse('course_detail', args=[self.id])
+        path = reverse('post_detail', args=["c", self.id])
         return path
 
 
 class Activity(Post):
     initiator = models.ForeignKey(User, default=1, related_name='activities')
-    joined = models.ManyToManyField(User, related_name="joined_activities")
-    interested = models.ManyToManyField(User, related_name="interested_activities")
+    joined = models.ManyToManyField(User, related_name="joined_activities", null=True, blank=True)
+    interested = models.ManyToManyField(User, related_name="interested_activities", null=True, blank=True)
     flag = models.CharField(max_length=1, default='a')
 
 

@@ -20,7 +20,7 @@ urlpatterns = [
                        url(r'^interested/(?P<kind>[a,c]{1})/$', views.interested, name='interested'),
                        
                        # post detail
-                       url(r'^detail/(?P<kind>a|c)/(?P<id>[0-9]+)/$', views.detail, name='detail'),
+                       url(r'^detail/(?P<kind>a|c)/(?P<id>[0-9]+)/$', views.detail, name='post_detail'),
                        
                        # post actions
                        url(r'^join/(?P<kind>[a,c]{1})/(?P<id>[0-9]+)/$', views.join, name='join'),
