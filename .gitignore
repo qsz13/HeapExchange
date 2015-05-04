@@ -1,2 +1,4 @@
 .idea/
 *.pyc
+HeapExchange/__init__.pyc
+HeapExchange/settings.pyc
