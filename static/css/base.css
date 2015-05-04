@@ -43,7 +43,8 @@
   color:#807f83;
 }
 
-
+.top1 { margin-top:1%; }
+.top2 { margin-top:2%; }
 .top3 { margin-top:3%; }
 .top5 { margin-top:5%; }
 .top7 { margin-top:7%; }
@@ -141,4 +142,9 @@ textarea.materialize-textarea:focus:not([readonly]) {
   font-size: 1.6em;
   font-weight: 300;
   color: #2dbe60;
+}
+
+.container-fluid{
+    width: 1024px !important;
+    margin: 0 auto;
 }

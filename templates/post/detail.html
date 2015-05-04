@@ -6,7 +6,7 @@
 
 {% block page %}
 
-
+<div class="container-fluid">
 <div class="row">
 
         <div class="col s7 offset-s1">
@@ -66,26 +66,57 @@
 
                 </div>
 
-
+                 {% get_comment_list for post as comment_list %}
+                 {% for comment in comment_list %}
                 <div class="row">
                     <div class="card">
 
-                        <div class="col s10 offset-s1">
+                        <div class="col s8 offset-s1">
+                            <div class="row">
+                                <div class="col s2 top3">
+                                    <img src="/media/{{ comment.user.profile.avatar }}" alt="" height="50px" class="circle">
 
-                            {% render_comment_list for post %}
+                                </div>
+
+                                <div class="col s10 top2">
+                                    <div class="row">
+                                        <div class="col s12 top1 grey-text text-darken-1">
+                                            {{ comment.user }}
+                                        </div>
+                                        <div class="col s12 grey-text text-lighten-1">
+                                            <div class="" style="font-size: 11px;">{{ comment.submit_date }}</div>
+
+                                        </div>
+
+                                        <div class="col s12 grey-text">
+                                            {{ comment.comment }}
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+
+                            </div>
 
                         </div>
                     </div>
 
                 </div>
+                 {% endfor %}
 
 
 
 
                 <div class="row">
-                    <div class="card">
+                    <div class="card ">
+                        <div class="col s2 top5">
+                            <span><a class="waves-effect waves-teal btn-flat text-black"><i><img src="/media/{{ user.profile.avatar }}" alt="" height="30px" width="30px"class="circle nav-avatar"></i></a></span>
 
-                        <div class="col s10 offset-s1">
+                        </div>
+                        <div class="col s10 top3 bottom3">
                             {% get_comment_form for post as comment_form %}
                             <form action="{% comment_form_target %}" method="post">
                                 <div class="input-field">
@@ -178,5 +209,6 @@
         </div>
 
 </div>
+    </div>
 
 {% endblock %}
