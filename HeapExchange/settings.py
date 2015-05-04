@@ -49,6 +49,8 @@ INSTALLED_APPS = (
     'notifications',
     'awesome_avatar',
     'rest_framework',
+    'django_comments',
+    'heap_comments',
 
 
 )
@@ -167,3 +169,5 @@ REST_FRAMEWORK = {
 DISABLE_USER_EMAILING = True
 
 POSTMAN_NOTIFIER_APP = 'notifications'
+
+COMMENTS_APP = 'heap_comments'

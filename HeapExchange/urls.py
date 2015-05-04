@@ -19,6 +19,7 @@ urlpatterns = [
     url(r'^heap_coin/', include('coin.urls')),
     url(r'^message/', include('postman.urls')),
     url('^notifications/', include('notifications.urls')),
+    url(r'^comments/', include('django_comments.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
