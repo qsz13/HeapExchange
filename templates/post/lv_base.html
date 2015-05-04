@@ -85,7 +85,7 @@
                                             <div class="collapsible-body">
                                                     <p> {{ item.description }} </p>
                                                     <p>
-                                                        <a href="{% url 'post_detail' kind=item.flag id=item.id%}">详细</a>
+                                                        <a href="{% url 'detail' kind=item.flag id=item.id%}">详细</a>
                                                         {% if is_posted %}
                                                             <a href="{% url 'update' kind=item.flag id=item.id %}">编辑</a>
                                                         {% endif %}

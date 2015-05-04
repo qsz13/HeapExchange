@@ -126,7 +126,7 @@
                                 <p> {{post.initiator}} 的条目: </p>
                                 <p>
                                 {% for item in list %}
-                                        <li> <a href ="{% url 'post_detail' item.flag item.id %}"> {{ item.title }}</a></li>
+                                        <li> <a href ="{% url 'detail' item.flag item.id %}"> {{ item.title }}</a></li>
                                 {% endfor %}
                                 </p>
                         </div>

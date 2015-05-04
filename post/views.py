@@ -190,7 +190,7 @@ def update(request, kind, id):
         form = CourseForm(request.POST or None, instance=post)
     if form.is_valid():
         form.save()
-        return redirect('detail', kind, id)
+        return redirect('detail', kind=kind, id=id)
     return render(request, 'post/form.html', {'form': form, 'post': post, 'kind': kind, 'action': 'update'})
 
 
