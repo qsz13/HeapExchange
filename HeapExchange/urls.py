@@ -15,7 +15,7 @@ urlpatterns = [
     url(r'^post/', include('post.urls', namespace='post', app_name='post')),
     url(r'^heap_admin/', include('heap_admin.urls')),
     url(r'^announcement/', include('announcement.urls')),
-    url(r'^search/', include('search.urls')),
+    url(r'^search/', include('haystack.urls')),
     url(r'^heap_coin/', include('coin.urls')),
     url(r'^message/', include('postman.urls')),
     url('^notifications/', include('notifications.urls')),
