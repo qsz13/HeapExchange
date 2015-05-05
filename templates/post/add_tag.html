@@ -80,7 +80,7 @@ function readURL(input) {
 
 // HOW TO DIRECT TO ALL_TAGS
 $(document).ready(function() {
-                                $("#myTags").tagit({autocomplete:{source:'{% url "all_tags" %}'}});
+                                $("#myTags").tagit({autocomplete:{source:'{% url "post:all_tags" %}'}});
 
                             });
 

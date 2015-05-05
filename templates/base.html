@@ -29,7 +29,7 @@
         {% if user.is_authenticated %}
 
             <li><a class="nav-color" href="{% url 'notifications_all' %}"><i class="mdi-social-public circle"></i></a></li>
-            <li><a class="nav-color" href="{% url 'post' %}"><i class="mdi-editor-mode-edit circle"></i></a></li>
+            <li><a class="nav-color" href="{% url 'post:post' %}"><i class="mdi-editor-mode-edit circle"></i></a></li>
             <li><a class="nav-color" href="{% url 'postman_inbox' %}"><i class="mdi-communication-message circle"></i></a></li>
             <li class=""></li>
             <li><a class="dropdown-button nav-color" href="#!" data-activates="dropdown1"><img src="/media/{{ user.profile.avatar }}" alt="" height="30px" class="circle nav-avatar"><i class="nav-color mdi-navigation-arrow-drop-down right"></i></a></li>

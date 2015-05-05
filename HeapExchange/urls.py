@@ -12,7 +12,7 @@ urlpatterns = [
     url(r'^$', views.HomeView.as_view(), name='index'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^account/', include('account.urls')),
-    url(r'^post/', include('post.urls')),
+    url(r'^post/', include('post.urls', namespace='post', app_name='post')),
     url(r'^heap_admin/', include('heap_admin.urls')),
     url(r'^announcement/', include('announcement.urls')),
     url(r'^search/', include('search.urls')),

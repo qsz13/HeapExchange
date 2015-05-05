@@ -20,11 +20,11 @@ p.big {line-height: 350%}
 
 	<div class="row">
                     <ul id="dropdown2" class="dropdown-content">
-                            <li><a href="{% url 'all' 'c' %}">所有POST<span class="badge"></span></a></li>
-                            <li><a href="{% url 'posted' 'c' %}">我发布的<span class="badge"></span></a></li>
-                            <li><a href="{% url 'joined' 'c' %}">我参加的<span class="badge"></span></a></li>
-                            <li><a href="{% url 'interested' 'c' %}">我感兴趣的<span class="badge"></span></a></li>
-                            <li><a href="{% url 'all_tags' %}">所有标签<span class="badge"></span></a></li>
+                            <li><a href="{% url 'post:all' 'c' %}">所有POST<span class="badge"></span></a></li>
+                            <li><a href="{% url 'post:posted' 'c' %}">我发布的<span class="badge"></span></a></li>
+                            <li><a href="{% url 'post:joined' 'c' %}">我参加的<span class="badge"></span></a></li>
+                            <li><a href="{% url 'post:interested' 'c' %}">我感兴趣的<span class="badge"></span></a></li>
+                            <li><a href="{% url 'post:all_tags' %}">所有标签<span class="badge"></span></a></li>
                     </ul>
                     <a class="btn dropdown-button" href="#!" data-activates="dropdown2">所有标签<i class="mdi-navigation-arrow-drop-down right"></i></a>
             </div>
@@ -36,7 +36,7 @@ p.big {line-height: 350%}
 		<div class="row"></div>
 			<p class="big">
 			{% for tag in tag_list %}
-			<span><a class="waves-effect waves-light btn red accent-2" href="{% url 'tagview' tag.id %}"><i class="mdi-image-style left"></i>{{ tag.name }}</a></span>
+			<span><a class="waves-effect waves-light btn red accent-2" href="{% url 'post:tagview' tag.id %}"><i class="mdi-image-style left"></i>{{ tag.name }}</a></span>
 			{% endfor %}
 			</p>
 		<div class="row"></div>
