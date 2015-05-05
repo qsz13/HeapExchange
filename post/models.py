@@ -29,7 +29,7 @@ class Course(Post):
     flag = models.CharField(max_length=1, default='c')
 
     def get_absolute_url(self):
-        path = reverse('post_detail', args=[self.flag, self.id])
+        path = reverse('detail', args=[self.flag, self.id])
         return path
 
 
@@ -40,7 +40,7 @@ class Activity(Post):
     flag = models.CharField(max_length=1, default='a')
 
     def get_absolute_url(self):
-        path = reverse('post_detail', args=[self.flag, self.id])
+        path = reverse('detail', args=[self.flag, self.id])
         return path
 
 class Tag(models.Model):
