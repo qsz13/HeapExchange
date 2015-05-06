@@ -39,7 +39,7 @@ def create(request, kind):
             new_form.initiator = User.objects.get(id=request.user.id)
             new_form.initialtime = datetime.now()
             new_form.save()
-            return redirect('posted', kind=kind)
+            return redirect('post:posted', kind=kind)
     else:
         if kind == 'a':
             form = ActivityForm()
@@ -135,7 +135,7 @@ def join(request, kind, id):
         post = get_object_or_404(Course, id=id)
     post.joined.add(request.user)
     post.save()
-    return redirect('detail', kind=kind, id=id)
+    return redirect('post:detail', kind=kind, id=id)
 
 
 @login_required
@@ -146,7 +146,7 @@ def unjoin(request, kind, id):
         post = get_object_or_404(Course, id=id)
     post.joined.remove(request.user)
     post.save()
-    return redirect('detail', kind=kind, id=id)
+    return redirect('post:detail', kind=kind, id=id)
 
 
 @login_required
@@ -157,7 +157,7 @@ def interest(request, kind, id):
         post = get_object_or_404(Course, id=id)
     post.interested.add(request.user)
     post.save()
-    return redirect('detail', kind=kind, id=id)
+    return redirect('post:detail', kind=kind, id=id)
 
 
 @login_required
@@ -168,7 +168,7 @@ def uninterest(request, kind, id):
         post = get_object_or_404(Course, id=id)
     post.interested.remove(request.user)
     post.save()
-    return redirect('detail', kind=kind, id=id)
+    return redirect('post:detail', kind=kind, id=id)
 
 
 def all_tags(request):
@@ -190,7 +190,7 @@ def update(request, kind, id):
         form = CourseForm(request.POST or None, instance=post)
     if form.is_valid():
         form.save()
-        return redirect('detail', kind=kind, id=id)
+        return redirect('post:detail', kind=kind, id=id)
     return render(request, 'post/form.html', {'form': form, 'post': post, 'kind': kind, 'action': 'update'})
 
 
@@ -201,7 +201,7 @@ def remove(request, kind, id):
     else:
         post = get_object_or_404(Course, id=id)
     post.delete()
-    return redirect('posted', kind=kind)
+    return redirect('post:posted', kind=kind)
 
 
 class CourseExploreList(APIView):
@@ -231,7 +231,7 @@ def add_tag(request, kind, id):
             t, created = Tag.objects.get_or_create(name=tag.lower())
             post.tags.add(t)
         post.save()
-        return redirect('detail', kind=kind, id=id)
+        return redirect('post:detail', kind=kind, id=id)
     else:
         tags = post.tags.all()
 

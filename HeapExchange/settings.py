@@ -51,6 +51,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'django_comments',
     'heap_comments',
+    'search',
 
 
 )

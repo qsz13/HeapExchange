@@ -54,7 +54,7 @@ $(document).ready(function() {
             
             <div class="row">  
             <form action="." method="post">
-            {% csrf_token %}
+            
             {{ form.non_field_errors }}
             <div class="row">
                 <div class="input-field">
@@ -147,7 +147,7 @@ $(document).ready(function() {
             
                 {%if action == 'update'%}
                 <div class="col s2 offset-s1">
-                    <a class="waves-effect waves-light btn red" href="{% url 'remove' post.flag post.id %}">删除</a>
+                    <a class="waves-effect waves-light btn red" href="{% url 'post:remove' post.flag post.id %}">删除</a>
                 </div>
                 {% endif %}
             </div>

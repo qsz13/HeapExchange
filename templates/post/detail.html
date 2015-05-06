@@ -20,7 +20,7 @@
                         <div class="row">
                                 <p class="card-title black-text">{{post.title}}</p>
                                 {% if is_self %}
-                                        <a class="col s2 offset-s11" href="{% url 'update' post.flag post.id %}">[编辑]</a>
+                                        <a class="col s2 offset-s11" href="{% url 'post:update' post.flag post.id %}">[编辑]</a>
                                 {% endif %}
                         </div>
                         <p> <span class="green-text text-darken-1">By</span> {{ post.initiator}} </p>
@@ -45,17 +45,17 @@
 
                         {% if not is_self %}
                                 {% if not interested %}
-                                        <a class="waves-effect waves-light btn" href="{% url 'interest' kind=post.flag id=post.id %}">我感兴趣</a>
+                                        <a class="waves-effect waves-light btn" href="{% url 'post:interest' kind=post.flag id=post.id %}">我感兴趣</a>
                                 {% else %}
-                                        <a class="waves-effect waves-light btn red" href="{% url 'uninterest' kind=post.flag id=post.id %}">已感兴趣</a>
+                                        <a class="waves-effect waves-light btn red" href="{% url 'post:uninterest' kind=post.flag id=post.id %}">已感兴趣</a>
                                 {% endif %}
                                 {% if not has_joined %}
-                                        <a class="waves-effect waves-light btn" href="{% url 'join' kind=post.flag id=post.id %}" >我要参加</a>
+                                        <a class="waves-effect waves-light btn" href="{% url 'post:join' kind=post.flag id=post.id %}" >我要参加</a>
                                 {% else %}
                                         {% if post.limit == post.joined.count %}
                                                 <a class="btn disabled">已满员</a>
                                         {% else %}
-                                                <a class="waves-effect waves-light btn red" href="{% url 'unjoin' kind=post.flag id=post.id %}">已参加</a>
+                                                <a class="waves-effect waves-light btn red" href="{% url 'post:unjoin' kind=post.flag id=post.id %}">已参加</a>
                                         {% endif %}
                                 {% endif %}
                         {% endif %}
@@ -157,7 +157,7 @@
                                 <p> {{post.initiator}} 的条目: </p>
                                 <p>
                                 {% for item in list %}
-                                        <li> <a href ="{% url 'detail' item.flag item.id %}"> {{ item.title }}</a></li>
+                                        <li> <a href ="{% url 'post:detail' item.flag item.id %}"> {{ item.title }}</a></li>
                                 {% endfor %}
                                 </p>
                         </div>
@@ -198,11 +198,11 @@
                                 <p class="card-title black-text">相关标签</p>
                                         <p>
                                                 {% for t in post.tags.all %}
-                                                        <span><a class="waves-effect waves-light btn red accent-2" href="{% url 'tagview' t.id %}"><i class="mdi-image-style left"></i>{{ t.name }}</a></span>
+                                                        <span><a class="waves-effect waves-light btn red accent-2" href="{% url 'post:tagview' t.id %}"><i class="mdi-image-style left"></i>{{ t.name }}</a></span>
                                                 {% endfor %}
                                                 <!-- add link -->
                                         </p>
-                                        <p><a href="{% url 'addtag' post.flag post.id%}">为活动添加标签</a></p>
+                                        <p><a href="{% url 'post:addtag' post.flag post.id%}">为活动添加标签</a></p>
                         </div>
                 </div>
 
