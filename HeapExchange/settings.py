@@ -51,7 +51,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'django_comments',
     'heap_comments',
-    'haystack',
+    'search',
 
 
 )
@@ -172,11 +172,3 @@ DISABLE_USER_EMAILING = True
 POSTMAN_NOTIFIER_APP = 'notifications'
 
 COMMENTS_APP = 'heap_comments'
-
-
-HAYSTACK_CONNECTIONS = {
-    'default': {
-        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
-        'PATH': os.path.join(os.path.dirname(__file__), 'whoosh_index'),
-    },
-}

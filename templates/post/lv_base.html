@@ -27,6 +27,7 @@
     <ul class="right">
         {% if user.is_authenticated %}
 
+            <li><a class="nav-color" href="{% url 'search:index' %}"><i class="mdi-action-search circle"></i></a></li>
             <li><a class="nav-color" href="{% url 'notifications_all' %}"><i class="mdi-social-public circle"></i></a></li>
             <li><a class="nav-color" href="{% url 'post:post' %}"><i class="mdi-editor-mode-edit circle"></i></a></li>
             <li><a class="nav-color" href="{% url 'postman_inbox' %}"><i class="mdi-communication-message circle"></i></a></li>

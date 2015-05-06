@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %} 搜索结果 {% endblock %}
+
+{% block page %}
+
+<div class="container">
+	<div class="row">
+		<h4>搜索结果</h4>
+	</div>
+
+	<div class="row">
+	{% if not list %}
+		<p>无结果</p>
+	{% else %}
+		<div class="collection">
+			{% for item in list %}
+				<a href="{{ item.get_absolute_url }}" class="collection-item"> {{ item.title }} </a>
+			{% endfor %}
+		</div>
+	{% endif %}
+	</div>
+</div>
+
+{% endblock %}
