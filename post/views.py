@@ -259,9 +259,13 @@ class CourseExploreList(APIView):
         course = Course.objects.order_by(
             '-initialtime').filter(~Q(initiator=request.user))
         course_url_list = [c.get_absolute_url() for c in course]
+        course_schedule_list = [c.get_post_schedule() for c in course]
         serializer = CourseSerializer(course, many=True)
         for (s, curl) in zip(serializer.data, course_url_list):
             s['url'] = curl
+
+        for (s, schedule) in zip(serializer.data, course_schedule_list):
+            s['schedule'] = schedule
 
         return Response(serializer.data)
 

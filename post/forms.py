@@ -10,8 +10,7 @@ class CourseForm(ModelForm):
     class Meta:
         model = Course
         fields = ['title', 'schedule_type', 'location', 'description',
-                  'requirement', 'limit',
-                  'price']
+                  'requirement', 'limit', 'price']
         widgets = {
             'title': forms.TextInput(),
             'schedule_type': forms.Select(choices=Post.SCHEDULE_TYPE),
@@ -19,6 +18,20 @@ class CourseForm(ModelForm):
             'description': Textarea(attrs={'cols': 80, 'rows': 20, 'class': 'materialize-textarea'}),
             'price': forms.NumberInput(),
         }
+
+
+
+class ActivityForm(ModelForm):
+    class Meta:
+        model = Activity
+        fields = ['title', 'schedule_type', 'location', 'description', 'requirement', 'limit']
+        widgets = {
+            'title': forms.TextInput(),
+            'schedule_type': forms.Select(choices=Post.SCHEDULE_TYPE),
+            'limit': forms.NumberInput(),
+            'description': Textarea(attrs={'cols': 80, 'rows': 20, 'class': 'materialize-textarea'}),
+        }
+
 
 
 class OneTimeForm(ModelForm):
@@ -59,13 +72,3 @@ class WeeklyTimeForm(ModelForm):
              'weekly_end_time': forms.TimeInput(attrs={'class': 'timepicker'}),
         }
 
-
-class ActivityForm(ModelForm):
-    class Meta:
-        model = Activity
-        fields = ['title', 'location', 'description', 'requirement', 'limit']
-        widgets = {
-            'title': forms.TextInput(),
-            'limit': forms.NumberInput(),
-            'description': Textarea(attrs={'cols': 80, 'rows': 20, 'class': 'materialize-textarea'}),
-        }

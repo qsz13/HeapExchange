@@ -20,7 +20,8 @@ $(document).ready(function(){
         {
             $("#index-card").append('<div class="card">\
                 <div class="card-content ">\
-                  <span class="card-title black-text">'+data[d].title+"</span><p>" + data[d].description+'</div>\
+                  <span class="card-title black-text">'+data[d].title+"</span><p>" + data[d].description+'</p>\
+                  <p>时间：'+data[d].schedule+'</p></div>\
                 <div class="card-action">\
                   <a href="'+data[d].url+'">Detail</a>\
                 </div>\

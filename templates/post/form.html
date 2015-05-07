@@ -108,168 +108,172 @@
                             <label for="{{ form.schedule_type.id_for_label }}">时间类型</label>
                         </div>
 
-                        <div class="col s10 card" id="once">
-                            <div class="row top3">
-                                <div class="col s3">
-                                    <label for="{{ once_form.once_date.id_for_label }}">{{ once_form.once_date.label }}</label>
-                                    {{ once_form.once_date }}
-                                </div>
-                                <div class="col s3">
-                                    <label for="{{ once_form.once_start_time.id_for_label }}">{{ once_form.once_start_time.label }}</label>
+                        <div class="col s10" id="once">
+                            <div class=" card grey lighten-4">
+                                <div class="row top3">
+                                    <div class="col s3 offset-s1">
+                                        <label for="{{ once_form.once_date.id_for_label }}">{{ once_form.once_date.label }}</label>
+                                        {{ once_form.once_date }}
+                                    </div>
+                                    <div class="col s3">
+                                        <label for="{{ once_form.once_start_time.id_for_label }}">{{ once_form.once_start_time.label }}</label>
 
-                                    {% render_field once_form.once_start_time class+="input-field" %}
-                                </div>
-                                <div class="col s1">
+                                        {% render_field once_form.once_start_time class+="input-field" %}
+                                    </div>
+                                    <div class="col s1">
 
-                                    <p><br>至</p>
-                                </div>
-                                <div class="col s3">
-                                     <label for="{{ once_form.once_end_time.id_for_label }}">{{ once_form.once_end_time.label }}</label>
-                                    {% render_field once_form.once_end_time class+="input-field" %}
+                                        <p><br>至</p>
+                                    </div>
+                                    <div class="col s3">
+                                         <label for="{{ once_form.once_end_time.id_for_label }}">{{ once_form.once_end_time.label }}</label>
+                                        {% render_field once_form.once_end_time class+="input-field" %}
+                                    </div>
+
                                 </div>
 
                             </div>
+                        </div>
 
+                        <div class="col s10  " id="sequence" style="display: none">
+                            <div class="card grey lighten-4">
+                                <div class="row top3">
+                                    <div class="col">
+                                        <div class="row">
+                                            <div class="col offset-s1">
+                                                <p>起止日期</p>
+                                            </div>
+                                            <div class="col s3">
+                                                {{ sequence_form.sequence_start_date }}
+                                            </div>
+                                            <div class="col s1">
+                                                <p>至</p>
+                                            </div>
+                                            <div class="col s3">
+                                                {{ sequence_form.sequence_end_date }}
+                                            </div>
+                                        </div>
+                                         <div class="row">
+                                            <div class="col offset-s1">
+                                                <p>活动时间</p>
+                                            </div>
+                                             <div class="col s3">
+                                                 {% render_field sequence_form.sequence_start_time class+="input-field" %}
+                                            </div>
+                                             <div class="col s1">
+                                                <p>至</p>
+                                            </div>
+                                             <div class="col s3">
+                                                 {% render_field sequence_form.sequence_end_time class+="input-field" %}
+                                             </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
 
                         </div>
 
-                        <div class="col s10 card" id="sequence" style="display: none">
-                            <div class="row top3">
-                                <div class="col">
-                                    <div class="row">
-                                        <div class="col">
-                                            <p>起止日期</p>
-                                        </div>
-                                        <div class="col">
-                                            {{ sequence_form.sequence_start_date }}
-                                        </div>
-                                        <div class="col">
-                                            <p>至</p>
-                                        </div>
-                                        <div class="col">
-                                            {{ sequence_form.sequence_end_date }}
-                                        </div>
-                                    </div>
-                                     <div class="row">
-                                        <div class="col">
-                                            <p>活动时间</p>
-                                        </div>
-                                         <div class="col">
-                                             {% render_field sequence_form.sequence_start_time class+="input-field" %}
-                                        </div>
-                                         <div class="col">
-                                            <p>至</p>
-                                        </div>
-                                         <div class="col">
-                                             {% render_field sequence_form.sequence_end_time class+="input-field" %}
-                                         </div>
-
-                                    </div>
-
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="col s10 card" id="weekly"  style="display: none">
-                            <div class="row top2">
-                                <div class="col">
-                                    <div class="row">
-                                        <div class="col">
-                                            <p>活动频率</p>
-                                        </div>
-
-                                        <div class="col top5">
-                                            <div class="row ">
-                                                <div class="col">
-                                                    {{ weekly_form.monday }}
-                                                    <label for="{{ weekly_form.monday.id_for_label }}">{{ weekly_form.monday.label }}</label>
-
-                                                </div>
-
-                                                <div class="col">
-                                                    {{ weekly_form.tuesday }}
-                                                    <label for="{{ weekly_form.tuesday.id_for_label }}">{{ weekly_form.tuesday.label }}</label>
-
-                                                </div>
-
-                                                <div class="col">
-                                                    {{ weekly_form.wednesday }}
-                                                    <label for="{{ weekly_form.wednesday.id_for_label }}">{{ weekly_form.wednesday.label }}</label>
-
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col">
-                                                    {{ weekly_form.thursday }}
-                                                    <label for="{{ weekly_form.thursday.id_for_label }}">{{ weekly_form.thursday.label }}</label>
-
-                                                </div>
-
-                                                <div class="col">
-                                                    {{ weekly_form.friday }}
-                                                    <label for="{{ weekly_form.friday.id_for_label }}">{{ weekly_form.friday.label }}</label>
-
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col">
-                                                    {{ weekly_form.saturday }}
-                                                    <label for="{{ weekly_form.saturday.id_for_label }}">{{ weekly_form.saturday.label }}</label>
-
-                                                </div>
-
-                                                <div class="col">
-                                                    {{ weekly_form.sunday }}
-                                                    <label for="{{ weekly_form.sunday.id_for_label }}">{{ weekly_form.sunday.label }}</label>
-
-                                                </div>
+                        <div class="col s10" id="weekly"  style="display: none">
+                            <div class="card grey lighten-4">
+                                <div class="row top2">
+                                    <div class="col offset-s1">
+                                        <div class="row">
+                                            <div class="col offset-2">
+                                                <p>活动频率</p>
                                             </div>
 
-                                        </div>
+                                            <div class="col top5">
+                                                <div class="row ">
+                                                    <div class="col">
+                                                        {{ weekly_form.monday }}
+                                                        <label for="{{ weekly_form.monday.id_for_label }}">{{ weekly_form.monday.label }}</label>
 
-                                        <div class="col">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <p>起止日期</p>
+                                                    </div>
+
+                                                    <div class="col">
+                                                        {{ weekly_form.tuesday }}
+                                                        <label for="{{ weekly_form.tuesday.id_for_label }}">{{ weekly_form.tuesday.label }}</label>
+
+                                                    </div>
+
+                                                    <div class="col">
+                                                        {{ weekly_form.wednesday }}
+                                                        <label for="{{ weekly_form.wednesday.id_for_label }}">{{ weekly_form.wednesday.label }}</label>
+
+                                                    </div>
                                                 </div>
-                                                <div class="col">
-                                                    {{ weekly_form.weekly_start_date }}
+                                                <div class="row">
+                                                    <div class="col">
+                                                        {{ weekly_form.thursday }}
+                                                        <label for="{{ weekly_form.thursday.id_for_label }}">{{ weekly_form.thursday.label }}</label>
+
+                                                    </div>
+
+                                                    <div class="col">
+                                                        {{ weekly_form.friday }}
+                                                        <label for="{{ weekly_form.friday.id_for_label }}">{{ weekly_form.friday.label }}</label>
+
+                                                    </div>
                                                 </div>
-                                                <div class="col">
-                                                    <p>至</p>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        {{ weekly_form.saturday }}
+                                                        <label for="{{ weekly_form.saturday.id_for_label }}">{{ weekly_form.saturday.label }}</label>
+
+                                                    </div>
+
+                                                    <div class="col">
+                                                        {{ weekly_form.sunday }}
+                                                        <label for="{{ weekly_form.sunday.id_for_label }}">{{ weekly_form.sunday.label }}</label>
+
+                                                    </div>
                                                 </div>
-                                                <div class="col">
-                                                    {{ weekly_form.weekly_end_date }}
-                                                </div>
+
                                             </div>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <p>活动时间</p>
+
+                                            <div class="col">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <p>起止日期</p>
+                                                    </div>
+                                                    <div class="col s4">
+                                                        {{ weekly_form.weekly_start_date }}
+                                                    </div>
+                                                    <div class="col s1">
+                                                        <p>至</p>
+                                                    </div>
+                                                    <div class="col s4">
+                                                        {{ weekly_form.weekly_end_date }}
+                                                    </div>
                                                 </div>
-                                                 <div class="col">
-                                                     {% render_field weekly_form.weekly_start_time class+="input-field" %}
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <p>活动时间</p>
+                                                    </div>
+                                                     <div class="col s4">
+                                                         {% render_field weekly_form.weekly_start_time class+="input-field" %}
+                                                    </div>
+                                                     <div class="col s1">
+                                                        <p>至</p>
+                                                    </div>
+                                                     <div class="col s4">
+                                                         {% render_field weekly_form.weekly_end_time class+="input-field" %}
+                                                     </div>
+
                                                 </div>
-                                                 <div class="col">
-                                                    <p>至</p>
-                                                </div>
-                                                 <div class="col">
-                                                     {% render_field weekly_form.weekly_end_time class+="input-field" %}
-                                                 </div>
+
+
 
                                             </div>
 
 
-
                                         </div>
-
-
                                     </div>
                                 </div>
+
+
                             </div>
-
-
-
 
                         </div>
                     </div>
