@@ -7,6 +7,6 @@ __author__ = 'danielqiu'
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
-        fields = ('id', 'title', 'time', 'description', 'requirement', 'location')
+        fields = ('id', 'title', 'initialtime', 'description', 'requirement', 'location')
 
 

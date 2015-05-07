@@ -46,6 +46,7 @@ class LoginView(View):
     template_name = "account/log_in.html"
 
     def get(self, request):
+        print "this is get"
         form = AuthenticationForm()
         return render(request, self.template_name, {"form": form})
 

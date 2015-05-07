@@ -255,9 +255,9 @@ def remove(request, kind, id):
 
 
 class CourseExploreList(APIView):
-    def get(self, request, format=None):
+    def get(self, request):
         course = Course.objects.order_by(
-            '-time').filter(~Q(initiator=request.user))
+            '-initialtime').filter(~Q(initiator=request.user))
         course_url_list = [c.get_absolute_url() for c in course]
         serializer = CourseSerializer(course, many=True)
         for (s, curl) in zip(serializer.data, course_url_list):
