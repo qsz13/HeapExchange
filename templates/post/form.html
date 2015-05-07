@@ -16,159 +16,187 @@
 
 {% endblock %}
 
+
 {% block extrahead %}
-<link rel="stylesheet" href="/static/css/jquery-ui.css">
-<script src="/static/js/jquery-2.1.3.min.js"></script>
-<script src="/static/js/jquery-ui.min.js"></script>
-<script>
-$(document).ready(function() {
-    $('.datepicker').datepicker();
-});
-</script>
+    <script type="application/javascript">
+     $(document).ready(function() {
+         $('.datepicker').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 15 // Creates a dropdown of 15 years to control year
+          });
+         $('select').material_select();
+
+         $("select").change(function() {
+             choice = $("select").val();
+             if(choice == 'ONCE'){
+                 $("#once").show();
+                 $("#sequence").hide();
+                 $("#weekly").hide();
+             }
+             else if(choice == 'SEQU'){
+                  $("#once").hide();
+                  $("#sequence").show();
+                  $("#weekly").hide();
+
+             }
+             else if(choice == 'WEEK'){
+                  $("#once").hide();
+                  $("#sequence").hide();
+                  $("#weekly").show();
+                 console.log("done");
+
+             }
+             else if(choice == 'CUST'){
+
+             }
+        });
+    });
+
+
+
+    </script>
 {% endblock %}
 
 {% block page %}
 
-<div class="row">
-</div>
 
-<div class="row">
-<div class="col s10 offset-s1">
-<div class="card">
+<div class="row top3">
+    <div class="col s10 offset-s1">
 
-            <div class="row">
+        <div class="row card">
             <div class="col s10 offset-s1">
-            <p class="card-title black-text">
-                {% if action == 'create' %}
-                    创建
-                {% elif action == 'update' %}
-                    编辑
-                {% endif %}
+                <p class="card-title black-text">
+                    {% if action == 'create' %}
+                        创 建
+                    {% elif action == 'update' %}
+                        编 辑
+                    {% endif %}
 
-                {% if kind == 'c' %}
-                    课程
-                {% elif kind == 'a' %}
-                    活动
-                {% endif %}
-            </p>
-            
-            <div class="row">  
-            <form action="." method="post">
-            
-            {{ form.non_field_errors }}
-            <div class="row">
-                <div class="input-field">
-                    <div class="fieldWrapper">
-                        {{ form.title.errors }}
-                        <label for="{{ form.title.id_for_label }}">标题:</label>
-                        {{ form.title }}
+                    {% if kind == 'c' %}
+                        课 程
+                    {% elif kind == 'a' %}
+                        活 动
+                    {% endif %}
+                </p>
+
+                <div class="row">
+                    <form action="." method="post">
+                    {% csrf_token %}
+
+                    {{ form.non_field_errors }}
+                    <div class="row">
+                        <div class="input-field">
+                            <div class="fieldWrapper">
+                                {{ form.title.errors }}
+                                <label for="{{ form.title.id_for_label }}">标题:</label>
+                                {{ form.title }}
+                            </div>
+                        </div>
                     </div>
+
+                    <div class="row">
+                        <div class="input-field col s2">
+                            {{ form.schedule_type }}
+                            <label for="{{ form.schedule_type.id_for_label }}">时间类型</label>
+                        </div>
+                        <div class="col s10 card" id="once">
+                             {{ once_form }}
+                        </div>
+
+                        <div class="col s10 card" id="sequence" style="display: none">
+                             {{ sequence_form }}
+                        </div>
+
+                        <div class="col s10 card" id="weekly"  style="display: none">
+                             {{ weekly_form }}
+                        </div>
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="input-field">
+                            <div class="fieldWrapper">
+                                {{ form.deadline.errors }}
+                                <label for="{{ form.deadline.id_for_label }}">截止日期:</label>
+                                {{ form.deadline }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field">
+                            <div class="fieldWrapper">
+                                {{ form.location.errors }}
+                                <label for="{{ form.location.id_for_label }}">地点:</label>
+                                {{ form.location }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field">
+                            <div class="fieldWrapper">
+                                {{ form.description.errors }}
+                                <label for="{{ form.description.id_for_label }}">描述:</label>
+                                {{ form.description }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field">
+                            <div class="fieldWrapper">
+                                {{ form.requirement.errors }}
+                                <label for="{{ form.requirement.id_for_label }}">需求:</label>
+                                {{ form.requirement }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field">
+                            <div class="fieldWrapper">
+                                {{ form.limit.errors }}
+                                <label for="{{ form.limit.id_for_label }}">人数限制:</label>
+                                {{ form.limit }}
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if kind == 'c' %}
+                    <div class="row">
+                        <div class="input-field">
+                            <div class="fieldWrapper">
+                                {{ form.price.errors }}
+                                <label for="{{ form.price.id_for_label }}">价格:</label>
+                                {{ form.price }}
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+
+
+                    <div class="row">
+                        <div class="col s2 offset-s3">
+                            <input class="btn btn-primary col offset-s5" type="submit" value="提交"/>
+                        </div>
+
+                        {%if action == 'update'%}
+                        <div class="col s2 offset-s1">
+                            <a class="waves-effect waves-light btn red" href="{% url 'post:remove' post.flag post.id %}">删除</a>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    </form>
                 </div>
             </div>
+        </div>
 
-{#            <div class="row">#}
-{#                <div class="input-field">#}
-{#                    <div class="fieldWrapper">#}
-{#                        {{ form.time.errors }}#}
-{#                        <label for="{{ form.time.id_for_label }}">时间:</label>#}
-{#                        {{ form.time }}#}
-{#                    </div>#}
-{#                </div>                #}
-{#            </div>#}
-
-            <div class="row">
-                <div class="input-field">
-                    <div class="fieldWrapper">
-                        {{ form.deadline.errors }}
-                        <label for="{{ form.deadline.id_for_label }}">截止日期:</label>
-                        {{ form.deadline }}
-                    </div>
-                </div>                
-            </div>
-
-            <div class="row">
-                <div class="input-field">
-                    <div class="fieldWrapper">
-                        {{ form.location.errors }}
-                        <label for="{{ form.location.id_for_label }}">地点:</label>
-                        {{ form.location }}
-                    </div>
-                </div>                
-            </div>
-
-            <div class="row">
-                <div class="input-field">
-                    <div class="fieldWrapper">
-                        {{ form.description.errors }}
-                        <label for="{{ form.description.id_for_label }}">描述:</label>
-                        {{ form.description }}
-                    </div>
-                </div>                
-            </div>
-
-            <div class="row">
-                <div class="input-field">
-                    <div class="fieldWrapper">
-                        {{ form.requirement.errors }}
-                        <label for="{{ form.requirement.id_for_label }}">需求:</label>
-                        {{ form.requirement }}
-                    </div>
-                </div>                
-            </div>
-
-            <div class="row">
-                <div class="input-field">
-                    <div class="fieldWrapper">
-                        {{ form.limit.errors }}
-                        <label for="{{ form.limit.id_for_label }}">人数限制:</label>
-                        {{ form.limit }}
-                    </div>
-                </div>                
-            </div>
-
-            {% if kind == 'c' %}
-            <div class="row">
-                <div class="input-field">
-                    <div class="fieldWrapper">
-                        {{ form.price.errors }}
-                        <label for="{{ form.price.id_for_label }}">价格:</label>
-                        {{ form.price }}
-                    </div>
-                </div>                
-            </div>
-            {% endif %}
-
-
-            <div class="row">
-                <div class="col s2 offset-s3">
-                    <input class="btn btn-primary col offset-s5" type="submit" value="提交"/>
-                </div>
-            
-                {%if action == 'update'%}
-                <div class="col s2 offset-s1">
-                    <a class="waves-effect waves-light btn red" href="{% url 'post:remove' post.flag post.id %}">删除</a>
-                </div>
-                {% endif %}
-            </div>
-
-            </form>
-            </div>
-            </div>
-            </div>
-            </div>
-</div>
-
-<div class="col s3">
-
-</div>
-
+    </div>
 </div>
 
 
- <!-- <form action="." method="post">
-{% csrf_token %}
-{{ form }}
-<input type="submit" value="Submit" />
-</form> -->
 {% endblock %}
 

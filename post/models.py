@@ -53,9 +53,9 @@ class Post(models.Model):
     initialtime = models.DateTimeField(auto_now=True)
     limit = models.IntegerField(null=True)
     schedule_type = models.CharField(max_length=4, null=True)
-    one_time_schedule = models.ForeignKey(OneTimeSchedule, null=True)
-    sequence_time_schedule = models.ForeignKey(SequenceTimeSchedule, null=True)
-    weekly_time_schedule = models.ForeignKey(WeeklyTimeSchedule, null=True)
+    one_time_schedule = models.OneToOneField(OneTimeSchedule, null=True)
+    sequence_time_schedule = models.OneToOneField(SequenceTimeSchedule, null=True)
+    weekly_time_schedule = models.OneToOneField(WeeklyTimeSchedule, null=True)
 
 
     class Meta:

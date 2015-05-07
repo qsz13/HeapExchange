@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from HeapExchange.views import LoginRequiredMixin
 from .models import Course, Tag, Activity
-from .forms import CourseForm, ActivityForm
+from .forms import CourseForm, ActivityForm, OneTimeForm, SequenceTimeForm, WeeklyTimeForm
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
@@ -45,7 +45,13 @@ def create(request, kind):
             form = ActivityForm()
         else:
             form = CourseForm()
-        return render(request, 'post/form.html', {'form': form, 'kind': kind, 'action': 'create'})
+
+        once_form = OneTimeForm()
+        sequence_form = SequenceTimeForm()
+        weekly_form = WeeklyTimeForm()
+        return render(request, 'post/form.html',
+                      {'form': form, 'once_form': once_form, 'sequence_form': sequence_form, 'weekly_form': weekly_form,
+                       'kind': kind, 'action': 'create'})
 
 
 @login_required
@@ -89,7 +95,8 @@ def detail(request, kind, id):
 
     return render(request,
                   'post/detail.html',
-                  {'kind': kind, 'post': post, 'list': ini_list, 'is_self': is_self, 'has_joined': has_joined, 'interested': interested, 'status': status})
+                  {'kind': kind, 'post': post, 'list': ini_list, 'is_self': is_self, 'has_joined': has_joined,
+                   'interested': interested, 'status': status})
 
 
 def all(request, kind='c'):
@@ -205,7 +212,6 @@ def remove(request, kind, id):
 
 
 class CourseExploreList(APIView):
-
     def get(self, request, format=None):
         course = Course.objects.order_by(
             '-time').filter(~Q(initiator=request.user))
