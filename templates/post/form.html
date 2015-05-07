@@ -3,15 +3,15 @@
 {% block title %}
 
     {% if action == 'create' %}
-        创建
+        创 建
     {% elif action == 'update' %}
-        编辑
+        编 辑
     {% endif %}
 
     {% if kind == 'c' %}
-        课程
+        课 程
     {% elif kind == 'a' %}
-        活动
+        活 动
     {% endif %}
 
 {% endblock %}
@@ -96,7 +96,7 @@
                         <div class="input-field">
                             <div class="fieldWrapper">
                                 {{ form.title.errors }}
-                                <label for="{{ form.title.id_for_label }}">标题:</label>
+                                <label for="{{ form.title.id_for_label }}">标题</label>
                                 {{ form.title }}
                             </div>
                         </div>
@@ -279,7 +279,7 @@
                         <div class="input-field">
                             <div class="fieldWrapper">
                                 {{ form.location.errors }}
-                                <label for="{{ form.location.id_for_label }}">地点:</label>
+                                <label for="{{ form.location.id_for_label }}">{{ form.location.label }}</label>
                                 {{ form.location }}
                             </div>
                         </div>
@@ -289,7 +289,7 @@
                         <div class="input-field">
                             <div class="fieldWrapper">
                                 {{ form.description.errors }}
-                                <label for="{{ form.description.id_for_label }}">描述:</label>
+                                <label for="{{ form.description.id_for_label }}">{{ form.description.label }}</label>
                                 {{ form.description }}
                             </div>
                         </div>
@@ -299,7 +299,7 @@
                         <div class="input-field">
                             <div class="fieldWrapper">
                                 {{ form.requirement.errors }}
-                                <label for="{{ form.requirement.id_for_label }}">需求:</label>
+                                <label for="{{ form.requirement.id_for_label }}">{{ form.requirement.label }}</label>
                                 {{ form.requirement }}
                             </div>
                         </div>
@@ -309,7 +309,7 @@
                         <div class="input-field">
                             <div class="fieldWrapper">
                                 {{ form.limit.errors }}
-                                <label for="{{ form.limit.id_for_label }}">人数限制:</label>
+                                <label for="{{ form.limit.id_for_label }}">{{ form.limit.label }}</label>
                                 {{ form.limit }}
                             </div>
                         </div>
@@ -320,7 +320,7 @@
                         <div class="input-field">
                             <div class="fieldWrapper">
                                 {{ form.price.errors }}
-                                <label for="{{ form.price.id_for_label }}">价格:</label>
+                                <label for="{{ form.price.id_for_label }}">{{ form.price.label }}</label>
                                 {{ form.price }}
                             </div>
                         </div>

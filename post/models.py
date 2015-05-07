@@ -52,12 +52,12 @@ class Post(models.Model):
     )
 
 
-    title = models.CharField(max_length=100, null=True)
-    description = models.CharField(max_length=500, null=True)
-    location = models.CharField(max_length=100, null=True)
-    requirement = models.CharField(max_length=500, null=True)
+    title = models.CharField(max_length=100, null=True, verbose_name=u'标题')
+    description = models.CharField(max_length=500, null=True, verbose_name=u'描述')
+    location = models.CharField(max_length=100, null=True, verbose_name=u'地点')
+    requirement = models.CharField(max_length=500, null=True, verbose_name=u'需求')
     initialtime = models.DateTimeField(auto_now=True)
-    limit = models.IntegerField(null=True)
+    limit = models.IntegerField(null=True, verbose_name=u'人数限制')
     schedule_type = models.CharField(max_length=4, null=True)
     one_time_schedule = models.OneToOneField(OneTimeSchedule, null=True)
     sequence_time_schedule = models.OneToOneField(SequenceTimeSchedule, null=True)
@@ -75,7 +75,7 @@ class Course(Post):
     initiator = models.ForeignKey(User, default=1, related_name='courses')
     joined = models.ManyToManyField(User, related_name="joined_courses",  blank=True)
     interested = models.ManyToManyField(User, related_name="interested_courses",  blank=True)
-    price = models.IntegerField(default=0)
+    price = models.IntegerField(default=0, verbose_name=u'价格')
     flag = models.CharField(max_length=1, default='c')
 
     def get_absolute_url(self):
