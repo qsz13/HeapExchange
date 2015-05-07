@@ -1,17 +1,16 @@
 import json
+from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
 from django.shortcuts import render
-from django.views.generic import TemplateView, CreateView
+from django.views.generic import TemplateView
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from HeapExchange.views import LoginRequiredMixin
 from .models import Course, Tag, Activity
 from .forms import CourseForm, ActivityForm, OneTimeForm, SequenceTimeForm, WeeklyTimeForm
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from datetime import datetime
 from post.serializers import CourseSerializer
 from django.shortcuts import get_object_or_404
 from datetime import datetime
@@ -22,8 +21,8 @@ class TempView(TemplateView):
 
 
 # class CourseCreateView(LoginRequiredMixin, CreateView):
-#     model = Course
-#     fields = ['link', 'skill_requirement']
+# model = Course
+# fields = ['link', 'skill_requirement']
 #     template_name = "post/course_create_form.html"
 
 
@@ -47,8 +46,9 @@ def create(request, kind):
                     once_schedule = once_form.save()
                 else:
                     return render(request, 'post/form.html',
-                      {'form': form, 'once_form': once_form, 'sequence_form': sequence_form, 'weekly_form': weekly_form,
-                       'kind': kind, 'action': 'create'})
+                                  {'form': form, 'once_form': once_form, 'sequence_form': sequence_form,
+                                   'weekly_form': weekly_form,
+                                   'kind': kind, 'action': 'create'})
 
             elif request.POST['schedule_type'] == "SEQU":
                 sequence_form = SequenceTimeForm(request.POST)
@@ -56,18 +56,18 @@ def create(request, kind):
                     sequence_schedule = sequence_form.save()
                 else:
                     return render(request, 'post/form.html',
-                      {'form': form, 'once_form': once_form, 'sequence_form': sequence_form, 'weekly_form': weekly_form,
-                       'kind': kind, 'action': 'create'})
+                                  {'form': form, 'once_form': once_form, 'sequence_form': sequence_form,
+                                   'weekly_form': weekly_form,
+                                   'kind': kind, 'action': 'create'})
             elif request.POST['schedule_type'] == "WEEK":
                 weekly_form = WeeklyTimeForm(request.POST)
                 if weekly_form.is_valid():
                     weekly_schedule = weekly_form.save()
                 else:
                     return render(request, 'post/form.html',
-                      {'form': form, 'once_form': once_form, 'sequence_form': sequence_form, 'weekly_form': weekly_form,
-                       'kind': kind, 'action': 'create'})
-
-
+                                  {'form': form, 'once_form': once_form, 'sequence_form': sequence_form,
+                                   'weekly_form': weekly_form,
+                                   'kind': kind, 'action': 'create'})
 
             new_post = form.save(commit=False)
             new_post.initiator = User.objects.get(id=request.user.id)
@@ -83,14 +83,14 @@ def create(request, kind):
             return redirect('post:posted', kind=kind)
         else:
             return render(request, 'post/form.html',
-                      {'form': form, 'once_form': once_form, 'sequence_form': sequence_form, 'weekly_form': weekly_form,
-                       'kind': kind, 'action': 'create'})
+                          {'form': form, 'once_form': once_form, 'sequence_form': sequence_form,
+                           'weekly_form': weekly_form,
+                           'kind': kind, 'action': 'create'})
     else:
         if kind == 'a':
             form = ActivityForm()
         else:
             form = CourseForm()
-
 
         return render(request, 'post/form.html',
                       {'form': form, 'once_form': once_form, 'sequence_form': sequence_form, 'weekly_form': weekly_form,
@@ -98,11 +98,15 @@ def create(request, kind):
 
 
 @login_required
-def detail(request, kind, id):
-    if kind == 'a':
-        post = Activity.objects.get(id=id)
-    elif kind == 'c':
-        post = Course.objects.get(id=id)
+def detail(request, kind, post_id):
+    post = None
+    try:
+        if kind == 'a':
+            post = Activity.objects.get(id=post_id)
+        elif kind == 'c':
+            post = Course.objects.get(id=post_id)
+    except ObjectDoesNotExist:
+        raise Http404("post does not exist")
 
     initiator = post.initiator
     ini_list = []
@@ -113,7 +117,6 @@ def detail(request, kind, id):
         if item != post:
             ini_list.append(item)
 
-    context_dict = {}
     if initiator == request.user:
         is_self = True
     else:
@@ -123,102 +126,104 @@ def detail(request, kind, id):
         has_joined = True
     else:
         has_joined = False
-
     if request.user in post.interested.all():
-        interested = True
+        interested_post = True
     else:
-        interested = False
+        interested_post = False
 
-    if datetime.date(datetime.now()) <= post.deadline:
-        status = 'registering'
-    elif datetime.date(datetime.now()) > post.deadline and datetime.date(datetime.now()) < post.time:
-        status = 'tobegin'
-    else:
-        status = 'end'
+    # if datetime.date(datetime.now()) <= post.deadline:
+    #     status = 'registering'
+    # elif datetime.date(datetime.now()) > post.deadline and datetime.date(datetime.now()) < post.time:
+    #     status = 'tobegin'
+    # else:
+    #     status = 'end'
+    status = None
 
     return render(request,
                   'post/detail.html',
                   {'kind': kind, 'post': post, 'list': ini_list, 'is_self': is_self, 'has_joined': has_joined,
-                   'interested': interested, 'status': status})
+                   'interested': interested_post, 'status': status})
 
 
-def all(request, kind='c'):
+def all_post(request, kind='c'):
+    activity_list = []
     if kind == 'a':
-        list = Activity.objects.exclude(initiator=request.user)
+        activity_list = Activity.objects.exclude(initiator=request.user)
     elif kind == 'c':
-        list = Course.objects.exclude(initiator=request.user)
-    return render(request, 'post/all.html', {'list': list, 'kind': kind})
+        activity_list = Course.objects.exclude(initiator=request.user)
+    return render(request, 'post/all.html', {'list': activity_list, 'kind': kind})
 
 
 @login_required
 def posted(request, kind):
+    posted_list = []
     if kind == 'a':
-        list = Activity.objects.filter(initiator=request.user)
+        posted_list = Activity.objects.filter(initiator=request.user)
     elif kind == 'c':
-        list = Course.objects.filter(initiator=request.user)
-    return render(request, 'post/posted.html', {'list': list, 'kind': kind, 'is_posted': True})
+        posted_list = Course.objects.filter(initiator=request.user)
+    return render(request, 'post/posted.html', {'list': posted_list, 'kind': kind, 'is_posted': True})
 
 
 @login_required
 def joined(request, kind):
     if kind == 'a':
-        list = request.user.joined_activities.all()
+        joined_list = request.user.joined_activities.all()
     else:
-        list = request.user.joined_courses.all()
-    return render(request, 'post/joined.html', {'list': list, 'kind': kind})
+        joined_list = request.user.joined_courses.all()
+    return render(request, 'post/joined.html', {'list': joined_list, 'kind': kind})
 
 
 @login_required
 def interested(request, kind):
     if kind == 'a':
-        list = request.user.interested_activities.all()
+        interest_list = request.user.interested_activities.all()
     else:
-        list = request.user.interested_courses.all()
-    return render(request, 'post/interested.html', {'list': list, 'kind': kind})
+        interest_list = request.user.interested_courses.all()
+    return render(request, 'post/interested.html', {'list': interest_list, 'kind': kind})
 
 
 @login_required
-def join(request, kind, id):
+def join(request, kind, post_id):
     if kind == 'a':
-        post = get_object_or_404(Activity, id=id)
+        post = get_object_or_404(Activity, id=post_id)
     else:
-        post = get_object_or_404(Course, id=id)
+        post = get_object_or_404(Course, id=post_id)
     post.joined.add(request.user)
     post.save()
-    return redirect('post:detail', kind=kind, id=id)
+    return redirect('post:detail', kind=kind, id=post_id)
 
 
 @login_required
-def unjoin(request, kind, id):
+def unjoin(request, kind, post_id):
     if kind == 'a':
-        post = get_object_or_404(Activity, id=id)
+        post = get_object_or_404(Activity, id=post_id)
     else:
-        post = get_object_or_404(Course, id=id)
+        post = get_object_or_404(Course, id=post_id)
     post.joined.remove(request.user)
     post.save()
-    return redirect('post:detail', kind=kind, id=id)
+    return redirect('post:detail', kind=kind, id=post_id)
 
 
 @login_required
-def interest(request, kind, id):
+def interest(request, kind, post_id):
     if kind == 'a':
-        post = get_object_or_404(Activity, id=id)
+        post = get_object_or_404(Activity, id=post_id)
     else:
-        post = get_object_or_404(Course, id=id)
+        post = get_object_or_404(Course, id=post_id)
     post.interested.add(request.user)
     post.save()
-    return redirect('post:detail', kind=kind, id=id)
+    return redirect('post:detail', kind=kind, id=post_id)
 
 
 @login_required
-def uninterest(request, kind, id):
+def uninterest(request, kind, post_id):
     if kind == 'a':
-        post = get_object_or_404(Activity, id=id)
+        post = get_object_or_404(Activity, id=post_id)
     else:
-        post = get_object_or_404(Course, id=id)
+        post = get_object_or_404(Course, id=post_id)
     post.interested.remove(request.user)
     post.save()
-    return redirect('post:detail', kind=kind, id=id)
+    return redirect('post:detail', kind=kind, id=post_id)
 
 
 def all_tags(request):
@@ -231,31 +236,33 @@ def all_tags(request):
 
 
 @login_required
-def update(request, kind, id):
+def update(request, kind, post_id):
     if kind == 'a':
-        post = get_object_or_404(Activity, id=id)
+        post = get_object_or_404(Activity, id=post_id)
         form = ActivityForm(request.POST or None, instance=post)
     else:
-        post = get_object_or_404(Course, id=id)
+        post = get_object_or_404(Course, id=post_id)
         form = CourseForm(request.POST or None, instance=post)
     if form.is_valid():
         form.save()
-        return redirect('post:detail', kind=kind, id=id)
+        return redirect('post:detail', kind=kind, id=post_id)
     return render(request, 'post/form.html', {'form': form, 'post': post, 'kind': kind, 'action': 'update'})
 
 
 @login_required
-def remove(request, kind, id):
+def remove(request, kind, post_id):
     if kind == 'a':
-        post = get_object_or_404(Activity, id=id)
+        post = get_object_or_404(Activity, id=post_id)
     else:
-        post = get_object_or_404(Course, id=id)
+        post = get_object_or_404(Course, id=post_id)
     post.delete()
     return redirect('post:posted', kind=kind)
 
 
 class CourseExploreList(APIView):
-    def get(self, request):
+
+    @staticmethod
+    def get(request):
         course = Course.objects.order_by(
             '-initialtime').filter(~Q(initiator=request.user))
         course_url_list = [c.get_absolute_url() for c in course]
@@ -270,11 +277,11 @@ class CourseExploreList(APIView):
         return Response(serializer.data)
 
 
-def add_tag(request, kind, id):
+def add_tag(request, kind, post_id):
     if kind == 'a':
-        post = get_object_or_404(Activity, id=id)
+        post = get_object_or_404(Activity, id=post_id)
     else:
-        post = get_object_or_404(Course, id=id)
+        post = get_object_or_404(Course, id=post_id)
 
     if request.method == 'POST':
         tags = request.POST.getlist('tags')
@@ -284,26 +291,21 @@ def add_tag(request, kind, id):
             t, created = Tag.objects.get_or_create(name=tag.lower())
             post.tags.add(t)
         post.save()
-        return redirect('post:detail', kind=kind, id=id)
+        return redirect('post:detail', kind=kind, id=post_id)
     else:
         tags = post.tags.all()
 
     return render(request, 'post/add_tag.html', {'tags': tags, 'item': post})
 
 
-def all_tags(request):
-    tag_list = Tag.objects.all()
-    return render(request, 'post/all_tags.html', {'tag_list': tag_list})
-
-
 def tag_view(request, tag_id):
     tag = get_object_or_404(Tag, id=tag_id)
-    list = []
+    tag_list = []
     course_list = Course.objects.filter(tags=tag)
     for course in course_list:
-        list.append(course)
+        tag_list.append(course)
     activity_list = Activity.objects.filter(tags=tag)
     for activity in activity_list:
-        list.append(activity)
+        tag_list.append(activity)
 
-    return render(request, 'post/tag_view.html', {'list': list, 'tag': tag, 'kind': 'c'})
+    return render(request, 'post/tag_view.html', {'list': tag_list, 'tag': tag, 'kind': 'c'})

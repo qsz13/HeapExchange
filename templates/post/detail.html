@@ -45,17 +45,17 @@
 
                         {% if not is_self %}
                                 {% if not interested %}
-                                        <a class="waves-effect waves-light btn" href="{% url 'post:interest' kind=post.flag id=post.id %}">我感兴趣</a>
+                                        <a class="waves-effect waves-light btn" href="{% url 'post:interest' kind=post.flag post_id=post.id %}">我感兴趣</a>
                                 {% else %}
-                                        <a class="waves-effect waves-light btn red" href="{% url 'post:uninterest' kind=post.flag id=post.id %}">已感兴趣</a>
+                                        <a class="waves-effect waves-light btn red" href="{% url 'post:uninterest' kind=post.flag post_id=post.id %}">已感兴趣</a>
                                 {% endif %}
                                 {% if not has_joined %}
-                                        <a class="waves-effect waves-light btn" href="{% url 'post:join' kind=post.flag id=post.id %}" >我要参加</a>
+                                        <a class="waves-effect waves-light btn" href="{% url 'post:join' kind=post.flag post_id=post.id %}" >我要参加</a>
                                 {% else %}
                                         {% if post.limit == post.joined.count %}
                                                 <a class="btn disabled">已满员</a>
                                         {% else %}
-                                                <a class="waves-effect waves-light btn red" href="{% url 'post:unjoin' kind=post.flag id=post.id %}">已参加</a>
+                                                <a class="waves-effect waves-light btn red" href="{% url 'post:unjoin' kind=post.flag post_id=post.id %}">已参加</a>
                                         {% endif %}
                                 {% endif %}
                         {% endif %}
