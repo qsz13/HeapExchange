@@ -27,12 +27,21 @@ class OneTimeForm(ModelForm):
         model = OneTimeSchedule
         fields = '__all__'
 
+        widgets = {
+            'date': forms.DateInput(attrs={'class': 'datepicker'}),
+        }
+
 
 
 class SequenceTimeForm(ModelForm):
     class Meta:
         model = SequenceTimeSchedule
         fields = '__all__'
+
+        widgets = {
+            'start_date': forms.DateInput(attrs={'class': 'datepicker'}),
+            'end_date': forms.DateInput(attrs={'class': 'datepicker'}),
+        }
 
 
 class WeeklyTimeForm(ModelForm):

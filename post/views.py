@@ -29,6 +29,9 @@ class CourseCreateView(LoginRequiredMixin, CreateView):
 
 @login_required
 def create(request, kind):
+    once_form = OneTimeForm()
+    sequence_form = SequenceTimeForm()
+    weekly_form = WeeklyTimeForm()
     if request.method == 'POST':
         if kind == 'a':
             form = ActivityForm(request.POST)
@@ -40,15 +43,17 @@ def create(request, kind):
             new_form.initialtime = datetime.now()
             new_form.save()
             return redirect('post:posted', kind=kind)
+        else:
+            return render(request, 'post/form.html',
+                      {'form': form, 'once_form': once_form, 'sequence_form': sequence_form, 'weekly_form': weekly_form,
+                       'kind': kind, 'action': 'create'})
     else:
         if kind == 'a':
             form = ActivityForm()
         else:
             form = CourseForm()
 
-        once_form = OneTimeForm()
-        sequence_form = SequenceTimeForm()
-        weekly_form = WeeklyTimeForm()
+
         return render(request, 'post/form.html',
                       {'form': form, 'once_form': once_form, 'sequence_form': sequence_form, 'weekly_form': weekly_form,
                        'kind': kind, 'action': 'create'})

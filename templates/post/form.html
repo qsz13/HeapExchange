@@ -22,7 +22,9 @@
      $(document).ready(function() {
          $('.datepicker').pickadate({
             selectMonths: true, // Creates a dropdown to control month
-            selectYears: 15 // Creates a dropdown of 15 years to control year
+            selectYears: 15, // Creates a dropdown of 15 years to control year
+            formatSubmit: 'mm/dd/yyyy',
+             hiddenSuffix: ''
           });
          $('select').material_select();
 
@@ -115,13 +117,11 @@
 
 
                     <div class="row">
-                        <div class="input-field">
                             <div class="fieldWrapper">
                                 {{ form.deadline.errors }}
                                 <label for="{{ form.deadline.id_for_label }}">截止日期:</label>
                                 {{ form.deadline }}
                             </div>
-                        </div>
                     </div>
 
                     <div class="row">
