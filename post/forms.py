@@ -39,15 +39,25 @@ class SequenceTimeForm(ModelForm):
         fields = '__all__'
 
         widgets = {
-            'start_date': forms.DateInput(attrs={'class': 'datepicker'}),
-            'end_date': forms.DateInput(attrs={'class': 'datepicker'}),
+            'sequence_start_date': forms.DateInput(attrs={'class': 'datepicker'}),
+            'sequence_end_date': forms.DateInput(attrs={'class': 'datepicker'}),
+            'sequence_start_time': forms.TimeInput(attrs={'class': 'timepicker'}),
+            'sequence_end_time': forms.TimeInput(attrs={'class': 'timepicker'}),
         }
+
 
 
 class WeeklyTimeForm(ModelForm):
     class Meta:
         model = WeeklyTimeSchedule
         fields = '__all__'
+
+        widgets = {
+             'weekly_start_date': forms.DateInput(attrs={'class': 'datepicker'}),
+             'weekly_end_date': forms.DateInput(attrs={'class': 'datepicker'}),
+             'weekly_start_time': forms.TimeInput(attrs={'class': 'timepicker'}),
+             'weekly_end_time': forms.TimeInput(attrs={'class': 'timepicker'}),
+        }
 
 
 class ActivityForm(ModelForm):

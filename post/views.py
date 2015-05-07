@@ -32,7 +32,7 @@ def create(request, kind):
     once_form = OneTimeForm()
     sequence_form = SequenceTimeForm()
     weekly_form = WeeklyTimeForm()
-
+    print weekly_form
     if request.method == 'POST':
         if kind == 'a':
             form = ActivityForm(request.POST)

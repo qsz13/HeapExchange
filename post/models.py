@@ -15,18 +15,26 @@ class OneTimeSchedule(models.Model):
 
 
 class SequenceTimeSchedule(models.Model):
-    start_date = models.DateField()
-    end_date = models.DateField()
-    start_time = models.TimeField()
-    end_time = models.TimeField()
+    sequence_start_date = models.DateField()
+    sequence_end_date = models.DateField()
+    sequence_start_time = models.TimeField()
+    sequence_end_time = models.TimeField()
 
 
 class WeeklyTimeSchedule(models.Model):
 
-    start_date = models.DateField()
-    end_date = models.DateField()
-    start_time = models.TimeField()
-    end_time = models.TimeField()
+    monday = models.BooleanField(default=False)
+    tuesday = models.BooleanField(default=False)
+    wednesday = models.BooleanField(default=False)
+    thursday = models.BooleanField(default=False)
+    friday = models.BooleanField(default=False)
+    saturday = models.BooleanField(default=False)
+    sunday = models.BooleanField(default=False)
+
+    weekly_start_date = models.DateField()
+    weekly_end_date = models.DateField()
+    weekly_start_time = models.TimeField()
+    weekly_end_time = models.TimeField()
 
 
 class Post(models.Model):
@@ -45,9 +53,7 @@ class Post(models.Model):
 
 
     title = models.CharField(max_length=100, null=True)
-    # time = models.DateField(null=True)
     description = models.CharField(max_length=500, null=True)
-    # deadline = models.DateField(null=True)
     location = models.CharField(max_length=100, null=True)
     requirement = models.CharField(max_length=500, null=True)
     initialtime = models.DateTimeField(auto_now=True)
