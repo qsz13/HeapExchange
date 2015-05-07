@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load widget_tweaks %}
 {% block title %}
 
     {% if action == 'create' %}
@@ -18,6 +18,10 @@
 
 
 {% block extrahead %}
+
+
+  <script type="text/javascript" src="/static/js/jquery.timepicker.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="/static/css/jquery.timepicker.css" />
     <script type="application/javascript">
      $(document).ready(function() {
          $('.datepicker').pickadate({
@@ -52,17 +56,19 @@
 
              }
         });
+          $('.timepicker').timepicker({ 'timeFormat': 'H:i' });
     });
 
 
 
     </script>
+
 {% endblock %}
 
 {% block page %}
 
 
-<div class="row top3">
+<div class="row top3 container">
     <div class="col s10 offset-s1">
 
         <div class="row card">
@@ -102,10 +108,34 @@
                             <label for="{{ form.schedule_type.id_for_label }}">时间类型</label>
                         </div>
                         <div class="col s10 card" id="once">
-                             {{ once_form }}
+                            <div class="row top3">
+                                <div class="col s3">
+                                    <label for="{{ once_form.once_date.id_for_label }}">{{ once_form.once_date.label }}</label>
+                                    {{ once_form.once_date }}
+                                </div>
+                                <div class="col s3">
+                                    <label for="{{ once_form.once_start_time.id_for_label }}">{{ once_form.once_start_time.label }}</label>
+
+                                    {% render_field once_form.once_start_time class+="input-field" %}
+                                </div>
+                                <div class="col s1">
+
+                                    <p><br>至</p>
+                                </div>
+                                <div class="col s3">
+                                     <label for="{{ once_form.once_end_time.id_for_label }}">{{ once_form.once_end_time.label }}</label>
+                                    {% render_field once_form.once_end_time class+="input-field" %}
+                                </div>
+
+                            </div>
+
+
                         </div>
 
                         <div class="col s10 card" id="sequence" style="display: none">
+                            <div class="row">
+                                <div class="col"></div>
+                            </div>
                              {{ sequence_form }}
                         </div>
 
@@ -114,15 +144,6 @@
                         </div>
                     </div>
 
-
-
-                    <div class="row">
-                            <div class="fieldWrapper">
-                                {{ form.deadline.errors }}
-                                <label for="{{ form.deadline.id_for_label }}">截止日期:</label>
-                                {{ form.deadline }}
-                            </div>
-                    </div>
 
                     <div class="row">
                         <div class="input-field">

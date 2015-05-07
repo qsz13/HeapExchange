@@ -9,9 +9,9 @@ from django.db import models
 
 
 class OneTimeSchedule(models.Model):
-    date = models.DateField()
-    start_time = models.TimeField()
-    end_time = models.TimeField()
+    once_date = models.DateField(verbose_name=u'活动日期')
+    once_start_time = models.TimeField(verbose_name=u'开始时间')
+    once_end_time = models.TimeField(verbose_name=u'结束时间')
 
 
 class SequenceTimeSchedule(models.Model):
@@ -45,9 +45,9 @@ class Post(models.Model):
 
 
     title = models.CharField(max_length=100, null=True)
-    time = models.DateField(null=True)
+    # time = models.DateField(null=True)
     description = models.CharField(max_length=500, null=True)
-    deadline = models.DateField(null=True)
+    # deadline = models.DateField(null=True)
     location = models.CharField(max_length=100, null=True)
     requirement = models.CharField(max_length=500, null=True)
     initialtime = models.DateTimeField(auto_now=True)

@@ -21,10 +21,10 @@ class TempView(TemplateView):
     template_name = 'post/post.html'
 
 
-class CourseCreateView(LoginRequiredMixin, CreateView):
-    model = Course
-    fields = ['link', 'skill_requirement']
-    template_name = "post/course_create_form.html"
+# class CourseCreateView(LoginRequiredMixin, CreateView):
+#     model = Course
+#     fields = ['link', 'skill_requirement']
+#     template_name = "post/course_create_form.html"
 
 
 @login_required
@@ -32,16 +32,26 @@ def create(request, kind):
     once_form = OneTimeForm()
     sequence_form = SequenceTimeForm()
     weekly_form = WeeklyTimeForm()
+
     if request.method == 'POST':
         if kind == 'a':
             form = ActivityForm(request.POST)
         else:
             form = CourseForm(request.POST)
         if form.is_valid():
-            new_form = form.save(commit=False)
-            new_form.initiator = User.objects.get(id=request.user.id)
-            new_form.initialtime = datetime.now()
-            new_form.save()
+            once_schedule = None
+            if request.POST['schedule_type'] == 'ONCE':
+                once_form = OneTimeForm(request.POST)
+                if once_form.is_valid():
+                    once_schedule = once_form.save()
+                else:
+                    print once_form.errors
+
+            new_post = form.save(commit=False)
+            new_post.initiator = User.objects.get(id=request.user.id)
+            new_post.initialtime = datetime.now()
+            new_post.one_time_schedule = once_schedule
+            new_post.save()
             return redirect('post:posted', kind=kind)
         else:
             return render(request, 'post/form.html',

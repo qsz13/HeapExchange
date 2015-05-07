@@ -9,13 +9,12 @@ from functools import partial
 class CourseForm(ModelForm):
     class Meta:
         model = Course
-        fields = ['title', 'schedule_type', 'location', 'deadline', 'description',
+        fields = ['title', 'schedule_type', 'location', 'description',
                   'requirement', 'limit',
                   'price']
         widgets = {
             'title': forms.TextInput(),
             'schedule_type': forms.Select(choices=Post.SCHEDULE_TYPE),
-            'deadline': forms.DateInput(attrs={'class': 'datepicker'}),
             'limit': forms.NumberInput(),
             'description': Textarea(attrs={'cols': 80, 'rows': 20, 'class': 'materialize-textarea'}),
             'price': forms.NumberInput(),
@@ -28,9 +27,10 @@ class OneTimeForm(ModelForm):
         fields = '__all__'
 
         widgets = {
-            'date': forms.DateInput(attrs={'class': 'datepicker'}),
+            'once_date': forms.DateInput(attrs={'class': 'datepicker'}),
+            'once_start_time': forms.TimeInput(attrs={'class': 'timepicker'}),
+            'once_end_time': forms.TimeInput(attrs={'class': 'timepicker'}),
         }
-
 
 
 class SequenceTimeForm(ModelForm):
@@ -53,11 +53,9 @@ class WeeklyTimeForm(ModelForm):
 class ActivityForm(ModelForm):
     class Meta:
         model = Activity
-        fields = ['title', 'location', 'time', 'deadline', 'description', 'requirement', 'limit']
+        fields = ['title', 'location', 'description', 'requirement', 'limit']
         widgets = {
             'title': forms.TextInput(),
-            'time': forms.DateInput(attrs={'class': 'datepicker', 'type': 'text'}),
-            'deadline': forms.DateInput(attrs={'class': 'datepicker'}),
             'limit': forms.NumberInput(),
             'description': Textarea(attrs={'cols': 80, 'rows': 20, 'class': 'materialize-textarea'}),
         }

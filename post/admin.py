@@ -1,5 +1,5 @@
 from django.contrib import admin
-from post.models import Tag, Course, Activity
+from post.models import Tag, Course, Activity, OneTimeSchedule
 
 
 @admin.register(Tag)
@@ -13,4 +13,9 @@ class CourseAdmin(admin.ModelAdmin):
 
 @admin.register(Activity)
 class ActivityAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(OneTimeSchedule)
+class OneTimeScheduleAdmin(admin.ModelAdmin):
     pass
