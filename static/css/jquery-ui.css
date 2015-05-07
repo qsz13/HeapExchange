@@ -528,7 +528,6 @@ button.ui-button::-moz-focus-inner {
 	height: 100%;
 }
 .ui-progressbar .ui-progressbar-overlay {
-	/*background: url("images/animated-overlay.gif");*/
 	height: 100%;
 	filter: alpha(opacity=25);
 	opacity: 0.25;
@@ -1164,14 +1163,12 @@ body .ui-tooltip {
 
 /* Overlays */
 .ui-widget-overlay {
-	background: #eeeeee url(images/ui-bg_flat_0_eeeeee_40x100.png) 50% 50% repeat-x;
 	opacity: .8;
 	filter: Alpha(Opacity=80);
 }
 .ui-widget-shadow {
 	margin: -4px 0 0 -4px;
 	padding: 4px;
-	background: #aaaaaa url(images/ui-bg_flat_0_aaaaaa_40x100.png) 50% 50% repeat-x;
 	opacity: .6;
 	filter: Alpha(Opacity=60);
 	border-radius: 0px;

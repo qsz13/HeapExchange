@@ -2,7 +2,15 @@
 
 {% block title %} 搜索 {% endblock %}
 
+{% block extrahead %}
+ <script>$(document).ready(function() {
+    $('select').material_select();
+});</script>
+{% endblock %}
+
+
 {% block page %}
+
 
 <div class="container">
 	<div class="row">
@@ -22,11 +30,12 @@
 
 		<div class="row">
 		<div class="input-field col s2 offset-s1">
-			<select class="browser-default" name="select">
+			<select name="select">
 				<option value="2">所有</option>
 				<option value="0">课程</option>
 				<option value="1">活动</option>
 			</select>
+
 		</div>
 	
 		<div class="input-field col s6">
