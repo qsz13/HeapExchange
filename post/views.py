@@ -32,7 +32,6 @@ def create(request, kind):
     once_form = OneTimeForm()
     sequence_form = SequenceTimeForm()
     weekly_form = WeeklyTimeForm()
-    print weekly_form
     if request.method == 'POST':
         if kind == 'a':
             form = ActivityForm(request.POST)
@@ -40,17 +39,46 @@ def create(request, kind):
             form = CourseForm(request.POST)
         if form.is_valid():
             once_schedule = None
+            sequence_schedule = None
+            weekly_schedule = None
             if request.POST['schedule_type'] == 'ONCE':
                 once_form = OneTimeForm(request.POST)
                 if once_form.is_valid():
                     once_schedule = once_form.save()
                 else:
-                    print once_form.errors
+                    return render(request, 'post/form.html',
+                      {'form': form, 'once_form': once_form, 'sequence_form': sequence_form, 'weekly_form': weekly_form,
+                       'kind': kind, 'action': 'create'})
+
+            elif request.POST['schedule_type'] == "SEQU":
+                sequence_form = SequenceTimeForm(request.POST)
+                if sequence_form.is_valid():
+                    sequence_schedule = sequence_form.save()
+                else:
+                    return render(request, 'post/form.html',
+                      {'form': form, 'once_form': once_form, 'sequence_form': sequence_form, 'weekly_form': weekly_form,
+                       'kind': kind, 'action': 'create'})
+            elif request.POST['schedule_type'] == "WEEK":
+                weekly_form = WeeklyTimeForm(request.POST)
+                if weekly_form.is_valid():
+                    weekly_schedule = weekly_form.save()
+                else:
+                    return render(request, 'post/form.html',
+                      {'form': form, 'once_form': once_form, 'sequence_form': sequence_form, 'weekly_form': weekly_form,
+                       'kind': kind, 'action': 'create'})
+
+
 
             new_post = form.save(commit=False)
             new_post.initiator = User.objects.get(id=request.user.id)
             new_post.initialtime = datetime.now()
-            new_post.one_time_schedule = once_schedule
+            if request.POST['schedule_type'] == 'ONCE':
+                new_post.one_time_schedule = once_schedule
+            elif request.POST['schedule_type'] == "SEQU":
+                new_post.sequence_time_schedule = sequence_schedule
+            elif request.POST['schedule_type'] == "WEEK":
+                new_post.weekly_time_schedule = weekly_schedule
+
             new_post.save()
             return redirect('post:posted', kind=kind)
         else:
