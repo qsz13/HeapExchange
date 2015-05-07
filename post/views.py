@@ -131,6 +131,10 @@ def detail(request, kind, post_id):
     else:
         interested_post = False
 
+
+    schedule = post.get_post_schedule()
+
+
     # if datetime.date(datetime.now()) <= post.deadline:
     #     status = 'registering'
     # elif datetime.date(datetime.now()) > post.deadline and datetime.date(datetime.now()) < post.time:
@@ -141,7 +145,7 @@ def detail(request, kind, post_id):
 
     return render(request,
                   'post/detail.html',
-                  {'kind': kind, 'post': post, 'list': ini_list, 'is_self': is_self, 'has_joined': has_joined,
+                  {'kind': kind, 'post': post, 'schedule':schedule, 'list': ini_list, 'is_self': is_self, 'has_joined': has_joined,
                    'interested': interested_post, 'status': status})
 
 

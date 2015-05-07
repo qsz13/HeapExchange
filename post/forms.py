@@ -9,7 +9,7 @@ from functools import partial
 class CourseForm(ModelForm):
     class Meta:
         model = Course
-        fields = ['title', 'schedule_type', 'location', 'description',
+        fields = ['title', 'schedule_type','deadline', 'location', 'description',
                   'requirement', 'limit', 'price']
         widgets = {
             'title': forms.TextInput(),
@@ -17,6 +17,7 @@ class CourseForm(ModelForm):
             'limit': forms.NumberInput(),
             'description': Textarea(attrs={'cols': 80, 'rows': 20, 'class': 'materialize-textarea'}),
             'price': forms.NumberInput(),
+            'deadline':forms.DateInput(attrs={'class': 'datepicker'}),
         }
 
 
@@ -24,12 +25,13 @@ class CourseForm(ModelForm):
 class ActivityForm(ModelForm):
     class Meta:
         model = Activity
-        fields = ['title', 'schedule_type', 'location', 'description', 'requirement', 'limit']
+        fields = ['title', 'schedule_type','deadline', 'location', 'description', 'requirement', 'limit']
         widgets = {
             'title': forms.TextInput(),
             'schedule_type': forms.Select(choices=Post.SCHEDULE_TYPE),
             'limit': forms.NumberInput(),
             'description': Textarea(attrs={'cols': 80, 'rows': 20, 'class': 'materialize-textarea'}),
+             'deadline':forms.DateInput(attrs={'class': 'datepicker'}),
         }
 
 

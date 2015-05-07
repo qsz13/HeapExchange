@@ -50,6 +50,7 @@ class Post(models.Model):
 
     title = models.CharField(max_length=100, null=True, verbose_name=u'标题')
     description = models.CharField(max_length=500, null=True, verbose_name=u'描述')
+    deadline = models.DateField(null=True, verbose_name=u'报名截至')
     location = models.CharField(max_length=100, null=True, verbose_name=u'地点')
     requirement = models.CharField(max_length=500, null=True, verbose_name=u'需求')
     initialtime = models.DateTimeField(auto_now=True, )
@@ -68,7 +69,6 @@ class Post(models.Model):
             return str(schedule.once_date) + ' ' + '{:%H:%M}'.format(
                 schedule.once_start_time) + u'至' + '{:%H:%M}'.format(schedule.once_end_time)
 
-        # 2015-05-11 至 2015-05-18 每天 10:00 至 08:00
         elif self.schedule_type == 'SEQU':
 
             schedule = self.sequence_time_schedule
