@@ -135,13 +135,12 @@ def detail(request, kind, post_id):
     else:
         interested_post = False
 
-
     schedule = post.get_post_schedule()
-
-
-    if datetime.date(datetime.now()) <= post.deadline:
+    if post.limit <= post.joined.count:
+        status = 'full'
+    elif datetime.date(datetime.now()) <= post.deadline:
         status = 'registering'
-    elif datetime.date(datetime.now()) > post.deadline and datetime.date(datetime.now()) < post.time:
+    elif post.deadline < datetime.date(datetime.now()) < post.time:
         status = 'tobegin'
     else:
         status = 'end'

@@ -33,6 +33,7 @@
                         <span class="green-text text-darken-1"> {% if status == 'registering' %}  正在报名 {% endif %}</span>
                         <span class="yellow-text text-darken-1"> {% if status == 'tobegin' %}  等待开始 {% endif %} </span>
                         <span class="red-text text-darken-1"> {% if status == 'end' %}  已结束 {% endif %} </span>
+                        <span class="red-text text-darken-1"> {% if status == 'full' %}  已满员 {% endif %} </span>
 
                         </p>
                         
@@ -188,8 +189,8 @@
 
                                 <p> 
                                         {% if post.joined.count > 0 %}
-                                                {% for user in post.joined.all %}
-                                                        {{ user }}  
+                                                {% for u in post.joined.all %}
+                                                        <i><img src="/media/{{ u.profile.avatar }}" alt="" height="30px" width="30px"class="circle nav-avatar"></i>
                                                 {% endfor %}
                                                 参加了这个活动。
                                         {% endif %}
@@ -210,6 +211,8 @@
                                         <p><a href="{% url 'post:addtag' post.flag post.id%}">为活动添加标签</a></p>
                         </div>
                 </div>
+
+
 
         </div>
 

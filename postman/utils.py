@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 from __future__ import unicode_literals
 import re
 import sys
@@ -95,7 +98,7 @@ def notify_user(object, action, site):
         return
     if notification:
         # the context key 'message' is already used in django-notification/models.py/send_now() (v0.2.0)
-        notify.send(object.sender, recipient=user, verb="sender you a message")
+        notify.send(object.sender, recipient=user, verb=u"给你发送了一条站内信")
         # notification.send(users=[user], label=label, extra_context={'pm_message': object, 'pm_action': action})
     else:
         if not DISABLE_USER_EMAILING and user.email and user.is_active:
