@@ -135,13 +135,12 @@ def detail(request, kind, post_id):
     schedule = post.get_post_schedule()
 
 
-    # if datetime.date(datetime.now()) <= post.deadline:
-    #     status = 'registering'
-    # elif datetime.date(datetime.now()) > post.deadline and datetime.date(datetime.now()) < post.time:
-    #     status = 'tobegin'
-    # else:
-    #     status = 'end'
-    status = None
+    if datetime.date(datetime.now()) <= post.deadline:
+        status = 'registering'
+    elif datetime.date(datetime.now()) > post.deadline and datetime.date(datetime.now()) < post.time:
+        status = 'tobegin'
+    else:
+        status = 'end'
 
     return render(request,
                   'post/detail.html',
