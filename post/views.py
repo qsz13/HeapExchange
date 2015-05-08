@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 import json
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
@@ -11,6 +14,7 @@ from django.http import HttpResponse, Http404
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from notifications import notify
 from post.serializers import CourseSerializer
 from django.shortcuts import get_object_or_404
 from datetime import datetime
@@ -193,7 +197,9 @@ def join(request, kind, post_id):
         post = get_object_or_404(Course, id=post_id)
     post.joined.add(request.user)
     post.save()
-    return redirect('post:detail', kind=kind, id=post_id)
+    noti_content = u'报名参加你的课程'+post.title
+    notify.send(request.user, recipient=post.initiator, verb=noti_content, description=post.get_absolute_url())
+    return redirect('post:detail', kind=kind, post_id=post_id)
 
 
 @login_required
@@ -204,7 +210,9 @@ def unjoin(request, kind, post_id):
         post = get_object_or_404(Course, id=post_id)
     post.joined.remove(request.user)
     post.save()
-    return redirect('post:detail', kind=kind, id=post_id)
+    noti_content = u'退出了你的课程'+post.title
+    notify.send(request.user, recipient=post.initiator, verb=noti_content, description=post.get_absolute_url())
+    return redirect('post:detail', kind=kind, post_id=post_id)
 
 
 @login_required
@@ -215,7 +223,7 @@ def interest(request, kind, post_id):
         post = get_object_or_404(Course, id=post_id)
     post.interested.add(request.user)
     post.save()
-    return redirect('post:detail', kind=kind, id=post_id)
+    return redirect('post:detail', kind=kind, post_id=post_id)
 
 
 @login_required
@@ -226,7 +234,7 @@ def uninterest(request, kind, post_id):
         post = get_object_or_404(Course, id=post_id)
     post.interested.remove(request.user)
     post.save()
-    return redirect('post:detail', kind=kind, id=post_id)
+    return redirect('post:detail', kind=kind, post_id=post_id)
 
 
 def all_tags(request):
@@ -248,7 +256,7 @@ def update(request, kind, post_id):
         form = CourseForm(request.POST or None, instance=post)
     if form.is_valid():
         form.save()
-        return redirect('post:detail', kind=kind, id=post_id)
+        return redirect('post:detail', kind=kind, post_id=post_id)
     return render(request, 'post/form.html', {'form': form, 'post': post, 'kind': kind, 'action': 'update'})
 
 
@@ -294,7 +302,7 @@ def add_tag(request, kind, post_id):
             t, created = Tag.objects.get_or_create(name=tag.lower())
             post.tags.add(t)
         post.save()
-        return redirect('post:detail', kind=kind, id=post_id)
+        return redirect('post:detail', kind=kind, post_id=post_id)
     else:
         tags = post.tags.all()
 

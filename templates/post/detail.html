@@ -149,17 +149,22 @@
                 </div>
 
                 <div class="row card">
-                    <div class="row top5">
-                        <div class="col top3 s2">
-                            <span><a class="waves-effect waves-teal btn-flat text-black"><i><img src="/media/{{ post.initiator.profile.avatar }}" alt="" height="30px" width="30px"class="circle nav-avatar"></i></a></span>
+                    <div class="col">
+                        <div class="row top10">
+                            <div class="col s3">
+                                <a class="waves-effect waves-teal text-black"><i><img src="/media/{{ post.initiator.profile.avatar }}" alt="" height="30px" width="30px"class="circle nav-avatar"></i></a>
+                            </div>
+                            <div class="col">
+                                {{post.initiator}} 的条目:
+                            </div>
                         </div>
-                        <div class="col s9 offset-s1">
-                                <p> {{post.initiator}} 的条目: </p>
-                                <p>
-                                {% for item in list %}
-                                        <li> <a href ="{% url 'post:detail' item.flag item.id %}"> {{ item.title }}</a></li>
-                                {% endfor %}
-                                </p>
+                        <div class="row">
+                             <div class="col s9 offset-s3">
+                                    {% for item in list %}
+                                            <li> <a href ="{% url 'post:detail' item.flag item.id %}"> {{ item.title }}</a></li>
+                                    {% endfor %}
+
+                            </div>
                         </div>
                     </div>
                 </div>

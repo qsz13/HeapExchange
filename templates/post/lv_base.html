@@ -1,61 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>{% block title %}Heap Exchange{% endblock %}</title>
-    <link rel="stylesheet" href="/static/materialize/css/materialize.css">
-
-    <script src="/static/js/jquery-2.1.3.min.js"></script>
-    {% block jquery-ui %}{% endblock %}
-    <script src="/static/materialize/js/materialize.js"></script>
-
-    {% block extrahead %}{% endblock %}
-    <link rel="stylesheet" href="/static/css/base.css">
-</head>
-
-<body class="body-color" >
-<nav class="nav-color nav-backcolor">
-  <div class="nav-wrapper row">
-    <div class="col s10 offset-s1 ">
-        <div class="left">
-          <a id="logo-container" href="/" class="logo waves-effect waves-light ">
-              <span class="left theme-color">Heap Exchange</span>
-          </a>
-        </div>
-
-    <div class="nav-wrapper">
-
-    <ul class="right">
-        {% if user.is_authenticated %}
-
-            <li><a class="nav-color" href="{% url 'search:index' %}"><i class="mdi-action-search circle"></i></a></li>
-            <li><a class="nav-color" href="{% url 'notifications:all' %}"><i class="mdi-social-public circle"></i></a></li>
-            <li><a class="nav-color" href="{% url 'post:post' %}"><i class="mdi-editor-mode-edit circle"></i></a></li>
-            <li><a class="nav-color" href="{% url 'postman_inbox' %}"><i class="mdi-communication-message circle"></i></a></li>
-            <li class=""></li>
-            <li><a class="dropdown-button nav-color" href="#!" data-activates="dropdown1"><img src="/media/{{ user.profile.avatar }}" alt="" height="30px" class="circle nav-avatar"><i class="nav-color mdi-navigation-arrow-drop-down right"></i></a></li>
-            <ul id="dropdown1" class="dropdown-content">
-              <li><a href="{% url "account" %}#profile" onclick="window.location.reload()">Profile</a></li>
-              <li><a href="{% url "account" %}#setting" onclick="window.location.reload()">Settings</a></li>
-                <li><a href="{% url "account" %}#interest" onclick="window.location.reload()">Interest</a></li>
-                <li><a href="{% url "account" %}#time_table" onclick="window.location.reload()">Time Table</a></li>
-              <li class="divider"></li>
-              <li><a href="{% url "logout" %}">Log out</a></li>
-            </ul>
-
-        {% else %}
-      <li> <a class="nav-color" href="{% url 'sign_up' %}">Sign up</a></li>
-      <li><a class="nav-color waves-effect waves-light btn button-color" href="{% url 'login' %}">Log in</a></li>
-        {% endif %}
-    </ul>
-
-    </div>
-
-  </div>
-  </div>
-</nav>
+{% extends 'base.html' %}
 
 
-    <div class="row">
+{% block page %}
+     <div class="row">
             <div class="col s10 offset-s1">
 
 
@@ -77,8 +24,7 @@
             <div class="row">
 
                     <div class="col s10 offset-s1">
-                    {# <div class="collection">#}
-                    
+
                             <ul class="collapsible popout">
                                     {% for item in list %}
                                             <li>
@@ -95,9 +41,10 @@
                                             </li>
                                     {% endfor %}
                             </ul>
-                    {#</div>#}
                     </div>
             </div>
+            </div>
+     </div>
 
 
 <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
@@ -109,6 +56,4 @@
     </ul>
 </div>
 
-
-</body>
-</html>
+{% endblock %}

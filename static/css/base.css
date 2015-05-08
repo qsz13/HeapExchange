@@ -131,6 +131,10 @@ textarea.materialize-textarea:focus:not([readonly]) {
     color:#2dbe60;
 }
 
+.unread_notification{
+     color:#2dbe60;
+}
+
 .nav-avatar{
     vertical-align:middle;
     width:auto;
