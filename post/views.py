@@ -136,7 +136,7 @@ def detail(request, kind, post_id):
         interested_post = False
 
     schedule = post.get_post_schedule()
-    if post.limit <= post.joined.count:
+    if post.limit <= post.joined.count():
         status = 'full'
     elif datetime.date(datetime.now()) <= post.deadline:
         status = 'registering'
@@ -145,10 +145,12 @@ def detail(request, kind, post_id):
     else:
         status = 'end'
 
+    dic = {"aaa":"AAA",'bbb':"BBB"}
+
     return render(request,
                   'post/detail.html',
                   {'kind': kind, 'post': post, 'schedule':schedule, 'list': ini_list, 'is_self': is_self, 'has_joined': has_joined,
-                   'interested': interested_post, 'status': status})
+                   'interested': interested_post, 'status': status, 'dic':dic})
 
 
 def all_post(request, kind='c'):

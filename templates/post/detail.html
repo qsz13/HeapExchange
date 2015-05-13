@@ -204,7 +204,7 @@
                                 <p class="card-title black-text">相关标签</p>
                                         <p>
                                                 {% for t in post.tags.all %}
-                                                        <span><a class="waves-effect waves-light btn red accent-2" href="{% url 'post:tagview' t.id %}"><i class="mdi-image-style left"></i>{{ t.name }}</a></span>
+                                                        <span><a class="waves-effect waves-light btn red accent-2" href="{% url 'post:tagview' t.id %}"><i class="mdi-image-style left"></i>{{ t.name|truncatechars:10 }}</a></span>
                                                 {% endfor %}
                                                 <!-- add link -->
                                         </p>
@@ -218,5 +218,6 @@
 
 </div>
     </div>
+
 
 {% endblock %}
