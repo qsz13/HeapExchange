@@ -49,16 +49,21 @@ class Post(models.Model):
     )
 
     title = models.CharField(max_length=100, null=True, verbose_name=u'标题')
-    description = models.CharField(max_length=500, null=True, verbose_name=u'描述')
+    description = models.CharField(
+        max_length=500, null=True, verbose_name=u'描述')
     deadline = models.DateField(null=True, verbose_name=u'报名截至')
     location = models.CharField(max_length=100, null=True, verbose_name=u'地点')
-    requirement = models.CharField(max_length=500, null=True, verbose_name=u'需求')
+    requirement = models.CharField(
+        max_length=500, null=True, verbose_name=u'需求')
     initialtime = models.DateTimeField(auto_now=True, )
     limit = models.IntegerField(null=True, verbose_name=u'人数限制')
     schedule_type = models.CharField(max_length=4, null=True)
-    one_time_schedule = models.OneToOneField(OneTimeSchedule, null=True, blank=True)
-    sequence_time_schedule = models.OneToOneField(SequenceTimeSchedule, null=True, blank=True)
-    weekly_time_schedule = models.OneToOneField(WeeklyTimeSchedule, null=True, blank=True)
+    one_time_schedule = models.OneToOneField(
+        OneTimeSchedule, null=True, blank=True)
+    sequence_time_schedule = models.OneToOneField(
+        SequenceTimeSchedule, null=True, blank=True)
+    weekly_time_schedule = models.OneToOneField(
+        WeeklyTimeSchedule, null=True, blank=True)
 
     def get_post_schedule(self):
 
@@ -79,7 +84,8 @@ class Post(models.Model):
         elif self.schedule_type == 'WEEK':
             schedule = self.weekly_time_schedule
 
-            s = str(schedule.weekly_start_date) + u' 至 ' + str(schedule.weekly_end_date) + u' 每周 '
+            s = str(schedule.weekly_start_date) + u' 至 ' + \
+                str(schedule.weekly_end_date) + u' 每周 '
             if schedule.monday:
                 s += u'一 '
             if schedule.tuesday:
@@ -98,7 +104,6 @@ class Post(models.Model):
                 schedule.weekly_start_time) + u'至' + '{:%H:%M}'.format(schedule.weekly_end_time)
             return s
 
-
     class Meta:
         abstract = True
 
@@ -108,10 +113,13 @@ class Post(models.Model):
 
 class Course(Post):
     initiator = models.ForeignKey(User, default=1, related_name='courses')
-    joined = models.ManyToManyField(User, related_name="joined_courses", blank=True)
-    interested = models.ManyToManyField(User, related_name="interested_courses", blank=True)
+    joined = models.ManyToManyField(
+        User, related_name="joined_courses", blank=True)
+    interested = models.ManyToManyField(
+        User, related_name="interested_courses", blank=True)
     price = models.IntegerField(default=0, verbose_name=u'价格')
     flag = models.CharField(max_length=1, default='c')
+
 
     def get_absolute_url(self):
         path = reverse('post:detail', args=[self.flag, self.id])
@@ -120,13 +128,22 @@ class Course(Post):
 
 class Activity(Post):
     initiator = models.ForeignKey(User, default=1, related_name='activities')
-    joined = models.ManyToManyField(User, related_name="joined_activities", blank=True)
-    interested = models.ManyToManyField(User, related_name="interested_activities", blank=True)
+    joined = models.ManyToManyField(
+        User, related_name="joined_activities", blank=True)
+    interested = models.ManyToManyField(
+        User, related_name="interested_activities", blank=True)
     flag = models.CharField(max_length=1, default='a')
 
     def get_absolute_url(self):
         path = reverse('post:detail', args=[self.flag, self.id])
         return path
+
+
+class Arrangement(models.Model):
+    course = models.ForeignKey(Course, default=1, related_name='arrangements')
+    order = models.IntegerField(null=True)
+    content = models.CharField(max_length=100, null=True)
+    time = models.DateTimeField(null=True)
 
 
 class Tag(models.Model):
@@ -136,5 +153,3 @@ class Tag(models.Model):
 
     def __unicode__(self):
         return self.name
-
-

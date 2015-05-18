@@ -8,7 +8,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import Course, Tag, Activity
+from .models import Course, Tag, Activity, Arrangement
 from .forms import CourseForm, ActivityForm, OneTimeForm, SequenceTimeForm, WeeklyTimeForm
 from django.http import HttpResponse, Http404
 from django.shortcuts import redirect
@@ -17,7 +17,7 @@ from django.contrib.auth.models import User
 from notifications import notify
 from post.serializers import CourseSerializer
 from django.shortcuts import get_object_or_404
-from datetime import datetime
+from datetime import datetime, date, timedelta
 
 
 class TempView(TemplateView):
@@ -82,8 +82,80 @@ def create(request, kind):
                 new_post.sequence_time_schedule = sequence_schedule
             elif request.POST['schedule_type'] == "WEEK":
                 new_post.weekly_time_schedule = weekly_schedule
-
             new_post.save()
+
+            if kind == 'c' and request.POST['schedule_type'] == "SEQU":
+                start = new_post.sequence_time_schedule.sequence_start_date
+                end = new_post.sequence_time_schedule.sequence_end_date
+                date_order = 0
+                length = (end - start).days
+                for day in range(length):
+                    arrange = Arrangement.objects.create()
+                    arrange.course = new_post
+                    arrange.order = date_order
+                    arrange.time = start + timedelta(days=date_order) # day
+                    date_order += 1
+                    arrange.content = ''
+                    arrange.save()
+                    print 'arr' + str(arrange.time)
+
+            if kind == 'c' and request.POST['schedule_type'] == "WEEK":
+                start = new_post.weekly_time_schedule.weekly_start_date
+                end = new_post.weekly_time_schedule.weekly_end_date
+                date_order = 0
+                week_list = []
+                if new_post.weekly_time_schedule.monday:
+                    week_list.append(True)
+                else:
+                    week_list.append(False)
+                if new_post.weekly_time_schedule.tuesday:
+                    week_list.append(True)
+                else:
+                    week_list.append(False)
+                if new_post.weekly_time_schedule.wednesday:
+                    week_list.append(True)
+                else:
+                    week_list.append(False)
+                if new_post.weekly_time_schedule.thursday:
+                    week_list.append(True)
+                else:
+                    week_list.append(False)
+                if new_post.weekly_time_schedule.friday:
+                    week_list.append(True)
+                else:
+                    week_list.append(False)
+                if new_post.weekly_time_schedule.saturday:
+                    week_list.append(True)
+                else:
+                    week_list.append(False)
+                if new_post.weekly_time_schedule.sunday:
+                    week_list.append(True)
+                else:
+                    week_list.append(False)
+
+                if week_list[start.weekday()]:
+                    week_index = start.weekday()
+                else:
+                    for i in range(7):
+                        if week_list[(start.weekday() + i) % 7]:
+                            start = start + timedelta(days=i)
+
+                week_index = start.weekday()
+                date_order = 0
+                for day in range((end - start).days):
+                    if week_list[week_index]:
+                        arrange = Arrangement.objects.create()
+                        arrange.course = new_post
+                        arrange.order = date_order
+                        arrange.time = start + timedelta(days=day) # day
+                        date_order += 1
+                        arrange.content = ''
+                        arrange.save()
+                        print 'arr' + str(arrange.time)
+                    week_index = (week_index + 1) % 7
+
+
+
             return redirect('post:posted', kind=kind)
         else:
             return render(request, 'post/form.html',
