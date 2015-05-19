@@ -1,5 +1,5 @@
 from django.forms import ModelForm, Textarea
-from .models import Course, Activity, Post, OneTimeSchedule, SequenceTimeSchedule, WeeklyTimeSchedule
+from .models import Course, Activity, Post, OneTimeSchedule, SequenceTimeSchedule, WeeklyTimeSchedule, Arrangement
 from django import forms
 from functools import partial
 

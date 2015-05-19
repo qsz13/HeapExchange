@@ -21,6 +21,9 @@ urlpatterns = [
                        
                        # post detail
                        url(r'^detail/(?P<kind>a|c)/(?P<post_id>[0-9]+)/$', views.detail, name='detail'),
+
+                       # edit arrangement
+                       url(r'^arrange/edit/(?P<post_id>[0-9]+)/$', views.edit_arrange, name='edit_arrange'),
                        
                        # post actions
                        url(r'^join/(?P<kind>[a,c]{1})/(?P<post_id>[0-9]+)/$', views.join, name='join'),

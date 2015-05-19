@@ -18,6 +18,7 @@ from notifications import notify
 from post.serializers import CourseSerializer
 from django.shortcuts import get_object_or_404
 from datetime import datetime, date, timedelta
+from django.forms.models import modelformset_factory
 
 
 class TempView(TemplateView):
@@ -153,8 +154,6 @@ def create(request, kind):
                         arrange.save()
                         print 'arr' + str(arrange.time)
                     week_index = (week_index + 1) % 7
-
-
 
             return redirect('post:posted', kind=kind)
         else:
@@ -391,3 +390,31 @@ def tag_view(request, tag_id):
         tag_list.append(activity)
 
     return render(request, 'post/tag_view.html', {'list': tag_list, 'tag': tag, 'kind': 'c'})
+
+
+def edit_arrange(request, post_id):
+    ArrFormsSet = modelformset_factory(Arrangement, fields=('content',))
+    if request.method == 'GET':
+        course = Course.objects.get(id=post_id)
+        arr_list = course.arrangements.all()
+        formset = ArrFormsSet(queryset=arr_list)
+        render(request, 'post/edit_arrangement.html', {'formset':formset})
+    else:
+        formset = ArrFormsSet(request.POST)
+        if formset.is_valid():
+            formset.save()
+        return HttpResponse("successl")
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
