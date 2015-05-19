@@ -24,6 +24,9 @@ urlpatterns = [
 
                        # edit arrangement
                        url(r'^arrange/edit/(?P<post_id>[0-9]+)/$', views.edit_arrange, name='edit_arrange'),
+
+                       # arrangement detail
+                       url(r'^arrange/detail/(?P<post_id>[0-9]+)/$', views.arrange_detail, name='arrange_detail'),
                        
                        # post actions
                        url(r'^join/(?P<kind>[a,c]{1})/(?P<post_id>[0-9]+)/$', views.join, name='join'),

@@ -89,7 +89,7 @@ def create(request, kind):
                 start = new_post.sequence_time_schedule.sequence_start_date
                 end = new_post.sequence_time_schedule.sequence_end_date
                 date_order = 0
-                length = (end - start).days
+                length = (end - start).days + 1
                 for day in range(length):
                     arrange = Arrangement.objects.create()
                     arrange.course = new_post
@@ -143,7 +143,7 @@ def create(request, kind):
 
                 week_index = start.weekday()
                 date_order = 0
-                for day in range((end - start).days):
+                for day in range((end - start).days + 1):
                     if week_list[week_index]:
                         arrange = Arrangement.objects.create()
                         arrange.course = new_post
@@ -394,16 +394,24 @@ def tag_view(request, tag_id):
 
 def edit_arrange(request, post_id):
     ArrFormsSet = modelformset_factory(Arrangement, fields=('content',))
-    if request.method == 'GET':
-        course = Course.objects.get(id=post_id)
-        arr_list = course.arrangements.all()
-        formset = ArrFormsSet(queryset=arr_list)
-        render(request, 'post/edit_arrangement.html', {'formset':formset})
-    else:
+    if request.method ==  'POST':
         formset = ArrFormsSet(request.POST)
         if formset.is_valid():
             formset.save()
-        return HttpResponse("successl")
+        return HttpResponse("success")
+    else:
+        course = Course.objects.get(id=post_id)
+        arr_list = course.arrangements.all()
+        formset = ArrFormsSet(queryset=arr_list)
+        return render(request, 'post/edit_arrangement.html', {'formset':formset})
+
+
+def arrange_detail(request, post_id):
+    course = Course.objects.get(id=post_id)
+    arr_list = course.arrangements.all()
+    return render(request, 'post/arrange_detail.html', {'arr_list' : arr_list})
+    
+        
    
 
 
