@@ -391,25 +391,33 @@ def tag_view(request, tag_id):
 
     return render(request, 'post/tag_view.html', {'list': tag_list, 'tag': tag, 'kind': 'c'})
 
-
+@login_required
 def edit_arrange(request, post_id):
-    ArrFormsSet = modelformset_factory(Arrangement, fields=('content',))
+    ArrFormSet = modelformset_factory(Arrangement, fields=('content',))
     if request.method ==  'POST':
-        formset = ArrFormsSet(request.POST)
+        formset = ArrFormSet(request.POST)
         if formset.is_valid():
             formset.save()
-        return HttpResponse("success")
+            return redirect('post:arrange_detail', post_id)
     else:
         course = Course.objects.get(id=post_id)
-        arr_list = course.arrangements.all()
-        formset = ArrFormsSet(queryset=arr_list)
+        if not course.has_arr:
+            course.has_arr = True
+            course.save()
+        arr_list = course.arrangements.all().order_by('order')
+        formset = ArrFormSet(queryset=arr_list)
+        time_list = []
+        for arr in arr_list:
+            time_list.append(arr.time)
+        fset_time = zip(formset, time_list)
         return render(request, 'post/edit_arrangement.html', {'formset':formset})
 
 
 def arrange_detail(request, post_id):
     course = Course.objects.get(id=post_id)
-    arr_list = course.arrangements.all()
-    return render(request, 'post/arrange_detail.html', {'arr_list' : arr_list})
+    arr_list = course.arrangements.all().order_by('order')
+    is_self =  (course.initiator == request.user)
+    return render(request, 'post/arrange_detail.html', {'arr_list' : arr_list, 'is_self':is_self, 'post_id':post_id})
     
         
    

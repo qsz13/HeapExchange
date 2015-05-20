@@ -119,6 +119,7 @@ class Course(Post):
         User, related_name="interested_courses", blank=True)
     price = models.IntegerField(default=0, verbose_name=u'价格')
     flag = models.CharField(max_length=1, default='c')
+    has_arr = models.BooleanField(default=False)
 
 
     def get_absolute_url(self):
@@ -143,7 +144,7 @@ class Arrangement(models.Model):
     course = models.ForeignKey(Course, default=1, related_name='arrangements')
     order = models.IntegerField(null=True)
     content = models.CharField(max_length=100, null=True)
-    time = models.DateTimeField(null=True)
+    time = models.DateField(null=True)
 
 
 class Tag(models.Model):
