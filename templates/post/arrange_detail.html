@@ -14,11 +14,20 @@
 		<li class="collection-header"><h4>课程安排</h4></li>
 		{% for arr in arr_list %}
 			<li class="collection-item">
-				<span class="green-text">{{arr.time}}</span>
-				&nbsp;&nbsp;&nbsp;&nbsp;
-				<span> {{arr.content}}</span>
+				{% if today < arr.time %}
+					<span class="green-text">{{arr.time}}</span>
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<span class="black-text"> {{arr.content}}</span>
+				{% else %}
+					<span class="blue-grey-text">{{arr.time}}</span>
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<span class="blue-grey-text"> {{arr.content}}</span>
+				{% endif %}
+				
+				
 			</li>
 		{% endfor %}
+
 	</ul>
 
 	{% if is_self %}

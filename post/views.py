@@ -417,7 +417,8 @@ def arrange_detail(request, post_id):
     course = Course.objects.get(id=post_id)
     arr_list = course.arrangements.all().order_by('order')
     is_self =  (course.initiator == request.user)
-    return render(request, 'post/arrange_detail.html', {'arr_list' : arr_list, 'is_self':is_self, 'post_id':post_id})
+    today = datetime.now().date()
+    return render(request, 'post/arrange_detail.html', {'arr_list' : arr_list, 'is_self':is_self, 'post_id':post_id, 'today':today})
     
         
    
