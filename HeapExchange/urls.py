@@ -20,6 +20,7 @@ urlpatterns = [
     url(r'^message/', include('postman.urls')),
     url('^notifications/', include('notifications.urls', namespace='notifications')),
     url(r'^comments/', include('django_comments.urls')),
+    url(r'^schedule/', include('schedule.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

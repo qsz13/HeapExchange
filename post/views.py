@@ -207,7 +207,7 @@ def detail(request, kind, post_id):
         interested_post = False
 
     schedule = post.get_post_schedule()
-    if post.limit <= post.joined.count:
+    if post.limit <= post.joined.count():
         status = 'full'
     elif datetime.date(datetime.now()) <= post.deadline:
         status = 'registering'

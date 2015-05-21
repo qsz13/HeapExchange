@@ -52,6 +52,7 @@ INSTALLED_APPS = (
     'django_comments',
     'heap_comments',
     'search',
+    'schedule',
 
 
 )

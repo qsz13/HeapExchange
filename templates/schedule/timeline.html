@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	我的日程
+{% endblock %}
+
+{% block page %}
+
+<div class="container">
+
+	<div class="row"></div>
+
+	<div class="row">
+
+		{% if today %}
+			<div class="row">
+				今天
+			</div>
+			<div class="collection">
+				{% for item in today %}
+					<li class="collection-item">{{item.title}}</li>
+				{% endfor %}
+			</div>
+		{% endif %}
+
+		{% if tomorrow %}
+			<div class="row">
+				明天
+			</div>
+			<div class="collection">
+				{% for item in tomorrow %}
+					<li class="collection-item">{{item.title}}</li>
+				{% endfor %}
+			</div>
+		{% endif %}
+
+		{% if later %}
+			<div class="row">
+				接下来
+			</div>
+			<div class="collection">
+				{% for item in later %}
+					<li class="collection-item">{{item.title}}</li>
+				{% endfor %}
+			</div>
+		{% endif %}
+
+	</div>
+</div>
+{% endblock %}
