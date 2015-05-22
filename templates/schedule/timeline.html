@@ -14,33 +14,82 @@
 
 		{% if today %}
 			<div class="row">
-				今天
+				<span class="green-text">今天</span>
 			</div>
-			<div class="collection">
-				{% for item in today %}
-					<li class="collection-item">{{item.title}}</li>
-				{% endfor %}
+			<div class="row">
+				<div class="collection">
+					{% for item in today %}
+						<a href="{% url 'post:detail' kind=item.flag post_id=item.id %}" class="collection-item">
+							<span class="teal-text">{{item.title}}</span>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							{{item.content}}
+						</a>
+					{% endfor %}
 			</div>
 		{% endif %}
 
 		{% if tomorrow %}
 			<div class="row">
-				明天
+				<span class="green-text">明天</span>
 			</div>
 			<div class="collection">
 				{% for item in tomorrow %}
-					<li class="collection-item">{{item.title}}</li>
+					<a href="{% url 'post:detail' kind=item.flag post_id=item.id %}" class="collection-item">
+						<span class="teal-text">{{item.title}}</span>
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						{{item.content}}
+					</a>
+				{% endfor %}
+			</div>
+		{% endif %}
+
+		{% if week %}
+			<div class="row">
+				<span class="green-text">本周</span>
+			</div>
+			<div class="collection">
+				{% for item in week %}
+					<a href="{% url 'post:detail' kind=item.flag post_id=item.id %}" class="collection-item">
+						<span class="deep-orange-text">{{item.date}}</span>
+						&nbsp;&nbsp;
+						<span class="teal-text">{{item.title}}</span>
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						<span class="">{{item.content}}</span>
+					</a>
+				{% endfor %}
+			</div>
+		{% endif %}
+
+		{% if month %}
+			<div class="row">
+				<span class="green-text">本月</span>
+			</div>
+			<div class="collection">
+				{% for item in month %}
+					<a href="{% url 'post:detail' kind=item.flag post_id=item.id %}" class="collection-item">
+						<span class="deep-orange-text">{{item.date}}</span>
+						&nbsp;&nbsp;
+						<span class="teal-text">{{item.title}}</span>
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						<span class="black-text">{{item.content}}</span>
+					</a>
 				{% endfor %}
 			</div>
 		{% endif %}
 
 		{% if later %}
 			<div class="row">
-				接下来
+				<span class="green-text">接下来</span>	
 			</div>
 			<div class="collection">
 				{% for item in later %}
-					<li class="collection-item">{{item.title}}</li>
+					<a href="{% url 'post:detail' kind=item.flag post_id=item.id %}" class="collection-item">
+						<span class="deep-orange-text">{{item.date}}</span>
+						&nbsp;&nbsp;
+						<span class="teal-text">{{item.title}}</span>
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						<span class="">{{item.content}}</span>
+					</a>
 				{% endfor %}
 			</div>
 		{% endif %}
