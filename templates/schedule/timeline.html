@@ -9,6 +9,19 @@
 <div class="container">
 
 	<div class="row"></div>
+	<div class="row">
+                    <ul id="dropdown2" class="dropdown-content">
+                            <li><a href="{% url 'schedule' kind='teach' %}">我发起的<span class="badge"></span></a></li>
+                            <li><a href="{% url 'schedule' kind='join' %}">我参加的<span class="badge"></span></a></li>
+                    </ul>
+                    <a class="btn dropdown-button" href="#!" data-activates="dropdown2">
+                    	{% if kind == 'teach' %}
+                    		我发起的
+                    	{% else %}
+                    		我参加的
+                    	{% endif %}
+                    <i class="mdi-navigation-arrow-drop-down right"></i></a>
+            </div>
 
 	<div class="row">
 
@@ -22,7 +35,7 @@
 						<a href="{% url 'post:detail' kind=item.flag post_id=item.id %}" class="collection-item">
 							<span class="teal-text">{{item.title}}</span>
 							&nbsp;&nbsp;&nbsp;&nbsp;
-							{{item.content}}
+							 <span class="black-text">{{item.content}}</span>
 						</a>
 					{% endfor %}
 			</div>
@@ -37,7 +50,7 @@
 					<a href="{% url 'post:detail' kind=item.flag post_id=item.id %}" class="collection-item">
 						<span class="teal-text">{{item.title}}</span>
 						&nbsp;&nbsp;&nbsp;&nbsp;
-						{{item.content}}
+						<span class="black-text">{{item.content}}</span>
 					</a>
 				{% endfor %}
 			</div>
@@ -50,11 +63,10 @@
 			<div class="collection">
 				{% for item in week %}
 					<a href="{% url 'post:detail' kind=item.flag post_id=item.id %}" class="collection-item">
-						<span class="deep-orange-text">{{item.date}}</span>
-						&nbsp;&nbsp;
 						<span class="teal-text">{{item.title}}</span>
 						&nbsp;&nbsp;&nbsp;&nbsp;
-						<span class="">{{item.content}}</span>
+						<span class="black-text">{{item.content}}</span>
+						<span class="badge deep-orange-text">{{item.date}}</span>
 					</a>
 				{% endfor %}
 			</div>
@@ -67,11 +79,10 @@
 			<div class="collection">
 				{% for item in month %}
 					<a href="{% url 'post:detail' kind=item.flag post_id=item.id %}" class="collection-item">
-						<span class="deep-orange-text">{{item.date}}</span>
-						&nbsp;&nbsp;
 						<span class="teal-text">{{item.title}}</span>
 						&nbsp;&nbsp;&nbsp;&nbsp;
 						<span class="black-text">{{item.content}}</span>
+						<span class="badge deep-orange-text">{{item.date}}</span>
 					</a>
 				{% endfor %}
 			</div>
@@ -84,11 +95,10 @@
 			<div class="collection">
 				{% for item in later %}
 					<a href="{% url 'post:detail' kind=item.flag post_id=item.id %}" class="collection-item">
-						<span class="deep-orange-text">{{item.date}}</span>
-						&nbsp;&nbsp;
 						<span class="teal-text">{{item.title}}</span>
 						&nbsp;&nbsp;&nbsp;&nbsp;
-						<span class="">{{item.content}}</span>
+						<span class="black-text">{{item.content}}</span>
+						<span class="badge deep-orange-text">{{item.date}}</span>
 					</a>
 				{% endfor %}
 			</div>

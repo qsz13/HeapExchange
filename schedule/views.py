@@ -15,26 +15,22 @@ class TimelineItem:
 		self.content = content
 
 
-def find(user):
+def find(user, kind):
 	tl_list = []
-	for course in user.courses.all():
-		if course.schedule_type == 'ONCE':
-			if course.one_time_schedule.once_date >= datetime.now().date():
-				tl_list.append(TimelineItem(course.id, 'c', course.title, course.one_time_schedule.once_date, arr.content))
-		else:
-			for arr in course.arrangements.all():
-				if arr.time >= datetime.now().date():
-					tl_list.append(TimelineItem(course.id, 'c', course.title, arr.time, arr.content))
-	for course in user.joined_courses.all():
-		if course.schedule_type == 'ONCE':
-			if course.one_time_schedule.once_date >= datetime.now().date():
-				tl_list.append(TimelineItem(course.id, 'c', course.title, course.one_time_schedule.once_date, arr.content))
-		else:
-			for arr in course.arrangements.all():
-				if arr.time >= datetime.now().date():
-					tl_list.append(TimelineItem(course.id, 'c', course.title, arr.time, arr.content))
-	#tl_list.sort(key=operator.attrgetter('date'))
+	if kind == 'teach':
+		course_list = user.courses.all()
+	else:
+		course_list = user.joined_courses.all()
 
+	for course in course_list:
+		if course.schedule_type == 'ONCE':
+			if course.one_time_schedule.once_date >= datetime.now().date():
+				tl_list.append(TimelineItem(course.id, 'c', course.title, course.one_time_schedule.once_date, arr.content))
+		else:
+			for arr in course.arrangements.all():
+				if arr.time >= datetime.now().date():
+					tl_list.append(TimelineItem(course.id, 'c', course.title, arr.time, arr.content))
+	
 	today = []
 	today_date = datetime.now().date()
 	tomorrow = []
@@ -63,11 +59,11 @@ def find(user):
 	return today, tomorrow, this_week, this_month, later
 
 @login_required
-def schedule(request):
+def schedule(request, kind):
 	user = request.user
-	today, tomorrow, week, month, later = find(user)
+	today, tomorrow, week, month, later = find(user, kind)
 	
 	return render(request, 
 			'schedule/timeline.html', 
 			{'today':today, 'tomorrow':tomorrow, 'week':week, 
-			'month':month, 'later':later})
+			'month':month, 'later':later, 'kind':kind})

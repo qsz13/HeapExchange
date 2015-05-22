@@ -2,5 +2,5 @@ from django.conf.urls import patterns, url
 from . import views
 
 urlpatterns = [
-	url(r'^$', views.schedule, name='schedule'),
+	url(r'^(?P<kind>teach|join)/$', views.schedule, name='schedule'),
 ]

@@ -45,7 +45,7 @@
                         <p> <span class="green-text text-darken-1">活动详情: </span></p>
                         <p> {{ post.description }} </p>
 
-                        {% if post.flag == 'c' %}
+                        {% if post.flag == 'c' and post.schedule_type != 'ONCE' %}
                             {% if post.has_arr or is_self %}
                             <p> <a  href="{% url 'post:arrange_detail' post_id=post.id %}" class="green-text text-darken-1">查看安排</a></p>
                             {% endif %}
