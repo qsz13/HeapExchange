@@ -19,7 +19,7 @@ from post.serializers import CourseSerializer
 from django.shortcuts import get_object_or_404
 from datetime import datetime, date, timedelta
 from django.forms.models import modelformset_factory
-
+from .helpers import DateJudge
 
 class TempView(TemplateView):
     template_name = 'post/post.html'
@@ -211,8 +211,10 @@ def detail(request, kind, post_id):
         status = 'full'
     elif datetime.date(datetime.now()) <= post.deadline:
         status = 'registering'
-    elif post.deadline < datetime.date(datetime.now()) < post.time:
+    elif post.deadline < datetime.date(datetime.now()) < DateJudge(post).start_date:
         status = 'tobegin'
+    elif DateJudge(post).start_date <= datetime.now().date() <= DateJudge(post).end_date:
+        status = 'ing'
     else:
         status = 'end'
 
