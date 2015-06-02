@@ -13,9 +13,19 @@ def index(request):
 
 
 def do_the_search(keyword, select):
-    obj_list = [[Course], [Activity], [Course, Activity]]
-    result = iterate(keyword, obj_list[select])
-    return result
+    if select == 3:
+        tag_result = []
+        for tag in Tag.objects.all():
+            if keyword.lower() in tag.name.lower():
+                for c in tag.course.all():
+                    tag_result.append(c)
+                for a in tag.activity.all():
+                    tag_result.append(a)
+        return tag_result
+    else:
+        obj_list = [[Course], [Activity], [Course, Activity]]
+        result = iterate(keyword, obj_list[select])
+        return result
 
 
 def iterate(keyword, obj_list):

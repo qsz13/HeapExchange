@@ -310,13 +310,8 @@ def uninterest(request, kind, post_id):
 
 
 def all_tags(request):
-    if 'term' in request.GET:
-        tags = Tag.objects.filter(
-            name__istartswith=request.GET['term']
-        )[:10]
-        return HttpResponse(json.dumps([tag.name for tag in tags]))
-    return HttpResponse()
-
+    tag_list = Tag.objects.all()
+    return render(request, 'post/all_tags.html', {'tag_list':tag_list})
 
 @login_required
 def update(request, kind, post_id):
