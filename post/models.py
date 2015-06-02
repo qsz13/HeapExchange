@@ -143,7 +143,7 @@ class Activity(Post):
 class Arrangement(models.Model):
     course = models.ForeignKey(Course, default=1, related_name='arrangements')
     order = models.IntegerField(null=True)
-    content = models.CharField(max_length=100, null=True)
+    content = models.CharField(max_length=100, null=True, blank=True)
     time = models.DateField(null=True)
 
 
