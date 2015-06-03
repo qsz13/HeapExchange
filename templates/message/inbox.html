@@ -37,10 +37,10 @@
 
                           </div>
                           <div class="collapsible-body">
-                              <p>{{ message.body }}</p>
-                              <p> {{ message.sent_at|compact_date:_("g:i A,M j,n/j/y") }}</p>
-                              <p><a href="{% if message.thread_id %}{% url 'postman_view_conversation' message.thread_id %}{% else %}{{message.get_absolute_url }}{% endif %}?next={{ current_url|urlencode }}">
-                                view detail
+                              <p>{{ message.body }}
+                                  <br><br><br>{{ message.sent_at|compact_date:_("g:i A,M j,n/j/y") }}<br><br>
+                                  <a href="{% if message.thread_id %}{% url 'postman_view_conversation' message.thread_id %}{% else %}{{message.get_absolute_url }}{% endif %}?next={{ current_url|urlencode }}">
+                                查看详情
                               </a></p>
                           </div>
                         </li>

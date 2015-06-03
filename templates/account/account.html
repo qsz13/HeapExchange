@@ -98,10 +98,10 @@ $(document).ready(function() {
         <div class="col s8 offset-s2 top3">
             <div class="card">
                   <ul class="tabs">
-                      <li class="tab col s3"><a href="#profile" onclick="window.location.hash='profile'">Profile</a></li>
-                      <li class="tab col s3"><a href="#setting" onclick="window.location.hash='setting'">Setting</a></li>
-                      <li class="tab col s3"><a href="#interest" onclick="window.location.hash='interest'">Interest</a></li>
-                      <li class="tab col s3"><a href="#time_table" onclick="window.location.hash='time_table'">Time Table</a></li>
+                      <li class="tab col s3"><a href="#profile" onclick="window.location.hash='profile'">个人资料</a></li>
+                      <li class="tab col s3"><a href="#setting" onclick="window.location.hash='setting'">设置</a></li>
+                      <li class="tab col s3"><a href="#interest" onclick="window.location.hash='interest'">兴趣</a></li>
+                      <li class="tab col s3"><a href="#time_table" onclick="window.location.hash='time_table'">时间表</a></li>
 
                   </ul>
                      <div id="profile" class="col s12 top5 bottom7">
@@ -128,7 +128,7 @@ $(document).ready(function() {
 
                         {% endfor %}
                         <div class="input-field col s8 offset-s2">
-                        <input class="btn btn-primary" name="profile" value="Submit" type="submit">
+                        <input class="btn btn-primary" name="profile" value="提交" type="submit">
                             </div>
 
                         </form>
@@ -146,7 +146,7 @@ $(document).ready(function() {
 
                         {% endfor %}
                         <div class="input-field col s8 offset-s2">
-                        <input class="btn btn-primary" name="setting" value="Submit" type="submit">
+                        <input class="btn btn-primary" name="setting" value="提交" type="submit">
                             </div>
                         </form>
                     </div>
@@ -165,7 +165,7 @@ $(document).ready(function() {
                                 {% endfor %}
 
                             </ul>
-                            <input class="btn" type="submit" name="interest" value="Submit">
+                            <input class="btn" type="submit" name="interest" value="提交">
                         </form>
 
 
@@ -214,7 +214,7 @@ $(document).ready(function() {
                         <form method="post">
                             {% csrf_token %}
                             <input id="time-table-input" name="table" hidden>
-                            <input class="btn btn-primary" name="time-table" value="Submit" type="submit">
+                            <input class="btn btn-primary" name="time-table" value="提交" type="submit">
                         </form>
                         </div>
 

@@ -50,7 +50,7 @@
         <div class="col s11 card">
             {% csrf_token %}
             <div id="pm_reply" class="input-field">
-                    <label for="{{ form.body.id_for_label}}" class="">Reply</label>
+                    <label for="{{ form.body.id_for_label}}" class="">回复</label>
                     {% render_field form.body class+="form-control materialize-textarea" %}
 
 
@@ -63,8 +63,8 @@
             <img src="/media/{{ user.profile.avatar }}" alt="" height="40px" class="circle nav-avatar">
         </div>
     </div>
-     <button class="btn" type="submit">{% trans 'Reply' %}</button>
-        <a href="{{ next_url }}">{% trans "Back" %}</a>
+     <button class="btn" type="submit">{% trans '回复' %}</button>
+        <a href="{{ next_url }}">{% trans "返回" %}</a>
     </form>
 
 
