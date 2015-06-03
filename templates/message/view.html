@@ -27,7 +27,7 @@
 
 
 
-                                <div class="pm_body bottom3">{{ message.body|linebreaksbr }}</div>
+                                <div class="pm_body bottom3">{{ message.body|safe|linebreaksbr}}</div>
                             </div>
 
                              {% if message.sender == user %}

@@ -23,6 +23,7 @@ from django.shortcuts import get_object_or_404
 from datetime import datetime, timedelta
 from django.forms.models import modelformset_factory
 from .helpers import DateJudge
+from postman.api import pm_write
 
 
 class TempView(TemplateView):
@@ -505,3 +506,16 @@ def remove_image(request, kind, img_id):
 
 
 
+@login_required
+def invite(request, kind, post_id):
+    if kind == 'a':
+        post = Activity.objects.get(id=post_id)
+
+    elif kind == 'c':
+        post = Course.objects.get(id=post_id)
+    to_user_name = request.GET['invite']
+    to_user = User.objects.get(username=to_user_name)
+    from_user = request.user
+    pm_write(from_user, to_user, u'邀请: '+post.title, body=u'快来参加这个活动吧：<a href="'+post.get_absolute_url()+u'">链接</a>')
+
+    return redirect('post:detail', kind=kind, post_id=post_id)

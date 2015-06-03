@@ -254,6 +254,21 @@
                         </div>
                 </div>
 
+                <div class="row card">
+                        <div class="col offset-s1">
+                                <p class="card-title black-text">邀请</p>
+                                        <p>
+                                            <form method="get" action="{% url 'post:invite' post.flag post.id%}">
+                                                <div class="input-field">
+                                                <label for="invite">用户名</label>
+                                                <input id="invite" name="invite" type="text" class="form-control" >
+                                                </div>
+                                                <input type="submit" class="btn" value="发送">
+                                            </form>
+                                        </p>
+                        </div>
+                </div>
+
 
 
         </div>
