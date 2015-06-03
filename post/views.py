@@ -8,6 +8,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from coin.models import transfer
 from .models import Course, Tag, Activity, Arrangement
 from .forms import CourseForm, ActivityForm, OneTimeForm, SequenceTimeForm, WeeklyTimeForm
 from django.http import HttpResponse, Http404
@@ -273,6 +274,8 @@ def join(request, kind, post_id):
     post.save()
     noti_content = u'报名参加你的课程'+post.title
     notify.send(request.user, recipient=post.initiator, verb=noti_content, description=post.get_absolute_url())
+    if kind == 'c':
+        transfer(from_user=request.user, to_user=post.initiator, amount=post.price)
     return redirect('post:detail', kind=kind, post_id=post_id)
 
 
@@ -286,6 +289,8 @@ def unjoin(request, kind, post_id):
     post.save()
     noti_content = u'退出了你的课程'+post.title
     notify.send(request.user, recipient=post.initiator, verb=noti_content, description=post.get_absolute_url())
+    if kind == 'c':
+        transfer(from_user=post.initiator, to_user=request.user, amount=post.price)
     return redirect('post:detail', kind=kind, post_id=post_id)
 
 

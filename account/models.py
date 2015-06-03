@@ -4,7 +4,7 @@ from django.db.models import ImageField
 from django.db.models.signals import post_save
 from HeapExchange.settings import REFER_COIN, REGISTER_COIN
 from awesome_avatar.fields import AvatarField
-from coin.models import Balance
+from coin.models import Balance, Transfer
 
 
 class Profile(models.Model):
@@ -35,6 +35,7 @@ class Profile(models.Model):
         self.user.balance.save()
         # TODO:
         # create a transaction record
+        Transfer.objects.create(from_user=None, to_user=self.user, amount=REFER_COIN)
         new_user.referral = self
         new_user.save()
 
