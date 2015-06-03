@@ -222,13 +222,19 @@ def detail(request, kind, post_id):
     else:
         status = 'end'
 
-    dic = {"aaa": "AAA", 'bbb': "BBB"}
+
+    if kind == 'a':
+        post = Activity.objects.get(id=post_id)
+
+    elif kind == 'c':
+        post = Course.objects.get(id=post_id)
+    image_set = post.images.all()
 
     return render(request,
                   'post/detail.html',
                   {'kind': kind, 'post': post, 'schedule': schedule, 'list': ini_list, 'is_self': is_self,
                    'has_joined': has_joined,
-                   'interested': interested_post, 'status': status, 'dic': dic})
+                   'interested': interested_post, 'status': status,'images':image_set})
 
 
 def all_post(request, kind='c'):
