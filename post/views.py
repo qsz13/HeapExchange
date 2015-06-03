@@ -8,7 +8,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import Course, Tag, Activity
+from .models import Course, Tag, Activity, Arrangement
 from .forms import CourseForm, ActivityForm, OneTimeForm, SequenceTimeForm, WeeklyTimeForm
 from django.http import HttpResponse, Http404
 from django.shortcuts import redirect
@@ -17,8 +17,9 @@ from django.contrib.auth.models import User
 from notifications import notify
 from post.serializers import CourseSerializer
 from django.shortcuts import get_object_or_404
-from datetime import datetime
-
+from datetime import datetime, date, timedelta
+from django.forms.models import modelformset_factory
+from .helpers import DateJudge
 
 class TempView(TemplateView):
     template_name = 'post/post.html'
@@ -82,8 +83,78 @@ def create(request, kind):
                 new_post.sequence_time_schedule = sequence_schedule
             elif request.POST['schedule_type'] == "WEEK":
                 new_post.weekly_time_schedule = weekly_schedule
-
             new_post.save()
+
+            if kind == 'c' and request.POST['schedule_type'] == "SEQU":
+                start = new_post.sequence_time_schedule.sequence_start_date
+                end = new_post.sequence_time_schedule.sequence_end_date
+                date_order = 0
+                length = (end - start).days + 1
+                for day in range(length):
+                    arrange = Arrangement.objects.create()
+                    arrange.course = new_post
+                    arrange.order = date_order
+                    arrange.time = start + timedelta(days=date_order) # day
+                    date_order += 1
+                    arrange.content = ''
+                    arrange.save()
+                    print 'arr' + str(arrange.time)
+
+            if kind == 'c' and request.POST['schedule_type'] == "WEEK":
+                start = new_post.weekly_time_schedule.weekly_start_date
+                end = new_post.weekly_time_schedule.weekly_end_date
+                date_order = 0
+                week_list = []
+                if new_post.weekly_time_schedule.monday:
+                    week_list.append(True)
+                else:
+                    week_list.append(False)
+                if new_post.weekly_time_schedule.tuesday:
+                    week_list.append(True)
+                else:
+                    week_list.append(False)
+                if new_post.weekly_time_schedule.wednesday:
+                    week_list.append(True)
+                else:
+                    week_list.append(False)
+                if new_post.weekly_time_schedule.thursday:
+                    week_list.append(True)
+                else:
+                    week_list.append(False)
+                if new_post.weekly_time_schedule.friday:
+                    week_list.append(True)
+                else:
+                    week_list.append(False)
+                if new_post.weekly_time_schedule.saturday:
+                    week_list.append(True)
+                else:
+                    week_list.append(False)
+                if new_post.weekly_time_schedule.sunday:
+                    week_list.append(True)
+                else:
+                    week_list.append(False)
+
+                if week_list[start.weekday()]:
+                    week_index = start.weekday()
+                else:
+                    for i in range(7):
+                        if week_list[(start.weekday() + i) % 7]:
+                            start = start + timedelta(days=i)
+
+                week_index = start.weekday()
+                date_order = 0
+                for day in range((end - start).days + 1):
+                    if week_list[week_index]:
+                        arrange = Arrangement.objects.create()
+                        arrange.course = new_post
+                        arrange.order = date_order
+                        arrange.time = start + timedelta(days=day) # day
+                        date_order += 1
+                        arrange.content = ''
+                        arrange.save()
+                        print 'arr' + str(arrange.time)
+                    week_index = (week_index + 1) % 7
+
             return redirect('post:posted', kind=kind)
         else:
             return render(request, 'post/form.html',
@@ -140,8 +211,10 @@ def detail(request, kind, post_id):
         status = 'full'
     elif datetime.date(datetime.now()) <= post.deadline:
         status = 'registering'
-    elif post.deadline < datetime.date(datetime.now()) < post.time:
+    elif post.deadline < datetime.date(datetime.now()) < DateJudge(post).start_date:
         status = 'tobegin'
+    elif DateJudge(post).start_date <= datetime.now().date() <= DateJudge(post).end_date:
+        status = 'ing'
     else:
         status = 'end'
 
@@ -239,13 +312,8 @@ def uninterest(request, kind, post_id):
 
 
 def all_tags(request):
-    if 'term' in request.GET:
-        tags = Tag.objects.filter(
-            name__istartswith=request.GET['term']
-        )[:10]
-        return HttpResponse(json.dumps([tag.name for tag in tags]))
-    return HttpResponse()
-
+    tag_list = Tag.objects.all()
+    return render(request, 'post/all_tags.html', {'tag_list':tag_list})
 
 @login_required
 def update(request, kind, post_id):
@@ -321,3 +389,48 @@ def tag_view(request, tag_id):
         tag_list.append(activity)
 
     return render(request, 'post/tag_view.html', {'list': tag_list, 'tag': tag, 'kind': 'c'})
+
+@login_required
+def edit_arrange(request, post_id):
+    ArrFormSet = modelformset_factory(Arrangement, fields=('content',))
+    if request.method ==  'POST':
+        formset = ArrFormSet(request.POST)
+        if formset.is_valid():
+            formset.save()
+            return redirect('post:arrange_detail', post_id)
+    else:
+        course = Course.objects.get(id=post_id)
+        if not course.has_arr:
+            course.has_arr = True
+            course.save()
+        arr_list = course.arrangements.all().order_by('order')
+        formset = ArrFormSet(queryset=arr_list)
+        time_list = []
+        for arr in arr_list:
+            time_list.append(arr.time)
+        fset_time = zip(formset, time_list)
+        return render(request, 'post/edit_arrangement.html', {'formset':formset})
+
+
+def arrange_detail(request, post_id):
+    course = Course.objects.get(id=post_id)
+    arr_list = course.arrangements.all().order_by('order')
+    is_self =  (course.initiator == request.user)
+    today = datetime.now().date()
+    return render(request, 'post/arrange_detail.html', {'arr_list' : arr_list, 'is_self':is_self, 'post_id':post_id, 'today':today})
+    
+        
+   
+
+
+
+
+
+
+
+
+
+
+
+
+

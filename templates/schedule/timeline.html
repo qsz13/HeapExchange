@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	我的日程
+{% endblock %}
+
+{% block page %}
+
+<div class="container">
+
+	<div class="row"></div>
+	<div class="row">
+                    <ul id="dropdown2" class="dropdown-content">
+                            <li><a href="{% url 'schedule' kind='teach' %}">我发起的<span class="badge"></span></a></li>
+                            <li><a href="{% url 'schedule' kind='join' %}">我参加的<span class="badge"></span></a></li>
+                    </ul>
+                    <a class="btn dropdown-button" href="#!" data-activates="dropdown2">
+                    	{% if kind == 'teach' %}
+                    		我发起的
+                    	{% else %}
+                    		我参加的
+                    	{% endif %}
+                    <i class="mdi-navigation-arrow-drop-down right"></i></a>
+            </div>
+
+	<div class="row">
+
+		{% if today %}
+			<div class="row">
+				<span class="green-text">今天</span>
+			</div>
+			<div class="row">
+				<div class="collection">
+					{% for item in today %}
+						<a href="{% url 'post:detail' kind=item.flag post_id=item.id %}" class="collection-item">
+							<span class="teal-text">{{item.title}}</span>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							 <span class="black-text">{{item.content}}</span>
+						</a>
+					{% endfor %}
+			</div>
+		{% endif %}
+
+		{% if tomorrow %}
+			<div class="row">
+				<span class="green-text">明天</span>
+			</div>
+			<div class="collection">
+				{% for item in tomorrow %}
+					<a href="{% url 'post:detail' kind=item.flag post_id=item.id %}" class="collection-item">
+						<span class="teal-text">{{item.title}}</span>
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						<span class="black-text">{{item.content}}</span>
+					</a>
+				{% endfor %}
+			</div>
+		{% endif %}
+
+		{% if week %}
+			<div class="row">
+				<span class="green-text">本周</span>
+			</div>
+			<div class="collection">
+				{% for item in week %}
+					<a href="{% url 'post:detail' kind=item.flag post_id=item.id %}" class="collection-item">
+						<span class="teal-text">{{item.title}}</span>
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						<span class="black-text">{{item.content}}</span>
+						<span class="badge deep-orange-text">{{item.date}}</span>
+					</a>
+				{% endfor %}
+			</div>
+		{% endif %}
+
+		{% if month %}
+			<div class="row">
+				<span class="green-text">本月</span>
+			</div>
+			<div class="collection">
+				{% for item in month %}
+					<a href="{% url 'post:detail' kind=item.flag post_id=item.id %}" class="collection-item">
+						<span class="teal-text">{{item.title}}</span>
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						<span class="black-text">{{item.content}}</span>
+						<span class="badge deep-orange-text">{{item.date}}</span>
+					</a>
+				{% endfor %}
+			</div>
+		{% endif %}
+
+		{% if later %}
+			<div class="row">
+				<span class="green-text">接下来</span>	
+			</div>
+			<div class="collection">
+				{% for item in later %}
+					<a href="{% url 'post:detail' kind=item.flag post_id=item.id %}" class="collection-item">
+						<span class="teal-text">{{item.title}}</span>
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						<span class="black-text">{{item.content}}</span>
+						<span class="badge deep-orange-text">{{item.date}}</span>
+					</a>
+				{% endfor %}
+			</div>
+		{% endif %}
+
+	</div>
+</div>
+{% endblock %}
