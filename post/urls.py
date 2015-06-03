@@ -47,5 +47,6 @@ urlpatterns = [
                        
                        url(r'^all_tags/$', views.all_tags, name='all_tags'),
                        url(r'^tagview/(?P<tag_id>[0-9]+)/$', views.tag_view, name='tagview'),
-                       
+                       url(r'^upload_image/(?P<kind>[a,c]{1})/(?P<post_id>[0-9]+)/$',views.upload_image, name="upload_image"),
+                       url(r'^remove_image/(?P<kind>[a,c]{1})/(?P<img_id>[0-9]+)/$',views.remove_image, name="remove_image"),
                        ]

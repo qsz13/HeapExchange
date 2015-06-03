@@ -12,8 +12,9 @@ class Balance(models.Model):
 
 
 class Transfer(models.Model):
-    from_user = models.OneToOneField(User, related_name="expense", null=True)
-    to_user = models.OneToOneField(User, related_name="income")
+
+    from_user = models.ForeignKey(User, related_name="expense", null=True)
+    to_user = models.ForeignKey(User, related_name="income", null=True)
     amount = models.IntegerField()
     time = models.DateTimeField(auto_now=True,null=True)
     def __unicode__(self):
@@ -28,5 +29,9 @@ def transfer(from_user, to_user, amount):
         to_user.balance.amount = to_user.balance.amount + amount
         from_user.balance.save()
         to_user.balance.save()
-        Transfer.objects.create(from_user=from_user, to_user=to_user, amount=amount)
+        tr = Transfer.objects.create(amount = amount)
+
+        tr.from_user = from_user
+        tr.to_user = to_user
+        tr.save()
         return True

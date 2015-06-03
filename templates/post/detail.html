@@ -47,7 +47,7 @@
 
                         {% if post.flag == 'c' and post.schedule_type != 'ONCE' %}
                             {% if post.has_arr or is_self %}
-                            <p> <a  href="{% url 'post:arrange_detail' post_id=post.id %}" class="green-text text-darken-1">查看安排</a></p>
+                            <p> <a  href="{% url 'post:arrange_detail' post_id=post.id %}" class="text-darken-1">查看安排</a></p>
                             {% endif %}
                         {% endif %}
 
@@ -66,13 +66,21 @@
                                                 <a class="waves-effect waves-light btn blue" href="{% url 'post:unjoin' kind=post.flag post_id=post.id %}">已参加</a>
                                         {% endif %}
                                 {% endif %}
+                        {% else %}
+
+
+                        <div class="row">
+                            <div class="top5"><a href="{% url 'post:upload_image' kind=post.flag post_id=post.id %}">上传图片</a></div>
+                        </div>
+
                         {% endif %}
+
                     
                 </div>
-
+                </div>
                 </div>
 
-                </div>
+
 
                  {% get_comment_list for post as comment_list %}
                  {% for comment in comment_list %}

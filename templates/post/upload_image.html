@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %} Posted Courses {% endblock %}
+
+{% block extrahead %}
+    <script type="text/javascript">
+  function PreviewImage() {
+    var oFReader = new FileReader();
+    oFReader.readAsDataURL(document.getElementById("uploadImage").files[0]);
+
+    oFReader.onload = function(oFREvent) {
+        document.getElementById("uploadPreview").src = oFREvent.target.result;
+        document.getElementById("uploadPreview").removeAttribute("style");
+    };
+  };
+</script>
+{% endblock %}
+
+{% block page %}
+<div class="row">
+    <div class="col s8 offset-s2">
+        <div class="row">
+            <div class="card">
+                 <form method="POST" enctype="multipart/form-data">
+                     {% csrf_token %}
+                <div class="col s8 offset-s2 top3 bottom3">
+                    <div class="row">
+                        <img id="uploadPreview" style="width: 100px; height: 100px;" height="100px" />
+                        <input id="uploadImage" type="file" name="image" onchange="PreviewImage();" />
+                    </div>
+                    <div class="row">
+                         <input class="btn" type="submit" value="submit">
+                     </div>
+                </div>
+
+
+                 </form>
+            </div>
+            {% for img in images %}
+                    <div class="row">
+                        <div class="col s12 m7">
+                          <div class="card">
+                            <div class="card-image">
+                              <img src="{{ img.image_file }}">
+                              <span class="card-title">{{ img.post }}</span>
+                            </div>
+                            <div class="card-content">
+                              <a href="{% url 'post:remove_image' kind=kind img_id=img.id %}"><i class="small mdi-action-delete"></i></a>
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

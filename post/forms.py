@@ -74,3 +74,5 @@ class WeeklyTimeForm(ModelForm):
              'weekly_end_time': forms.TimeInput(attrs={'class': 'timepicker'}),
         }
 
+
+

@@ -154,3 +154,12 @@ class Tag(models.Model):
 
     def __unicode__(self):
         return self.name
+
+
+class CourseImages(models.Model):
+    post = models.ForeignKey(Course, related_name="images", null=True)
+    image_file = models.ImageField(upload_to="imgs", null=True)
+
+class ActivityImages(models.Model):
+    post = models.ForeignKey(Activity, related_name="images", null=True)
+    image_file = models.ImageField(upload_to="imgs", null=True)

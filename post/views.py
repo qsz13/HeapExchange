@@ -1,7 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import json
+
+from PIL import Image
+from StringIO import StringIO
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
 from django.shortcuts import render
@@ -9,7 +11,7 @@ from django.views.generic import TemplateView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from coin.models import transfer
-from .models import Course, Tag, Activity, Arrangement
+from .models import Course, Tag, Activity, Arrangement, CourseImages, ActivityImages
 from .forms import CourseForm, ActivityForm, OneTimeForm, SequenceTimeForm, WeeklyTimeForm
 from django.http import HttpResponse, Http404
 from django.shortcuts import redirect
@@ -18,7 +20,7 @@ from django.contrib.auth.models import User
 from notifications import notify
 from post.serializers import CourseSerializer
 from django.shortcuts import get_object_or_404
-from datetime import datetime, date, timedelta
+from datetime import datetime, timedelta
 from django.forms.models import modelformset_factory
 from .helpers import DateJudge
 
@@ -340,11 +342,11 @@ def update(request, kind, post_id):
     weekly_form = WeeklyTimeForm()
 
     if post.schedule_type == 'ONCE':
-        once_form = OneTimeForm(instance= post.one_time_schedule)
+        once_form = OneTimeForm(instance=post.one_time_schedule)
     elif post.schedule_type == 'SEQU':
-        sequence_form = SequenceTimeForm(instance= post.sequence_time_schedule)
+        sequence_form = SequenceTimeForm(instance=post.sequence_time_schedule)
     elif post.schedule_type == 'WEEK':
-        weekly_form = WeeklyTimeForm(instance= post.weekly_time_schedule)
+        weekly_form = WeeklyTimeForm(instance=post.weekly_time_schedule)
 
     return render(request, 'post/form.html',
                   {'form': form, 'post': post, 'kind': kind, 'once_form': once_form, 'sequence_form': sequence_form,
@@ -441,19 +443,59 @@ def arrange_detail(request, post_id):
     today = datetime.now().date()
     return render(request, 'post/arrange_detail.html',
                   {'arr_list': arr_list, 'is_self': is_self, 'post_id': post_id, 'today': today})
-    
-        
-   
 
 
+@login_required
+def upload_image(request, kind, post_id):
+    if request.method == 'GET':
+        if kind == 'a':
+            post = Activity.objects.get(id=post_id)
+
+        elif kind == 'c':
+            post = Course.objects.get(id=post_id)
+        image_set = post.images.all()
+
+        return render(request, 'post/upload_image.html', {"images": image_set,'kind':kind})
+
+    elif request.method == 'POST':
+        if request.FILES:
+            upload_file = request.FILES['image']
+            im = Image.open(StringIO(upload_file.read()))
+            file_name = "media/imgs/" + kind + str(post_id) + '-' + upload_file.name
+            im.save(file_name, "PNG")
+            if kind == 'a':
+                post = Activity.objects.get(id=post_id)
+                activity_image = ActivityImages.objects.create()
+                activity_image.image_file = '/'+file_name
+                activity_image.post = post
+                activity_image.save()
+            elif kind == 'c':
+                post = Course.objects.get(id=post_id)
+                course_image = CourseImages.objects.create()
+                course_image.image_file = '/'+file_name
+                course_image.post = post
+                course_image.save()
+
+    return redirect('post:upload_image', kind=kind, post_id=post_id)
 
 
+@login_required
+def remove_image(request, kind, img_id):
+    post_image = None
+    if kind == 'a':
+        post_image = ActivityImages.objects.get(id=img_id)
 
 
+    elif kind == 'c':
+        post_image = CourseImages.objects.get(id=img_id)
+
+    post = post_image.post
+
+    if post.initiator == request.user:
+        post_image.delete()
 
 
-
-
+    return redirect('post:upload_image', kind=kind, post_id=post.id)
 
 
 
