@@ -7,13 +7,20 @@
 
         <div class="row">
             <div class="col offset-s2 s8">
+                <div class="row">
+    <div class="col">
+    <h4>通知</h4>
+
+
+    </div>
+  </div>
                 <ul class="collection">
                     {% for notice in notifications %}
 
                         <li class="collection-item">
                         {{ notice.actor }} {{ notice.verb }}
                             {% if notice.unread %}
-                            <a class="close pull-right" href="{% url 'notifications:mark_as_read' notice.slug %}">mark as read</a>
+                            <span class="badge"><a class="close pull-right" href="{% url 'notifications:mark_as_read' notice.slug %}"><i class="small mdi-action-done"></i></a></span>
                         {% endif %}
                         </li>
                     {% empty %}

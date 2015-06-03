@@ -11,9 +11,9 @@
   <a class='dropdown-button btn' href='#' data-activates='postman_menu'>{% block page-title %}{% endblock %}<i class="mdi-navigation-arrow-drop-down right"></i></a>
 
     <ul id="postman_menu" class='dropdown-content'>{% postman_unread as unread_count %}
-     <li><a href="{% url 'postman_inbox' %}">{% trans "Inbox" %}{% if unread_count %} <strong>({{ unread_count }})</strong>{% endif %}</a></li>
-     <li><a href="{% url 'postman_sent' %}">{% trans "Sent" %}</a></li>
-     <li><a href="{% url 'postman_write' %}">{% trans "Write" %}</a></li>
+     <li><a href="{% url 'postman_inbox' %}">收件箱{% if unread_count %} <strong>({{ unread_count }})</strong>{% endif %}</a></li>
+     <li><a href="{% url 'postman_sent' %}">已发送</a></li>
+     <li><a href="{% url 'postman_write' %}">新私信</a></li>
     </ul>
     </div>
   </div>

@@ -39,13 +39,13 @@ class Post(models.Model):
     ONE_TIME = "ONCE"
     SEQUENCE_TIME = "SEQU"
     WEEKLY_TIME = "WEEK"
-    CUSTOMIZE_TIME = "CUST"
+    #CUSTOMIZE_TIME = "CUST"
 
     SCHEDULE_TYPE = (
         (ONE_TIME, u"当天结束"),
         (SEQUENCE_TIME, u"连续多天"),
         (WEEKLY_TIME, u"每周举行"),
-        (CUSTOMIZE_TIME, u"自定义"),
+        #(CUSTOMIZE_TIME, u"自定义"),
     )
 
     title = models.CharField(max_length=100, null=True, verbose_name=u'标题')

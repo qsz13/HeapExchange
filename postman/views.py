@@ -79,6 +79,11 @@ class FolderMixin(object):
             'current_url': self.request.get_full_path(),
             'gets': self.request.GET,  # useful to postman_order_by template tag
         })
+        for m in msgs:
+
+            if m.read_at is None:
+                m.read_at = now()
+                m.save()
         return context
 
 

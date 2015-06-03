@@ -36,7 +36,7 @@ p.big {line-height: 350%}
 		<div class="row"></div>
 			<p class="big">
 			{% for tag in tag_list %}
-			<span><a class="waves-effect waves-light btn red accent-2" href="{% url 'post:tagview' tag.id %}"><i class="mdi-image-style left"></i>{{ tag.name }}</a></span>
+			<span><a class="waves-effect waves-light btn blue accent-2" href="{% url 'post:tagview' tag.id %}"><i class="mdi-image-style left"></i>{{ tag.name }}</a></span>
 			{% endfor %}
 			</p>
 		<div class="row"></div>

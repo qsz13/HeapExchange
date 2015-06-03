@@ -1,4 +1,5 @@
 {% load notifications_tags %}
+{% load postman_tags %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,16 +33,19 @@
             {% notifications_unread as unread_count %}
             <li><a class="nav-color" href="{% url 'notifications:all' %}"><i class="mdi-social-public circle {% if unread_count %}unread_notification{% endif %}"></i></a></li>
             <li><a class="nav-color" href="{% url 'post:post' %}"><i class="mdi-editor-mode-edit circle"></i></a></li>
-            <li><a class="nav-color" href="{% url 'postman_inbox' %}"><i class="mdi-communication-message circle"></i></a></li>
+            {% postman_unread as post_unread_count %}
+
+
+            <li><a class="nav-color" href="{% url 'postman_inbox' %}"><i class="mdi-communication-message circle  {% if post_unread_count %}unread_notification{% endif %}"></i></a></li>
             <li class=""></li>
             <li><a class="dropdown-button nav-color" href="#!" data-activates="dropdown1"><img src="/media/{{ user.profile.avatar }}" alt="" height="30px" class="circle nav-avatar"><i class="nav-color mdi-navigation-arrow-drop-down right"></i></a></li>
             <ul id="dropdown1" class="dropdown-content">
-              <li><a href="{% url "account" %}#profile" onclick="window.location.reload()">Profile</a></li>
-              <li><a href="{% url "account" %}#setting" onclick="window.location.reload()">Settings</a></li>
-                <li><a href="{% url "account" %}#interest" onclick="window.location.reload()">Interest</a></li>
-                <li><a href="{% url "account" %}#time_table" onclick="window.location.reload()">Time Table</a></li>
+              <li><a href="{% url "account" %}#profile" onclick="window.location.reload()">个人信息</a></li>
+              <li><a href="{% url "account" %}#setting" onclick="window.location.reload()">设置</a></li>
+                <li><a href="{% url "account" %}#interest" onclick="window.location.reload()">兴趣</a></li>
+                <li><a href="{% url "account" %}#time_table" onclick="window.location.reload()">时间表</a></li>
               <li class="divider"></li>
-              <li><a href="{% url "logout" %}">Log out</a></li>
+              <li><a href="{% url "logout" %}">退出</a></li>
             </ul>
 
 

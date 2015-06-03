@@ -7,11 +7,11 @@
 <a class="btn dropdown-button" href="#!" data-activates="dropdown2">所有POST <i class="mdi-navigation-arrow-drop-down right"></i></a>
 
 {% if kind == 'c' %}
-    <a class="waves-effect waves-light btn red" href="{% url 'post:all' 'c'%}">课程</a>
+    <a class="waves-effect waves-light btn blue" href="{% url 'post:all' 'c'%}">课程</a>
     <a class="waves-effect waves-light btn" href="{% url 'post:all' 'a'%}">活动</a>
 {% else %}
     <a class="waves-effect waves-light btn" href="{% url 'post:all' 'c'%}">课程</a>
-    <a class="waves-effect waves-light btn red" href="{% url 'post:all' 'a'%}">活动</a>
+    <a class="waves-effect waves-light btn blue" href="{% url 'post:all' 'a'%}">活动</a>
 {% endif %}
 
 {% endblock %}

@@ -23,7 +23,7 @@ $(document).ready(function(){
                   <span class="card-title black-text">'+data[d].title+"</span><p>" + data[d].description+'</p>\
                   <p>时间：'+data[d].schedule+'</p></div>\
                 <div class="card-action">\
-                  <a href="'+data[d].url+'">Detail</a>\
+                  <a href="'+data[d].url+'">详情</a>\
                 </div>\
               </div>');
 
@@ -92,77 +92,7 @@ $(document).ready(function(){
 
 
 
-              <div class="card">
-                <div class="card-content ">
-                  <span class="card-title black-text">Card Title</span>
-                  <p>I am a very simple card. I am good at containing small bits of information.
-                  I am convenient because I require little markup to use effectively.</p>
-                </div>
-                <div class="card-action">
-                  <a href="#">This is a link</a>
-                  <a href='#'>This is a link</a>
-                </div>
-              </div>
 
-                <div class="card blue-grey darken-1">
-                <div class="card-content white-text">
-                  <span class="card-title">Card Title</span>
-                  <p>I am a very simple card. I am good at containing small bits of information.
-                  I am convenient because I require little markup to use effectively.</p>
-                </div>
-                <div class="card-action">
-                  <a href="#">This is a link</a>
-                  <a href='#'>This is a link</a>
-                </div>
-              </div>
-
-                <div class="card blue-grey darken-1">
-                <div class="card-content white-text">
-                  <span class="card-title">Card Title</span>
-                  <p>I am a very simple card. I am good at containing small bits of information.
-                  I am convenient because I require little markup to use effectively.</p>
-                </div>
-                <div class="card-action">
-                  <a href="#">This is a link</a>
-                  <a href='#'>This is a link</a>
-                </div>
-              </div>
-
-                <div class="card blue-grey darken-1">
-                <div class="card-content white-text">
-                  <span class="card-title">Card Title</span>
-                  <p>I am a very simple card. I am good at containing small bits of information.
-                  I am convenient because I require little markup to use effectively.</p>
-                </div>
-                <div class="card-action">
-                  <a href="#">This is a link</a>
-                  <a href='#'>This is a link</a>
-                </div>
-              </div>
-
-                <div class="card blue-grey darken-1">
-                <div class="card-content white-text">
-                  <span class="card-title">Card Title</span>
-                  <p>I am a very simple card. I am good at containing small bits of information.
-                  I am convenient because I require little markup to use effectively.</p>
-                </div>
-                <div class="card-action">
-                  <a href="#">This is a link</a>
-                  <a href='#'>This is a link</a>
-                </div>
-              </div>
-
-                <div class="card blue-grey darken-1">
-                <div class="card-content white-text">
-                  <span class="card-title">Card Title</span>
-                  <p>I am a very simple card. I am good at containing small bits of information.
-                  I am convenient because I require little markup to use effectively.</p>
-                </div>
-                <div class="card-action">
-                  <a href="#">This is a link</a>
-                  <a href='#'>This is a link</a>
-                </div>
-              </div>
             </div>
 
 
@@ -170,11 +100,12 @@ $(document).ready(function(){
                 <div class="toc-wrapper pinned">
 
                     <ul class="collection">
-                      <li class="collection-item"><a href="{% url "schedule" kind='teach' %}">Schedule</a></li>
-                      <li class="collection-item"><a href="{% url "announcement" %}">Announcement</a></li>
-                      <li class="collection-item"><a href="{% url "transaction_history" %}">Coin</a></li>
-                      <li class="collection-item"><a href="{% url "post:post" %}">Post</a></li>
-                      <li class="collection-item"><a href="{% url "search:index" %}">Search</a></li>
+                      <li class="collection-item"><a href="{% url "schedule" kind='teach' %}">时间表</a></li>
+                      <li class="collection-item"><a href="{% url "announcement" %}">公告</a></li>
+                      <li class="collection-item"><a href="{% url "transaction_history" %}">呵币</a></li>
+                      <li class="collection-item"><a href="{% url "post:post" %}">帖子</a></li>
+                      <li class="collection-item"><a href="{% url "search:index" %}">搜索</a></li>
+                        <li class="collection-item"><a href="{% url "search:index" %}">邀请好友</a></li>
                     </ul>
                 </div>
 

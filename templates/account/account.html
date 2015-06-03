@@ -112,9 +112,13 @@ $(document).ready(function() {
 
 
 
-
+                        <div class="input-field col s8 offset-s2">
+                            <input id="username" name="username" type="text" class="form-control" readonly value="{{ user }}">
+                            <label for="username">username</label>
+                        </div>
 
                         {% for field in profile_form %}
+
                             <div class="input-field col s8 offset-s2">
                             {% render_field field class+="form-control" %}
                             <label for="{{ field.id_for_label}}" class="">{{ field.label }}</label>

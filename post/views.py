@@ -22,6 +22,7 @@ from datetime import datetime, date, timedelta
 from django.forms.models import modelformset_factory
 from .helpers import DateJudge
 
+
 class TempView(TemplateView):
     template_name = 'post/post.html'
 
@@ -29,7 +30,7 @@ class TempView(TemplateView):
 # class CourseCreateView(LoginRequiredMixin, CreateView):
 # model = Course
 # fields = ['link', 'skill_requirement']
-#     template_name = "post/course_create_form.html"
+# template_name = "post/course_create_form.html"
 
 
 @login_required
@@ -95,7 +96,7 @@ def create(request, kind):
                     arrange = Arrangement.objects.create()
                     arrange.course = new_post
                     arrange.order = date_order
-                    arrange.time = start + timedelta(days=date_order) # day
+                    arrange.time = start + timedelta(days=date_order)  # day
                     date_order += 1
                     arrange.content = ''
                     arrange.save()
@@ -149,7 +150,7 @@ def create(request, kind):
                         arrange = Arrangement.objects.create()
                         arrange.course = new_post
                         arrange.order = date_order
-                        arrange.time = start + timedelta(days=day) # day
+                        arrange.time = start + timedelta(days=day)  # day
                         date_order += 1
                         arrange.content = ''
                         arrange.save()
@@ -219,12 +220,13 @@ def detail(request, kind, post_id):
     else:
         status = 'end'
 
-    dic = {"aaa":"AAA",'bbb':"BBB"}
+    dic = {"aaa": "AAA", 'bbb': "BBB"}
 
     return render(request,
                   'post/detail.html',
-                  {'kind': kind, 'post': post, 'schedule':schedule, 'list': ini_list, 'is_self': is_self, 'has_joined': has_joined,
-                   'interested': interested_post, 'status': status, 'dic':dic})
+                  {'kind': kind, 'post': post, 'schedule': schedule, 'list': ini_list, 'is_self': is_self,
+                   'has_joined': has_joined,
+                   'interested': interested_post, 'status': status, 'dic': dic})
 
 
 def all_post(request, kind='c'):
@@ -272,7 +274,7 @@ def join(request, kind, post_id):
         post = get_object_or_404(Course, id=post_id)
     post.joined.add(request.user)
     post.save()
-    noti_content = u'报名参加你的课程'+post.title
+    noti_content = u'报名参加你的课程' + post.title
     notify.send(request.user, recipient=post.initiator, verb=noti_content, description=post.get_absolute_url())
     if kind == 'c':
         transfer(from_user=request.user, to_user=post.initiator, amount=post.price)
@@ -287,7 +289,7 @@ def unjoin(request, kind, post_id):
         post = get_object_or_404(Course, id=post_id)
     post.joined.remove(request.user)
     post.save()
-    noti_content = u'退出了你的课程'+post.title
+    noti_content = u'退出了你的课程' + post.title
     notify.send(request.user, recipient=post.initiator, verb=noti_content, description=post.get_absolute_url())
     if kind == 'c':
         transfer(from_user=post.initiator, to_user=request.user, amount=post.price)
@@ -318,7 +320,8 @@ def uninterest(request, kind, post_id):
 
 def all_tags(request):
     tag_list = Tag.objects.all()
-    return render(request, 'post/all_tags.html', {'tag_list':tag_list})
+    return render(request, 'post/all_tags.html', {'tag_list': tag_list})
+
 
 @login_required
 def update(request, kind, post_id):
@@ -331,7 +334,21 @@ def update(request, kind, post_id):
     if form.is_valid():
         form.save()
         return redirect('post:detail', kind=kind, post_id=post_id)
-    return render(request, 'post/form.html', {'form': form, 'post': post, 'kind': kind, 'action': 'update'})
+
+    once_form = OneTimeForm()
+    sequence_form = SequenceTimeForm()
+    weekly_form = WeeklyTimeForm()
+
+    if post.schedule_type == 'ONCE':
+        once_form = OneTimeForm(instance= post.one_time_schedule)
+    elif post.schedule_type == 'SEQU':
+        sequence_form = SequenceTimeForm(instance= post.sequence_time_schedule)
+    elif post.schedule_type == 'WEEK':
+        weekly_form = WeeklyTimeForm(instance= post.weekly_time_schedule)
+
+    return render(request, 'post/form.html',
+                  {'form': form, 'post': post, 'kind': kind, 'once_form': once_form, 'sequence_form': sequence_form,
+                   'weekly_form': weekly_form, 'action': 'update'})
 
 
 @login_required
@@ -345,7 +362,6 @@ def remove(request, kind, post_id):
 
 
 class CourseExploreList(APIView):
-
     @staticmethod
     def get(request):
         course = Course.objects.order_by(
@@ -395,10 +411,11 @@ def tag_view(request, tag_id):
 
     return render(request, 'post/tag_view.html', {'list': tag_list, 'tag': tag, 'kind': 'c'})
 
+
 @login_required
 def edit_arrange(request, post_id):
     ArrFormSet = modelformset_factory(Arrangement, fields=('content',))
-    if request.method ==  'POST':
+    if request.method == 'POST':
         formset = ArrFormSet(request.POST)
         if formset.is_valid():
             formset.save()
@@ -414,15 +431,16 @@ def edit_arrange(request, post_id):
         for arr in arr_list:
             time_list.append(arr.time)
         fset_time = zip(formset, time_list)
-        return render(request, 'post/edit_arrangement.html', {'formset':formset})
+        return render(request, 'post/edit_arrangement.html', {'formset': formset})
 
 
 def arrange_detail(request, post_id):
     course = Course.objects.get(id=post_id)
     arr_list = course.arrangements.all().order_by('order')
-    is_self =  (course.initiator == request.user)
+    is_self = (course.initiator == request.user)
     today = datetime.now().date()
-    return render(request, 'post/arrange_detail.html', {'arr_list' : arr_list, 'is_self':is_self, 'post_id':post_id, 'today':today})
+    return render(request, 'post/arrange_detail.html',
+                  {'arr_list': arr_list, 'is_self': is_self, 'post_id': post_id, 'today': today})
     
         
    
