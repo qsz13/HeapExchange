@@ -12,7 +12,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from coin.models import transfer
 from .models import Course, Tag, Activity, Arrangement, CourseImages, ActivityImages
-from .forms import CourseForm, ActivityForm, OneTimeForm, SequenceTimeForm, WeeklyTimeForm
+from .forms import CourseForm, ActivityForm, OneTimeForm, SequenceTimeForm, WeeklyTimeForm, CourseBulletinForm
 from django.http import HttpResponse, Http404
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
@@ -519,3 +519,17 @@ def invite(request, kind, post_id):
     pm_write(from_user, to_user, u'邀请: '+post.title, body=u'快来参加这个活动吧：<a href="'+post.get_absolute_url()+u'">链接</a>')
 
     return redirect('post:detail', kind=kind, post_id=post_id)
+
+@login_required
+def create_bulletin(request, flag, post_id):
+    if request.method == 'POST':
+        form = CourseBulletinForm(request.POST)
+        if form.is_valid():
+            new_form = form.save(commit=False)
+            new_form.initiator = request.user
+            new_form.post = Course.objects.get(id=post_id)
+            new_form.save()
+            return redirect('post:detail', kind=flag, post_id=post_id)
+    else:
+        form = CourseBulletinForm()
+        return render(request, 'post/create_bulletin.html', {'form':form})

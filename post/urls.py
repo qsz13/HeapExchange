@@ -51,4 +51,6 @@ urlpatterns = [
                        url(r'^remove_image/(?P<kind>[a,c]{1})/(?P<img_id>[0-9]+)/$',views.remove_image, name="remove_image"),
                        url(r'^invite/(?P<kind>[a,c]{1})/(?P<post_id>[0-9]+)/$',views.invite, name="invite"),
 
+                       url(r'^bulletin/create/(?P<flag>[a,c]{1})/(?P<post_id>[0-9]+)/$', views.create_bulletin, name='create_bulletin'),
+
                        ]

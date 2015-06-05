@@ -163,3 +163,9 @@ class CourseImages(models.Model):
 class ActivityImages(models.Model):
     post = models.ForeignKey(Activity, related_name="images", null=True)
     image_file = models.ImageField(upload_to="imgs", null=True)
+
+class CourseBulletin(models.Model):
+    post = models.ForeignKey(Course, default=1, related_name='bulletins')
+    initial_time = models.DateTimeField(auto_now=True)
+    initiator = models.OneToOneField(User, null=True)
+    content = models.CharField(max_length=100, null=True)
