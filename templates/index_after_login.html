@@ -105,7 +105,7 @@ $(document).ready(function(){
                       <li class="collection-item"><a href="{% url "transaction_history" %}">呵币</a></li>
                       <li class="collection-item"><a href="{% url "post:post" %}">帖子</a></li>
                       <li class="collection-item"><a href="{% url "search:index" %}">搜索</a></li>
-                        <li class="collection-item"><a href="/account/signup/?referral={{ user.username }}">注册邀请链接</a></li>
+		      <li class="collection-item"><a href="{% url "invite" %}">注册邀请链接</a></li>
                     </ul>
                 </div>
 

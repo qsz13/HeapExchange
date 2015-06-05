@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}
+邀请
+{% endblock %}
+
+{% block page %}
+
+<div class="container">
+	<div class="row"></div>
+	<div class="row"></div>
+	<div class="row"></div>
+	<div class="row"></div>
+
+	<div class="row">
+		<h3>
+			将这个链接发给你的朋友
+		</h3>
+	</div>
+
+	<div class="row">
+		<ul class="collection">
+			<a href={{path}} class="collection-item">{{ path }}</a>
+		</ul>
+	</div>
+</div>
+
+{% endblock %}

@@ -9,6 +9,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import View, CreateView
 from account.forms import ProfileForm
 from post.models import Tag
+from django.contrib.auth.decorators import login_required
 
 
 class SignUpView(View):
@@ -128,4 +129,30 @@ class AccountView(View):
             return render(request, self.template_name, {"profile_form": profile_form, "setting_form": setting_form,
                                                         'classes_number': self.classes_number,
                                                         'class_taken': self.class_taken, 'tags': tags})
+
+@login_required
+def invitation_view(request):
+    user = str(request.user)
+    path = "http://" + request.get_host() + "/account/signup/?referral=" + user 
+    return render(request, 'account/invitation.html', {'path' : path})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

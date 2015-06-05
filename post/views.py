@@ -15,8 +15,8 @@ from .models import Course, Tag, Activity, Arrangement, CourseImages, ActivityIm
 from .forms import CourseForm, ActivityForm, OneTimeForm, SequenceTimeForm, WeeklyTimeForm
 from django.http import HttpResponse, Http404
 from django.shortcuts import redirect
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from notifications import notify
 from post.serializers import CourseSerializer
 from django.shortcuts import get_object_or_404
