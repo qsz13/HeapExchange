@@ -12,7 +12,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from coin.models import transfer
 from .models import Course, Tag, Activity, Arrangement, CourseImages, ActivityImages
-from .forms import CourseForm, ActivityForm, OneTimeForm, SequenceTimeForm, WeeklyTimeForm, CourseBulletinForm
+from .forms import CourseForm, ActivityForm, OneTimeForm, SequenceTimeForm
+from .forms import WeeklyTimeForm, CourseBulletinForm, ActivityBulletinForm
 from django.http import HttpResponse, Http404
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
@@ -24,7 +25,7 @@ from datetime import datetime, timedelta
 from django.forms.models import modelformset_factory
 from .helpers import DateJudge
 from postman.api import pm_write
-
+from .helpers import noti
 
 class TempView(TemplateView):
     template_name = 'post/post.html'
@@ -522,14 +523,35 @@ def invite(request, kind, post_id):
 
 @login_required
 def create_bulletin(request, flag, post_id):
+    if flag == 'c':
+        Post = Course
+        Form = CourseBulletinForm
+    else:
+        Post = Activity
+        Form = ActivityBulletinForm
+
     if request.method == 'POST':
-        form = CourseBulletinForm(request.POST)
+        form = Form(request.POST)
         if form.is_valid():
             new_form = form.save(commit=False)
             new_form.initiator = request.user
-            new_form.post = Course.objects.get(id=post_id)
+            new_form.post = Post.objects.get(id=post_id)
             new_form.save()
-            return redirect('post:detail', kind=flag, post_id=post_id)
+            noti(request.user, new_form.post, new_form.content)
+            return redirect('post:view_bulletin', flag, post_id)
     else:
-        form = CourseBulletinForm()
+        form = Form()
         return render(request, 'post/create_bulletin.html', {'form':form})
+
+@login_required
+def view_bulletin(request, flag, post_id):
+    if flag == 'c':
+        post = get_object_or_404(Course, id=post_id)
+    else:
+        post = get_object_or_404(Activity, id=post_id)
+
+    if request.user != post.initiator and request.user not in post.joined.all():
+        return redirect('post:detail', kind=flag, post_id=post_id)
+
+    list = post.bulletins.all().order_by('-initial_time')
+    return render(request, 'post/view_bulletin.html', {'list':list, 'id':post_id, 'flag':flag})

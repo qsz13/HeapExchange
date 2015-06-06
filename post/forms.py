@@ -2,7 +2,7 @@ from django.forms import ModelForm, Textarea
 from .models import Course, Activity, Post, OneTimeSchedule, SequenceTimeSchedule, WeeklyTimeSchedule, Arrangement
 from django import forms
 from functools import partial
-from .models import CourseBulletin
+from .models import CourseBulletin, ActivityBulletin
 
 # DateInput = partial(forms.DateInput, {'class': 'datepicker', 'type': 'date'})
 
@@ -80,6 +80,14 @@ class CourseBulletinForm(ModelForm):
     class Meta:
         model = CourseBulletin
         fields = ['content',]
+        widgets = {
+                'content' : Textarea(attrs={'class': 'materialize-textarea'}),
+        }
+
+class ActivityBulletinForm(ModelForm):
+    class Meta:
+        model = ActivityBulletin
+        fields = ['content']
         widgets = {
                 'content' : Textarea(attrs={'class': 'materialize-textarea'}),
         }

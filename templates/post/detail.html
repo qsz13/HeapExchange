@@ -51,6 +51,8 @@
                             {% endif %}
                         {% endif %}
 
+                        <p> <a href="{% url 'post:view_bulletin' post.flag post.id %}" class="text-darken-1">公告板</a></p>
+
                         {% if not is_self %}
                                 {% if not interested %}
                                         <a class="waves-effect waves-light btn" href="{% url 'post:interest' kind=post.flag post_id=post.id %}">我感兴趣</a>

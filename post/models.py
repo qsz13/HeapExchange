@@ -167,5 +167,12 @@ class ActivityImages(models.Model):
 class CourseBulletin(models.Model):
     post = models.ForeignKey(Course, default=1, related_name='bulletins')
     initial_time = models.DateTimeField(auto_now=True)
-    initiator = models.OneToOneField(User, null=True)
+    initiator = models.ForeignKey(User, default=1, related_name='course_bulletins')
+    content = models.CharField(max_length=100, null=True)
+
+
+class ActivityBulletin(models.Model):
+    post = models.ForeignKey(Activity, default=1, related_name='bulletins')
+    initial_time = models.DateTimeField(auto_now=True)
+    initiator = models.ForeignKey(User, default=1, related_name='activity_bulletins')
     content = models.CharField(max_length=100, null=True)
