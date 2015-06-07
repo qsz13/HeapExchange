@@ -51,7 +51,9 @@
                             {% endif %}
                         {% endif %}
 
+                        {% if is_self or has_joined %}
                         <p> <a href="{% url 'post:view_bulletin' post.flag post.id %}" class="text-darken-1">公告板</a></p>
+                        {% endif %}
 
                         {% if not is_self %}
                                 {% if not interested %}
