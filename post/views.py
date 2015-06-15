@@ -242,9 +242,9 @@ def detail(request, kind, post_id):
 def all_post(request, kind='c'):
     activity_list = []
     if kind == 'a':
-        activity_list = Activity.objects.exclude(initiator=request.user)
+        activity_list = Activity.objects.exclude(initiator=request.user).order_by("-initialtime")
     elif kind == 'c':
-        activity_list = Course.objects.exclude(initiator=request.user)
+        activity_list = Course.objects.exclude(initiator=request.user).order_by("-initialtime")
     return render(request, 'post/all.html', {'list': activity_list, 'kind': kind})
 
 
@@ -252,27 +252,27 @@ def all_post(request, kind='c'):
 def posted(request, kind):
     posted_list = []
     if kind == 'a':
-        posted_list = Activity.objects.filter(initiator=request.user)
+        posted_list = Activity.objects.filter(initiator=request.user).order_by("-initialtime")
     elif kind == 'c':
-        posted_list = Course.objects.filter(initiator=request.user)
+        posted_list = Course.objects.filter(initiator=request.user).order_by("-initialtime")
     return render(request, 'post/posted.html', {'list': posted_list, 'kind': kind, 'is_posted': True})
 
 
 @login_required
 def joined(request, kind):
     if kind == 'a':
-        joined_list = request.user.joined_activities.all()
+        joined_list = request.user.joined_activities.all().order_by("-initialtime")
     else:
-        joined_list = request.user.joined_courses.all()
+        joined_list = request.user.joined_courses.all().order_by("-initialtime")
     return render(request, 'post/joined.html', {'list': joined_list, 'kind': kind})
 
 
 @login_required
 def interested(request, kind):
     if kind == 'a':
-        interest_list = request.user.interested_activities.all()
+        interest_list = request.user.interested_activities.all().order_by("-initialtime")
     else:
-        interest_list = request.user.interested_courses.all()
+        interest_list = request.user.interested_courses.all().order_by("-initialtime")
     return render(request, 'post/interested.html', {'list': interest_list, 'kind': kind})
 
 
