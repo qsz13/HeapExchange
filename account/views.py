@@ -56,7 +56,7 @@ class LoginView(View):
         if form.is_valid():
             login(request, form.get_user())
             if request.user.is_staff:
-                return redirect("heap_admin")
+                return redirect("/admin")
             else:
                 return redirect("index")
         else:

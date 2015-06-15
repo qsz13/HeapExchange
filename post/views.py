@@ -282,12 +282,21 @@ def join(request, kind, post_id):
         post = get_object_or_404(Activity, id=post_id)
     else:
         post = get_object_or_404(Course, id=post_id)
-    post.joined.add(request.user)
-    post.save()
-    noti_content = u'报名参加你的课程' + post.title
-    notify.send(request.user, recipient=post.initiator, verb=noti_content, description=post.get_absolute_url())
+
     if kind == 'c':
-        transfer(from_user=request.user, to_user=post.initiator, amount=post.price)
+        if transfer(from_user=request.user, to_user=post.initiator, amount=post.price):
+
+            post.joined.add(request.user)
+            post.save()
+
+            noti_content = u'报名参加你的课程' + post.title
+            notify.send(request.user, recipient=post.initiator, verb=noti_content, description=post.get_absolute_url())
+    else:
+        post.joined.add(request.user)
+        post.save()
+        noti_content = u'报名参加你的课程' + post.title
+        notify.send(request.user, recipient=post.initiator, verb=noti_content, description=post.get_absolute_url())
+
     return redirect('post:detail', kind=kind, post_id=post_id)
 
 

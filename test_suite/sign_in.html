@@ -1,0 +1,686 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://127.0.0.1:8000/" />
+<title>sign in</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">sign in</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>http://127.0.0.1:8000/account/login/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=id_username</td>
+	<td>user100</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=id_password</td>
+	<td>123</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input.btn.btn-primary</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=p</td>
+	<td>Your username and password didn't match. Please try again.</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>id=id_username</td>
+	<td>user100</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Sign up</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=id_username</td>
+	<td>user100</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=id_password1</td>
+	<td>123</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=id_password2</td>
+	<td>1234</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input.btn.btn-primary</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=ul.errorlist &gt; li</td>
+	<td>The two password fields didn't match.</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[2]/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=id_password1</td>
+	<td>123</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=id_password2</td>
+	<td>123 </td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input.btn.btn-primary</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=ul.errorlist &gt; li</td>
+	<td>The two password fields didn't match.</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[2]/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=id_password1</td>
+	<td>123</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[3]/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=id_password2</td>
+	<td>123</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input.btn.btn-primary</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=img.circle.nav-avatar</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=详情</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=我感兴趣</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=我要参加</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>link=已参加</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=已参加</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>link=我要参加</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTitle</td>
+	<td>足球课</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>link=已感兴趣</td>
+	<td>已感兴趣</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=我要参加</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=id_comment</td>
+	<td>user100评论测试：我来参加这个活动了</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>http://127.0.0.1:8000/post/detail/c/12/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=为活动添加标签</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=interest</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>http://127.0.0.1:8000/post/detail/c/12/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=invite</td>
+	<td>user1</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=div.col.offset-s1 &gt; form &gt; input.btn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=invite</td>
+	<td>user2</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=div.col.offset-s1 &gt; form &gt; input.btn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//li[6]/a/i</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=个人信息</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=id_avatar</td>
+	<td>F:\人员图片\未命名1.jpg</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=id_email</td>
+	<td>916189241@qq.com</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=id_phone</td>
+	<td>18817876233</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=id_school</td>
+	<td>软件</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=id_age</td>
+	<td>18</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=profile</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//li[6]/a/i</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=body.body-color</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=a.dropdown-button.nav-color</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=个人信息</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>id=id_age</td>
+	<td>18</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//a[contains(text(),'设置')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='setting']/form/div/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=id_old_password</td>
+	<td>123</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=id_new_password1</td>
+	<td>123</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=id_new_password2</td>
+	<td>1234</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=setting</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=ul.errorlist &gt; li</td>
+	<td>The two password fields didn't match.</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=id_old_password</td>
+	<td>123</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='setting']/form/div[2]/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=id_new_password1</td>
+	<td>123</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='setting']/form/div[3]/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=id_new_password2</td>
+	<td>123</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=id_new_password1</td>
+	<td>1234</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=id_new_password2</td>
+	<td>1234</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=setting</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//li[6]/a/i</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=设置</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=id_old_password</td>
+	<td>1234</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='setting']/form/div[2]/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=id_old_password</td>
+	<td>123</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='setting']/form/div[2]/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=id_new_password1</td>
+	<td>12345</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=id_new_password2</td>
+	<td>12345</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=setting</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=ul.errorlist &gt; li</td>
+	<td>Your old password was entered incorrectly. Please enter it again.</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=id_old_password</td>
+	<td>1234</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='setting']/form/div[2]/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=id_new_password1</td>
+	<td>123</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='setting']/form/div[3]/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=id_new_password2</td>
+	<td>123</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=setting</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//li[6]/a/i</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=兴趣</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=interest</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//a[contains(text(),'设置')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//a[contains(text(),'兴趣')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//a[contains(text(),'时间表')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=row1col5</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=i.mdi-communication-message.circle&nbsp;&nbsp;</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=a.dropdown-button.btn &gt; i.mdi-navigation-arrow-drop-down.right</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=已发送</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=div.collapsible-header</td>
+	<td>邀请: 足球课 from user100</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=i.mdi-social-public.circle </td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=i.mdi-editor-mode-edit.circle</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=i.large.mdi-editor-mode-edit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=id_title</td>
+	<td>1000</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input.select-dropdown</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=li &gt; span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//table[@id='id_once_date_table']/tbody/tr/td[3]/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=li.active &gt; span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//table[@id='id_deadline_table']/tbody/tr/td[3]/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=id_location</td>
+	<td>上海</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=id_description</td>
+	<td>没有</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=id_title</td>
+	<td>唱歌比赛</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=id_description</td>
+	<td>学习怎么唱歌</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=id_requirement</td>
+	<td>带上好嗓子</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=id_limit</td>
+	<td>100</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=id_price</td>
+	<td>3</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value='提交']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=id_once_start_time</td>
+	<td>01:00</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=id_once_end_time</td>
+	<td>08:30</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value='提交']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=详细</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=[编辑]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//table[@id='id_once_date_table']/tbody/tr/td[3]/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input.select-dropdown</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=li.active &gt; span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input.select-dropdown</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=li &gt; span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input.select-dropdown</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=input.select-dropdown</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=li.active &gt; span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value='提交']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=上传图片</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=uploadImage</td>
+	<td>F:\人员图片\未命名1.jpg</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input.btn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>css=div.card-image &gt; img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//li[6]/a/i</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=退出</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=h1</td>
+	<td>Heap Exchange</td>
+</tr>
+</tbody></table>
+</body>
+</html>
