@@ -51,6 +51,6 @@ admin/amdin
 
 #####for normal user:
 
-from user1 to user5
-
-password:123
+ctx 123
+dtx 123
+xueba 123
